@@ -1,0 +1,25 @@
+{
+    "title": "example round",
+    "topics": [ 
+        {
+            "title": "Flüsse",
+            "questions": [
+                {
+                    "question" : "Ein Teil des menschlichen Körpers.",
+                    "answer" : "Po"
+                }
+            ]
+        },
+    
+        {
+            "title": "Städte",
+            "questions": 
+            [
+                {
+                    "question" : "Um ein Zeichen wäre ich als Schnaps in der Karibik gelandet.",
+                    "answer" : "Rom"
+                }
+            ]
+        }
+    ]
+}

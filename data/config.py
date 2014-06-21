@@ -1,0 +1,34 @@
+
+"""
+pyPardy
+
+Configuration module for pyPardy.
+
+@author: Christian Wichmann
+"""
+
+
+import logging
+
+
+logger = logging.getLogger('pyPardy.data')
+
+
+APP_NAME = "pyPardy!"
+# maximum number of teams
+MAX_TEAM_NUMBER = 3
+# time for answering a questions in seconds
+QUESTION_TIME = 5
+# points that are added for every question in a given topic
+QUESTION_POINTS = 100
+
+
+def load_config_from_file():
+    logger.info('Loading config from file...')
+
+
+def save_config_to_file():
+    logger.info('Saving config to file...')
+
+if __name__ == '__main__':
+    pass
