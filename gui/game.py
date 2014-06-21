@@ -106,7 +106,8 @@ class QuestionTablePanel(QtGui.QWidget):
         for button in self.button_list:
             if self.game_data.was_question_completed(button.topic_count,
                                                      button.question_count):
-                button.setText('')
+                button.setEnabled(False)
+                #button.setText('')
 
     @QtCore.pyqtSlot()
     def on_button_click(self):

@@ -117,6 +117,7 @@ class PyPardyGui(QtGui.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.current_question_panel)
 
     def show_available_rounds_panel(self):
+        self.current_game = game.Game()
         if not self.available_rounds_panel:
             self.available_rounds_panel = admin.AvailableRoundPanel(self, self.WIDTH,
                                                                     self.HEIGHT)
