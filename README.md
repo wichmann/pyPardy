@@ -21,6 +21,11 @@ pyPardy requires Python 3.
 
 For the correct rendering the font "Linux Biolinum O" has to be installed.
 
+To use the USB buzzer, libusb version 1.0 and the wrapper python-libusb1 have
+to be installed. The file '10-buzzer.rules' contains a udev rule to access the
+usb device without root access. Just copy it to /etc/udev/rules.d and change
+the GROUP attribute to your needs.
+
 
 THIRD PARTY SOFTWARE
 --------------------
