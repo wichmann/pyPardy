@@ -49,7 +49,7 @@ class BuzzerDevice(threading.Thread):
         self.__keep_running = False
         try:
             # close device only if still available
-            self.device.getDeviceAddress()
+            self.__device.getDeviceAddress()
             self.close_device()
         except libusb1.USBError:
             pass

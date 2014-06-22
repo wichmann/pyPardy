@@ -1,0 +1,3 @@
+# udev rules for buzzer project
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="05dc", GROUP="__your_users_group__", MODE="777"
+
