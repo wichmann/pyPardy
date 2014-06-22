@@ -8,7 +8,7 @@ Package for all data handling functions.
 """
 
 
-from data import config
+#from data import config
 
 
-config.load_config_from_file()
+#config.load_config_from_file()

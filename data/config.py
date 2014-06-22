@@ -29,10 +29,13 @@ AUDIO_SFX = False
 
 def load_config_from_file():
     logger.info('Loading config from file...')
+    raise NotImplementedError()
 
 
 def save_config_to_file():
     logger.info('Saving config to file...')
+    raise NotImplementedError()
+
 
 if __name__ == '__main__':
     pass

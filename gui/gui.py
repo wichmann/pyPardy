@@ -16,6 +16,7 @@ from data import game
 from data import config
 from gui import game as game_ui
 from gui import admin
+from gui import helper
 
 
 __all__ = ['start_gui']
@@ -40,15 +41,15 @@ class PyPardyGui(QtGui.QMainWindow):
         self.buzzer_config_panel = None
         # build and config all widgets
         self.setup_ui()
+        #self.set_background()
         self.center_on_screen()
         self.set_signals_and_slots()
         # create instance of Game class for saving all necessary data
         self.current_game = game.Game()
 
     # FIXME Handle game ending and release all resources from buzzer API!
-    #def __del__(self):
-    #    if self.buzzer_config_panel:
-    #        self.buzzer_config_panel.close_connection_to_buzzer()
+    def __del__(self):
+        helper
 
     def setup_ui(self):
         """Initializes the UI by displaying all available rounds."""
@@ -63,6 +64,24 @@ class PyPardyGui(QtGui.QMainWindow):
         self.show_available_rounds_panel()
         # set central widget for main window
         self.setCentralWidget(self.stackedWidget)
+
+    def set_background(self):
+        """Paints a color gradient over the background.
+
+        Sources:
+         * http://developer.nokia.com/community/wiki/Archived:Creating_a_gradient_background_for_a_QPushButton_with_style_sheet
+         * https://wiki.python.org/moin/PyQt/Windows%20with%20gradient%20backgrounds
+        """
+        #palette = QtGui.QPalette()
+        #gradient = QtGui.QLinearGradient(QtCore.QRectF(self.rect()).topLeft(),
+        #                                 QtCore.QRectF(self.rect()).topRight())
+        #gradient.setColorAt(0.0, QtGui.QColor(33, 152, 192))
+        #gradient.setColorAt(1.0, QtGui.QColor(13, 92, 166))
+        #palette.setBrush(QtGui.QPalette.Background, QtGui.QBrush(gradient))
+        #self.setPalette(palette)
+        self.stackedWidget.setStyleSheet("""background-color: qlineargradient(
+                              x1: 0, y1: 0, x2: 0, y2: 1,
+                              stop: 0 #2198c0, stop: 1 #0d5ca6);""")
 
     def center_on_screen(self):
         """Centers the window on the screen."""
@@ -151,10 +170,15 @@ class PyPardyGui(QtGui.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.buzzer_config_panel)
 
 
+def handle_exit():
+    helper.get_buzzer_connector().close_connection()
+
+
 def start_gui():
     import sys
     app = QtGui.QApplication(sys.argv)
     app.setApplicationName(config.APP_NAME)
+    app.aboutToQuit.connect(handle_exit)
     main = PyPardyGui()
     main.show()
     sys.exit(app.exec_())

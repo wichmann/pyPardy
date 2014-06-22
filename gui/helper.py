@@ -38,6 +38,11 @@ class BuzzerConnector(QtCore.QObject):
     def __del__(self):
         self.buzzer_reader.stop()
 
+    def close_connection(self):
+        self.buzzer_reader.stop()
+        self.buzzer_reader.join()
+        del self.buzzer_reader
+
     def on_buzzer_pressed(self, buzzer_id):
         self.buzzing.emit(buzzer_id)
 
