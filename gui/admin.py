@@ -13,6 +13,7 @@ from PyQt4 import QtCore
 
 from data import round
 from data import config
+from gui import helper
 
 
 logger = logging.getLogger('pyPardy.gui')
@@ -20,16 +21,20 @@ logger = logging.getLogger('pyPardy.gui')
 
 class BuzzerConfigPanel(QtGui.QWidget):
     """Shows a panel to config the buzzers for all teams."""
-    def __init__(self, parent, width, height):
+    def __init__(self, parent, game_data, width, height):
         super(BuzzerConfigPanel, self).__init__(parent)
         self.main_gui = parent
+        self.game_data = game_data
         self.team_label_list = []
         self.currently_highlighted_team = 0
         self.setFixedSize(width, height)
         self.create_fonts()
         self.setup_ui()
         self.set_signals_and_slots()
-        self.build_timer()
+
+    def __del__(self):
+        # stop threads inside buzzer API
+        self.buzzer_connector.buzzer_reader.stop()
 
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
@@ -65,25 +70,25 @@ class BuzzerConfigPanel(QtGui.QWidget):
 
     def set_signals_and_slots(self):
         """Sets all signals and slots for main window."""
-        pass
+        self.buzzer_connector = helper.BuzzerConnector()
+        self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
-    def build_timer(self):
-        """Builds timer that simulates buzzer pressed."""
-        self.timer = QtCore.QTimer(self)
-        self.timer.timeout.connect(self.on_buzzer_pressed)
-        self.timer.start(2000)
+    @QtCore.pyqtSlot(int)
+    def on_buzzer_pressed(self, buzzer_id):
+        """Handles a pressed buzzer and highlight the next team name.
 
-    @QtCore.pyqtSlot()
-    def on_buzzer_pressed(self):
-        # FIXME Use buzzer connection to call method 'on_buzzer_pressed'
-        # when buzzer was pressed and save buzzer id for teams in Game class
+        :param buzzer_id: buzzer id delivered by BuzzerReader()"""
+        logger.info('Getting buzzer id ({}) from buzzer API.'.format(buzzer_id))
         if self.currently_highlighted_team < config.MAX_TEAM_NUMBER - 1:
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
+            # set buzzer id for current team in Game object
+            self.game_data.set_buzzer_id_for_team(self.currently_highlighted_team,
+                                                  buzzer_id)
+            # highlight next team name
             self.currently_highlighted_team += 1
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: red")
         else:
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
-            self.timer.stop()
             self.main_gui.show_available_rounds_panel()
 
 

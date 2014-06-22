@@ -12,6 +12,7 @@ from PyQt4 import QtGui
 from PyQt4 import QtCore
 
 from data import config
+from gui import helper
 
 
 ANIMATION_TIME = 1500
@@ -107,7 +108,7 @@ class QuestionTablePanel(QtGui.QWidget):
             if self.game_data.was_question_completed(button.topic_count,
                                                      button.question_count):
                 button.setEnabled(False)
-                #button.setText('')
+                button.setText('')
 
     @QtCore.pyqtSlot()
     def on_button_click(self):
@@ -140,6 +141,8 @@ class QuestionViewPanel(QtGui.QWidget):
         self.setup_ui()
         self.set_signals_and_slots()
         self.build_timer()
+        if config.AUDIO_SPEECH:
+            self.read_question()
 
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
@@ -181,6 +184,10 @@ class QuestionViewPanel(QtGui.QWidget):
         self.question_label.setAlignment(QtCore.Qt.AlignCenter |
                                          QtCore.Qt.AlignHCenter)
         self.grid.addWidget(self.question_label, 1, 0, 1, 4)
+        # add label for team that buzzered first
+        self.team_to_answer_label = QtGui.QLabel('')
+        self.team_to_answer_label.setFont(self.question_font)
+        self.grid.addWidget(self.team_to_answer_label, 2, 2)
         # add timer
         self.timer_lcd = QtGui.QLCDNumber(self)
         self.timer_lcd.resize(200, 200)
@@ -209,8 +216,20 @@ class QuestionViewPanel(QtGui.QWidget):
         """Sets all signals and slots for question view."""
         self.show_answer_button.clicked.connect(self.on_show_answer_button)
         self.back_to_table_button.clicked.connect(self.on_back_button)
+        self.buzzer_connector = helper.BuzzerConnector()
+        self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
-    ##### helper methods #####
+    @QtCore.pyqtSlot(int)
+    def on_buzzer_pressed(self, buzzer_id):
+        """Handles a pressed buzzer and registers the team.
+
+        :param buzzer_id: buzzer id delivered by BuzzerReader()"""
+        logger.info('Getting buzzer id ({}) from buzzer API.'.format(buzzer_id))
+        string = 'Team {}'.format(buzzer_id)
+        self.team_to_answer_label.setText(string)
+        self.stop_timer()
+
+    ##### timer methods #####
 
     def build_timer(self):
         """Builds timer that will update game time every 1000 ms."""
@@ -218,6 +237,12 @@ class QuestionViewPanel(QtGui.QWidget):
         self.timer.timeout.connect(self.on_update_lcd)
         self.timer.start(1000)
         self.on_update_lcd()
+
+    def stop_timer(self):
+        self.timer.stop()
+        self.timer_lcd.display('')
+
+    ##### helper methods #####
 
     def animate_widget(self, widget, fade_out, hook=None):
         """Creates an opacity effect for the question label and fades it in or
@@ -258,6 +283,10 @@ class QuestionViewPanel(QtGui.QWidget):
         # set opacity
         effect.setOpacity(0.0)
 
+    def play_buzzer_sound(self):
+        buzzer_sound = QtGui.QSound("./sounds/buzzer.wav")
+        buzzer_sound.play()
+
     ##### slot methods #####
 
     @QtCore.pyqtSlot()
@@ -270,7 +299,8 @@ class QuestionViewPanel(QtGui.QWidget):
             # stop timer and fade question out
             self.timer_lcd.display(self.current_time)
             self.timer.stop()
-            self.animate_widget(self.question_label, True, self.on_question_fadeout)
+            self.animate_widget(self.question_label, True,
+                                self.on_question_fadeout)
 
     @QtCore.pyqtSlot()
     def on_question_fadeout(self):
@@ -291,7 +321,14 @@ class QuestionViewPanel(QtGui.QWidget):
 
     @QtCore.pyqtSlot()
     def on_back_button(self):
+        self.play_buzzer_sound()
         self.main_gui.back_to_round_table()
+
+    ##### miscellaneous methods #####
+
+    def read_question(self):
+        from espeak import espeak
+        espeak.synth(self.game_data.get_current_question())
 
 
 class TeamViewPanel(QtGui.QWidget):

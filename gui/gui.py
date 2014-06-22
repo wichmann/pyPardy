@@ -44,6 +44,10 @@ class PyPardyGui(QtGui.QMainWindow):
         # create instance of Game class for saving all necessary data
         self.current_game = game.Game()
 
+    def __del__(self):
+        if self.buzzer_config_panel:
+            self.buzzer_config_panel.__del__()
+
     def setup_ui(self):
         """Initializes the UI by displaying all available rounds."""
         # set size of window
@@ -132,7 +136,9 @@ class PyPardyGui(QtGui.QMainWindow):
         if self.buzzer_config_panel:
             self.stackedWidget.removeWidget(self.buzzer_config_panel)
         # create new buzzer config panel
-        self.buzzer_config_panel = admin.BuzzerConfigPanel(self, self.WIDTH,
+        self.buzzer_config_panel = admin.BuzzerConfigPanel(self,
+                                                           self.current_game,
+                                                           self.WIDTH,
                                                            self.HEIGHT)
         self.stackedWidget.addWidget(self.buzzer_config_panel)
         self.stackedWidget.setCurrentWidget(self.buzzer_config_panel)

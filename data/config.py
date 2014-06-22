@@ -21,6 +21,10 @@ MAX_TEAM_NUMBER = 3
 QUESTION_TIME = 5
 # points that are added for every question in a given topic
 QUESTION_POINTS = 100
+# whether to use text-to-speech to read question
+AUDIO_SPEECH = False
+# whether to play sound effects when buzzer was hit
+AUDIO_SFX = False
 
 
 def load_config_from_file():
