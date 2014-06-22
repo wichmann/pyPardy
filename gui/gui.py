@@ -36,6 +36,7 @@ class PyPardyGui(QtGui.QMainWindow):
         self.available_rounds_panel = None
         self.current_round_question_panel = None
         self.current_question_panel = None
+        self.current_game = None
         self.buzzer_config_panel = None
         # build and config all widgets
         self.setup_ui()
@@ -44,9 +45,10 @@ class PyPardyGui(QtGui.QMainWindow):
         # create instance of Game class for saving all necessary data
         self.current_game = game.Game()
 
-    def __del__(self):
-        if self.buzzer_config_panel:
-            self.buzzer_config_panel.__del__()
+    # FIXME Handle game ending and release all resources from buzzer API!
+    #def __del__(self):
+    #    if self.buzzer_config_panel:
+    #        self.buzzer_config_panel.close_connection_to_buzzer()
 
     def setup_ui(self):
         """Initializes the UI by displaying all available rounds."""
@@ -96,8 +98,10 @@ class PyPardyGui(QtGui.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.current_round_question_panel)
 
     def back_to_round_table(self):
+        """Handles the transition from question view panel back to the table
+        with all questions of the round."""
         self.stackedWidget.setCurrentWidget(self.current_round_question_panel)
-        self.current_round_question_panel.update_question_buttons()
+        self.current_round_question_panel.update_widgets()
         if self.current_game.is_round_complete():
             logger.info('Round was completed.')
             QtGui.QMessageBox.information(self, 'Rund komplett!',
@@ -121,15 +125,18 @@ class PyPardyGui(QtGui.QMainWindow):
         self.stackedWidget.setCurrentWidget(self.current_question_panel)
 
     def show_available_rounds_panel(self):
-        self.current_game = game.Game()
+        # delete buzzer config panel if it exists already to unhook buzzer API
+        if self.buzzer_config_panel:
+            self.stackedWidget.removeWidget(self.buzzer_config_panel)
+        # reset all internal state of game object
+        if self.current_game:
+            self.current_game.reset_game()
+        # build and display available rounds
         if not self.available_rounds_panel:
             self.available_rounds_panel = admin.AvailableRoundPanel(self, self.WIDTH,
                                                                     self.HEIGHT)
             self.stackedWidget.addWidget(self.available_rounds_panel)
         self.stackedWidget.setCurrentWidget(self.available_rounds_panel)
-
-    def show_answer_for_questions(self):
-        pass
 
     def show_buzzer_config_panel(self):
         # remove old buzzer config panel

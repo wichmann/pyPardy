@@ -32,9 +32,9 @@ class BuzzerConfigPanel(QtGui.QWidget):
         self.setup_ui()
         self.set_signals_and_slots()
 
-    def __del__(self):
-        # stop threads inside buzzer API
-        self.buzzer_connector.buzzer_reader.stop()
+    #def __del__(self):
+    #    # stop threads inside buzzer API
+    #    self.close_connection_to_buzzer()
 
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
@@ -70,8 +70,13 @@ class BuzzerConfigPanel(QtGui.QWidget):
 
     def set_signals_and_slots(self):
         """Sets all signals and slots for main window."""
-        self.buzzer_connector = helper.BuzzerConnector()
+        self.buzzer_connector = helper.get_buzzer_connector()
         self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
+
+    def close_connection_to_buzzer(self):
+        self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
+        #self.buzzer_connector.buzzer_reader.stop()
+        self.buzzer_connector = None
 
     @QtCore.pyqtSlot(int)
     def on_buzzer_pressed(self, buzzer_id):
@@ -79,16 +84,17 @@ class BuzzerConfigPanel(QtGui.QWidget):
 
         :param buzzer_id: buzzer id delivered by BuzzerReader()"""
         logger.info('Getting buzzer id ({}) from buzzer API.'.format(buzzer_id))
+        # set buzzer id for current team in Game object
+        self.game_data.set_buzzer_id_for_team(self.currently_highlighted_team,
+                                              buzzer_id)
         if self.currently_highlighted_team < config.MAX_TEAM_NUMBER - 1:
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
-            # set buzzer id for current team in Game object
-            self.game_data.set_buzzer_id_for_team(self.currently_highlighted_team,
-                                                  buzzer_id)
             # highlight next team name
             self.currently_highlighted_team += 1
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: red")
         else:
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
+            self.close_connection_to_buzzer()
             self.main_gui.show_available_rounds_panel()
 
 
