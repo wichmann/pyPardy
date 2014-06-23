@@ -341,9 +341,12 @@ class QuestionViewPanel(QtGui.QWidget):
         self.last_buzzed_team = team_id
         # update gui widgets
         self.team_view_panel.highlight_team(team_id)
-        self.stop_timer()
-        self.animate_widget(self.question_label, True,
-                            self.on_question_fadeout)
+        if self.timer.isActive():
+            # stop timer and fade question out only when buzzered before end
+            # of timer
+            self.stop_timer()
+            self.animate_widget(self.question_label, True,
+                                self.on_question_fadeout)
 
     @QtCore.pyqtSlot()
     def on_update_lcd(self):
