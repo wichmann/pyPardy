@@ -10,6 +10,7 @@ Widgets for showing questions.
 import logging
 from PyQt4 import QtGui
 from PyQt4 import QtCore
+from PyQt4.phonon import Phonon
 
 from data import config
 from gui import helper
@@ -158,8 +159,8 @@ class QuestionViewPanel(QtGui.QWidget):
         self.setup_ui()
         self.set_signals_and_slots()
         self.start_timer()
-        if config.AUDIO_SPEECH:
-            self.read_question()
+        self.play_background_music()
+        self.read_question()
 
     def __del__(self):
         self.close_connection_to_buzzer()
@@ -334,7 +335,8 @@ class QuestionViewPanel(QtGui.QWidget):
 
         :param buzzer_id: buzzer id delivered by BuzzerReader()"""
         logger.info('Getting buzzer id ({}) from buzzer API.'.format(buzzer_id))
-        # play buzzer sound
+        # stop background music and play buzzer sound
+        # FIXME self.background_music.stop()
         self.play_buzzer_sound()
         # get team id from buzzer id
         team_id = self.game_data.get_team_by_buzzer_id(buzzer_id)
@@ -394,13 +396,25 @@ class QuestionViewPanel(QtGui.QWidget):
     ##### methods concering sound/audio #####
 
     def read_question(self):
-        from espeak import espeak
-        espeak.synth(self.game_data.get_current_question())
+        if config.AUDIO_SPEECH:
+            from espeak import espeak
+            espeak.synth(self.game_data.get_current_question())
 
     def play_buzzer_sound(self):
         if config.AUDIO_SFX:
-            buzzer_sound = QtGui.QSound("./sounds/buzzer.wav")
+            buzzer_sound = QtGui.QSound('./sounds/buzzer.wav')
             buzzer_sound.play()
+
+    def play_background_music(self):
+        if config.AUDIO_MUSIC:
+            #self.background_music = QtGui.QSound('./sounds/jeopardy.wav')
+            #self.background_music.setLoops(-1)
+            #self.background_music.play()
+            output = Phonon.AudioOutput(Phonon.MusicCategory)
+            m_media = Phonon.MediaObject()
+            Phonon.createPath(m_media, output)
+            m_media.setCurrentSource(Phonon.MediaSource('./sounds/jeopardy.wav'))
+            m_media.play()
 
 
 class TeamViewPanel(QtGui.QWidget):
