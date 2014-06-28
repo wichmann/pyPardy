@@ -19,6 +19,14 @@ from gui import helper
 logger = logging.getLogger('pyPardy.gui')
 
 
+# time before a buzzer press has any effect
+STARTUP_TIME = 3000
+# step that will be used to decrease game time
+GAME_TIME_STEP = 100
+# factor to divide given time in seconds into part of that
+GAME_TIME_FACTOR = 10
+
+
 class QuestionTablePanel(QtGui.QWidget):
     """Panel showing all questions of a chosen round.
 
@@ -183,7 +191,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.main_gui = parent
         self.topic = game_data.get_topic_name()
         self.points = game_data.get_points_for_current_question()
-        self.current_time = config.QUESTION_TIME
+        self.current_time = config.QUESTION_TIME * GAME_TIME_FACTOR
         self.last_buzzed_team = -1
         self.setFixedSize(width, height)
         # build gui and slots
@@ -292,7 +300,19 @@ class QuestionViewPanel(QtGui.QWidget):
         self.show_answer_button.clicked.connect(self.on_show_answer_button)
         self.answer_incorrect_button.clicked.connect(lambda: self.on_back_button(False))
         self.answer_correct_button.clicked.connect(lambda: self.on_back_button(True))
+        self.startup_timer = QtCore.QTimer()
+        self.startup_timer.timeout.connect(self.on_startup_timer)
+        self.startup_timer.start(STARTUP_TIME)
+
+    def on_startup_timer(self):
+        """Handles initialization of buzzer API and connects buzzer connector
+        instance with slot in this class. After this the question view panel
+        will react on all buzzer presses.
+        """
+        print('timer abgelaufen...')
+        self.startup_timer.stop()
         self.buzzer_connector = helper.get_buzzer_connector()
+        self.buzzer_connector.flush_connection()
         self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
     def remove_signals_and_slots(self):
@@ -321,17 +341,21 @@ class QuestionViewPanel(QtGui.QWidget):
         self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
         self.buzzer_connector = None
 
-    ##### timer methods #####
+    ##### game timer methods #####
 
     def start_timer(self):
-        """Builds timer that will update game time every 1000 ms."""
+        """Builds timer that will update game time depending on the value of
+        GAME_TIME_STEP. Each time the lcd widget will be updated and decreased
+        by GAME_TIME_STEP. The maximum game time is defined as seconds in the
+        config file and multiplied by GAME_TIME_FACTOR to show part of seconds.
+        """
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.on_update_lcd)
-        self.timer.start(1000)
+        self.timer.start(GAME_TIME_STEP)
         self.on_update_lcd()
 
     def stop_timer(self):
-        self.timer_lcd.display(self.current_time)
+        self.timer_lcd.display('{0:01}'.format(self.current_time / GAME_TIME_FACTOR))
         self.timer.stop()
 
     ##### slot methods #####
@@ -363,7 +387,7 @@ class QuestionViewPanel(QtGui.QWidget):
         if self.current_time > 0:
             # decrement time when not yet expired
             self.current_time -= 1
-            self.timer_lcd.display(self.current_time)
+            self.timer_lcd.display('{0:01}'.format(self.current_time / GAME_TIME_FACTOR))
         else:
             # stop timer and fade question out
             self.stop_timer()
