@@ -45,9 +45,9 @@ class QuestionTablePanel(QtGui.QWidget):
         base_font = 'Linux Biolinum O'
         #QtGui.QFontDatabase.addApplicationFont()
         self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(24)
+        self.title_font.setPointSize(34)
         self.topic_font = QtGui.QFont(base_font)
-        self.topic_font.setPointSize(18)
+        self.topic_font.setPointSize(24)
         self.question_font = QtGui.QFont(base_font)
         self.question_font.setPointSize(56)
 
@@ -164,7 +164,7 @@ class QuestionViewPanel(QtGui.QWidget):
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
         self.question_font = QtGui.QFont(base_font)
-        self.question_font.setPointSize(36)
+        self.question_font.setPointSize(42)
         self.button_font = QtGui.QFont(base_font)
         self.button_font.setPointSize(24)
 
@@ -199,15 +199,18 @@ class QuestionViewPanel(QtGui.QWidget):
         # add button for showing the answer of the question
         self.show_answer_button = QtGui.QPushButton('Antwort...')
         self.show_answer_button.setFont(self.button_font)
+        self.show_answer_button.setEnabled(False)
         helper.hide_widget(self.show_answer_button)
         self.grid.addWidget(self.show_answer_button, 2, 0)
         # add button for going back to question table
         self.answer_correct_button = QtGui.QPushButton('Richtig!')
         self.answer_correct_button.setFont(self.button_font)
+        self.answer_correct_button.setEnabled(False)
         helper.hide_widget(self.answer_correct_button)
         self.grid.addWidget(self.answer_correct_button, 2, 1)
         self.answer_incorrect_button = QtGui.QPushButton('Falsch!')
         self.answer_incorrect_button.setFont(self.button_font)
+        self.answer_incorrect_button.setEnabled(False)
         helper.hide_widget(self.answer_incorrect_button)
         self.grid.addWidget(self.answer_incorrect_button, 2, 2)
 
@@ -230,7 +233,7 @@ class QuestionViewPanel(QtGui.QWidget):
     def build_timer_widgets(self):
         # add timer
         self.timer_lcd = QtGui.QLCDNumber(self)
-        self.timer_lcd.resize(200, 200)
+        self.timer_lcd.resize(300, 300)
         self.timer_lcd.setSegmentStyle(QtGui.QLCDNumber.Flat)
         self.timer_lcd.setFrameStyle(QtGui.QFrame.NoFrame)
         #self.timer_lcd.setStyleSheet("border: 0px")
@@ -267,15 +270,12 @@ class QuestionViewPanel(QtGui.QWidget):
         control by keyboard."""
         if event.isAutoRepeat():
             return
+        list_of_keys = [QtCore.Qt.Key_1, QtCore.Qt.Key_2, QtCore.Qt.Key_3,
+                        QtCore.Qt.Key_4, QtCore.Qt.Key_5, QtCore.Qt.Key_6]
         key = event.key()
-        if key == QtCore.Qt.Key_1:
-            self.on_buzzer_pressed(self.game_data.buzzer_id_list[0])
-        elif key == QtCore.Qt.Key_2:
-            self.on_buzzer_pressed(self.game_data.buzzer_id_list[1])
-        elif key == QtCore.Qt.Key_3:
-            self.on_buzzer_pressed(self.game_data.buzzer_id_list[2])
-        elif key == QtCore.Qt.Key_4:
-            self.on_buzzer_pressed(self.game_data.buzzer_id_list[3])
+        for i in range(config.MAX_TEAM_NUMBER):
+            if key == list_of_keys[i]:
+                self.on_buzzer_pressed(self.game_data.buzzer_id_list[i])
 
     def close_connection_to_buzzer(self):
         """Closes the connection between the BuzzerConnector and the callable
@@ -313,7 +313,6 @@ class QuestionViewPanel(QtGui.QWidget):
         self.last_buzzed_team = team_id
         # update gui widgets
         self.team_view_panel.highlight_team(team_id)
-        print('on buzzer pressed')
         if self.timer.isActive():
             # stop timer and fade question out only when buzzered before end
             # of timer
@@ -336,18 +335,35 @@ class QuestionViewPanel(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def on_question_fadeout(self):
         logger.info('Question has been faded out.')
+        self.show_answer_button.setEnabled(True)
         helper.animate_widget(self.show_answer_button, False)
 
     @QtCore.pyqtSlot()
     def on_answer_fadein(self):
         logger.info('Question has been faded out.')
-        helper.animate_widget(self.answer_correct_button, False)
-        helper.animate_widget(self.answer_incorrect_button, False)
+        if self.last_buzzed_team != -1:
+            # if one of the buzzers was pressed, show buttons for
+            # right and wrong
+            self.answer_correct_button.setEnabled(True)
+            self.answer_incorrect_button.setEnabled(True)
+            helper.animate_widget(self.answer_correct_button, False)
+            helper.animate_widget(self.answer_incorrect_button, False)
+        else:
+            # otherwise just show one of the buttons to get back
+            # to the question view table
+            self.answer_correct_button.setText('Zurück')
+            self.answer_correct_button.setEnabled(True)
+            helper.animate_widget(self.answer_correct_button, False)
 
     @QtCore.pyqtSlot()
     def on_show_answer_button(self):
         logger.info('Answer is shown.')
-        self.question_label.setText(self.game_data.get_current_answer())
+        # build string with question and answer
+        string = self.game_data.get_current_question()
+        string += '<br><br>–<br><br>'
+        string += self.game_data.get_current_answer()
+        # fade in label with question and answer
+        self.question_label.setText(string)
         helper.animate_widget(self.question_label, False, self.on_answer_fadein)
         self.game_data.mark_question_as_complete()
 

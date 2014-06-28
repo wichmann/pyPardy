@@ -18,7 +18,7 @@ logger = logging.getLogger('pyPardy.gui')
 
 
 # duration for the animation of widgets
-ANIMATION_TIME = 1500
+ANIMATION_TIME = 750
 # singleton instance that is returned by get_buzzer_connector() function
 STATIC_INSTANCE_OF_BUZZER_CONNECTOR = None
 
