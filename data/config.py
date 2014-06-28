@@ -29,7 +29,9 @@ AUDIO_SFX = False
 AUDIO_MUSIC = False
 
 # predefined buzzer ids for teams
-BUZZER_ID_FOR_TEAMS = {1: 1, 2: 2, 3: 3, 4: 4}
+BUZZER_ID_FOR_TEAMS = [1, 2, 3, 4]
+# predefined team names
+TEAM_NAMES = ['Team 1', 'Team A', 'Team α', 'Team あ']
 
 
 def load_config_from_file():

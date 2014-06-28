@@ -29,7 +29,7 @@ class Game():
         self.reset_game()
         # dictionary with the buzzer id for each team copied from configs
         # default
-        self.buzzer_id_list = dict(config.BUZZER_ID_FOR_TEAMS)
+        self.buzzer_id_list = list(config.BUZZER_ID_FOR_TEAMS)
 
     ##### methods for generating information from raw data #####
 
@@ -125,7 +125,7 @@ class Game():
 
         :param buzzer_id: buzzer id for which to get team id
         """
-        for team, buzzer in self.buzzer_id_list.items():
+        for team, buzzer in enumerate(self.buzzer_id_list):
             if buzzer == buzzer_id:
                 return team
         return -1

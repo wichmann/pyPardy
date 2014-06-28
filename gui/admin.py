@@ -54,7 +54,7 @@ class BuzzerConfigPanel(QtGui.QWidget):
             new_button.setIcon(QtGui.QIcon('./icons/buzzer.png'))
             new_button.setIconSize(QtCore.QSize(128, 128))
             vbox.addWidget(new_button)
-            team_name = 'Team {}'.format(i + 1)
+            team_name = config.TEAM_NAMES[i+1]
             new_label = QtGui.QLabel(team_name)
             self.team_label_list.append(new_label)
             new_label.setAlignment(QtCore.Qt.AlignCenter |
@@ -88,11 +88,13 @@ class BuzzerConfigPanel(QtGui.QWidget):
         self.game_data.set_buzzer_id_for_team(self.currently_highlighted_team,
                                               buzzer_id)
         if self.currently_highlighted_team < config.MAX_TEAM_NUMBER - 1:
+            # unhighlight last team name
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
             # highlight next team name
             self.currently_highlighted_team += 1
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: red")
         else:
+            # unhighlight all team names and return
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
             self.close_connection_to_buzzer()
             self.main_gui.show_available_rounds_panel()

@@ -415,7 +415,7 @@ class TeamViewPanel(QtGui.QWidget):
         # add labels for each team
         for i in range(config.MAX_TEAM_NUMBER):
             # add team names
-            string = 'Team {}'.format(i + 1)
+            string = config.TEAM_NAMES[i]
             team_label = QtGui.QLabel(string)
             team_label.setFont(self.team_font)
             team_label.setAlignment(QtCore.Qt.AlignCenter |
@@ -441,7 +441,7 @@ class TeamViewPanel(QtGui.QWidget):
         for i in range(config.MAX_TEAM_NUMBER):
             team_box = QtGui.QVBoxLayout()
             # add team names
-            string = 'Team {}'.format(i + 1)
+            string = config.TEAM_NAMES[i]
             team_label = QtGui.QLabel(string)
             team_label.setFont(self.team_font)
             team_label.setAlignment(QtCore.Qt.AlignCenter |

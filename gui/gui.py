@@ -31,8 +31,7 @@ class PyPardyGui(QtGui.QMainWindow):
         """Initialize main window for pyPardy."""
         logger.info('Building main window of pyPardy...')
         QtGui.QMainWindow.__init__(self, parent)
-        self.WIDTH = 1000
-        self.HEIGHT = 750
+        self.setWindowSize()
         # define all panels that are used inside the QStackedWidget
         self.available_rounds_panel = None
         self.current_round_question_panel = None
@@ -51,11 +50,16 @@ class PyPardyGui(QtGui.QMainWindow):
     def __del__(self):
         helper
 
+    def setWindowSize(self):
+        resolution = QtGui.QDesktopWidget().screenGeometry()
+        self.WIDTH = resolution.width()
+        self.HEIGHT = resolution.height()
+
     def setup_ui(self):
         """Initializes the UI by displaying all available rounds."""
         # set size of window
         self.resize(self.WIDTH, self.HEIGHT)
-        #self.showFullScreen()
+        self.showFullScreen()
         self.setWindowTitle(config.APP_NAME)
         self.setWindowIcon(QtGui.QIcon('icons/buzzer.png'))
         # build stacked widget for all current and coming panels
