@@ -46,7 +46,7 @@ class QuestionTablePanel(QtGui.QWidget):
         # TODO Load font from shipped file!
         #QtGui.QFontDatabase.addApplicationFont()
         self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(34)
+        self.title_font.setPointSize(46)
         self.topic_font = QtGui.QFont(base_font)
         self.topic_font.setPointSize(24)
         self.question_font = QtGui.QFont(base_font)
@@ -68,12 +68,12 @@ class QuestionTablePanel(QtGui.QWidget):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
                            QtGui.QSizePolicy.Expanding)
         self.button_grid = QtGui.QGridLayout()
-        margin = 35
+        margin = 40
         self.button_grid.setContentsMargins(margin, margin, margin, margin)
         # add title label
         title_label = QtGui.QLabel(self.game_data.current_round_data['title'])
         title_label.setFont(self.title_font)
-        title_label.setAlignment(QtCore.Qt.AlignCenter |
+        title_label.setAlignment(QtCore.Qt.AlignTop |
                                  QtCore.Qt.AlignHCenter)
         self.button_grid.addWidget(title_label, 0, 0, 1, 8)
         # add questions and labels  for all topics
@@ -262,7 +262,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.grid.addWidget(self.question_label, 1, 0, 1, 4)
         # add team view panel for showing team that buzzered first
         self.team_view_panel = TeamViewPanel(self, self.game_data,
-                                             400, 150,
+                                             600, 250,
                                              TeamViewPanel.HORIZONTAL_ORIENTATION)
         self.grid.addWidget(self.team_view_panel, 0, 2, 1, 2,
                             QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
@@ -341,21 +341,22 @@ class QuestionViewPanel(QtGui.QWidget):
         """Handles a pressed buzzer and registers the team.
 
         :param buzzer_id: buzzer id delivered by BuzzerReader()"""
-        logger.info('Getting buzzer id ({}) from buzzer API.'.format(buzzer_id))
-        # stop background music and play buzzer sound
-        # FIXME self.background_music.stop()
-        self.play_buzzer_sound()
-        # get team id from buzzer id
-        team_id = self.game_data.get_team_by_buzzer_id(buzzer_id)
-        self.last_buzzed_team = team_id
-        # update gui widgets
-        self.team_view_panel.highlight_team(team_id)
-        if self.timer.isActive():
-            # stop timer and fade question out only when buzzered before end
-            # of timer
-            self.stop_timer()
-            helper.animate_widget(self.question_label, True,
-                                  self.on_question_fadeout)
+        logger.info('Buzzer ({}) was pressed.'.format(buzzer_id))
+        if self.last_buzzed_team == -1:
+            # stop background music and play buzzer sound
+            # FIXME self.background_music.stop()
+            self.play_buzzer_sound()
+            # get team id from buzzer id
+            team_id = self.game_data.get_team_by_buzzer_id(buzzer_id)
+            self.last_buzzed_team = team_id
+            # update gui widgets
+            self.team_view_panel.highlight_team(team_id)
+            if self.timer.isActive():
+                # stop timer and fade question out only when buzzered before end
+                # of timer
+                self.stop_timer()
+                helper.animate_widget(self.question_label, True,
+                                      self.on_question_fadeout)
 
     @QtCore.pyqtSlot()
     def on_update_lcd(self):
@@ -471,10 +472,10 @@ class TeamViewPanel(QtGui.QWidget):
         base_font = 'Linux Biolinum O'
         if self.orientation == self.VERTICAL_ORIENTATION:
             self.team_font = QtGui.QFont(base_font)
-            self.team_font.setPointSize(24)
+            self.team_font.setPointSize(28)
         elif self.orientation == self.HORIZONTAL_ORIENTATION:
             self.team_font = QtGui.QFont(base_font)
-            self.team_font.setPointSize(18)
+            self.team_font.setPointSize(32)
         else:
             raise NotImplementedError()
 
@@ -488,7 +489,7 @@ class TeamViewPanel(QtGui.QWidget):
 
     def setup_vertically(self):
         layout = QtGui.QVBoxLayout()
-        layout.addSpacing(10)
+        layout.addSpacing(50)
         # add labels for each team
         for i in range(config.MAX_TEAM_NUMBER):
             # add team names
@@ -508,7 +509,8 @@ class TeamViewPanel(QtGui.QWidget):
             points_label.display(points_for_team)
             self.points_label_dict[i] = points_label
             layout.addWidget(points_label)
-        layout.addSpacing(10)
+            layout.addSpacing(20)
+        layout.addSpacing(50)
         self.setLayout(layout)
 
     def setup_horizontally(self):
@@ -543,9 +545,9 @@ class TeamViewPanel(QtGui.QWidget):
         """
         for id, team_label in self.team_label_dict.items():
             if team_id == id:
-                team_label.setStyleSheet("color: red")
+                team_label.setStyleSheet('background: red')
             else:
-                team_label.setStyleSheet("color: black")
+                team_label.setStyleSheet('')
 
     @QtCore.pyqtSlot()
     def on_update_points(self):

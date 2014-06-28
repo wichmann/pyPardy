@@ -132,9 +132,9 @@ class AvailableRoundPanel(QtGui.QWidget):
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
         self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(38)
+        self.title_font.setPointSize(42)
         self.button_font = QtGui.QFont(base_font)
-        self.button_font.setPointSize(26)
+        self.button_font.setPointSize(36)
 
     def setup_ui(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
