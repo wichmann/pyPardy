@@ -158,6 +158,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.read_question()
 
     def __del__(self):
+        self.remove_signals_and_slots()
         self.close_connection_to_buzzer()
 
     def create_fonts(self):
@@ -254,6 +255,28 @@ class QuestionViewPanel(QtGui.QWidget):
         self.buzzer_connector = helper.get_buzzer_connector()
         self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
+    def remove_signals_and_slots(self):
+        """Sets all signals and slots for question view."""
+        self.show_answer_button.clicked.disconnect()
+        self.answer_incorrect_button.clicked.disconnect()
+        self.answer_correct_button.clicked.disconnect()
+        self.buzzer_connector.buzzing.disconnect()
+
+    def keyPressEvent(self, event):
+        """Handle key events for choosing teams instead of buzzering and
+        control by keyboard."""
+        if event.isAutoRepeat():
+            return
+        key = event.key()
+        if key == QtCore.Qt.Key_1:
+            self.on_buzzer_pressed(self.game_data.buzzer_id_list[0])
+        elif key == QtCore.Qt.Key_2:
+            self.on_buzzer_pressed(self.game_data.buzzer_id_list[1])
+        elif key == QtCore.Qt.Key_3:
+            self.on_buzzer_pressed(self.game_data.buzzer_id_list[2])
+        elif key == QtCore.Qt.Key_4:
+            self.on_buzzer_pressed(self.game_data.buzzer_id_list[3])
+
     def close_connection_to_buzzer(self):
         """Closes the connection between the BuzzerConnector and the callable
         method 'on_buzzer_pressed' on this class.
@@ -290,6 +313,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.last_buzzed_team = team_id
         # update gui widgets
         self.team_view_panel.highlight_team(team_id)
+        print('on buzzer pressed')
         if self.timer.isActive():
             # stop timer and fade question out only when buzzered before end
             # of timer
