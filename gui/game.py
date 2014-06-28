@@ -43,6 +43,7 @@ class QuestionTablePanel(QtGui.QWidget):
 
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
+        # TODO Load font from shipped file!
         #QtGui.QFontDatabase.addApplicationFont()
         self.title_font = QtGui.QFont(base_font)
         self.title_font.setPointSize(34)
@@ -67,7 +68,7 @@ class QuestionTablePanel(QtGui.QWidget):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
                            QtGui.QSizePolicy.Expanding)
         self.button_grid = QtGui.QGridLayout()
-        margin = 25
+        margin = 35
         self.button_grid.setContentsMargins(margin, margin, margin, margin)
         # add title label
         title_label = QtGui.QLabel(self.game_data.current_round_data['title'])
@@ -105,6 +106,42 @@ class QuestionTablePanel(QtGui.QWidget):
     def set_signals_and_slots(self):
         """Sets all signals and slots for question table panel."""
         self.table_shown.connect(self.team_view_panel.on_update_points)
+
+    def keyPressEvent(self, event):
+        """Handle key events for cursor keys to navigate questions."""
+        if event.isAutoRepeat():
+            return
+        # check which QButton is focused
+        widget = QtGui.qApp.focusWidget()
+        if isinstance(widget, QtGui.QPushButton):
+            topic = widget.topic_count
+            question = widget.question_count
+        else:
+            return
+        # react to cursor keys
+        key = event.key()
+        if key == QtCore.Qt.Key_D:
+            self.focus_specific_button(topic + 1, question)
+        elif key == QtCore.Qt.Key_A:
+            self.focus_specific_button(topic - 1, question)
+        elif key == QtCore.Qt.Key_W:
+            self.focus_specific_button(topic, question - 1)
+        elif key == QtCore.Qt.Key_S:
+            self.focus_specific_button(topic, question + 1)
+
+    def focus_specific_button(self, topic, question):
+        """Focuses a given button defined by its topic and the question number.
+
+        This method checks if the given coordinates (topic, question) are valid
+        within the bounds of the current round.
+
+        :param topic: given topic number of which a button should be focused
+        :param question: given question number of which a button should be
+                         focused
+        """
+        for button in self.button_list:
+            if button.topic_count == topic and button.question_count == question:
+                button.setFocus()
 
     def update_widgets(self):
         # check which questions were played already

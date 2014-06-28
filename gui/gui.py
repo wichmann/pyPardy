@@ -48,7 +48,7 @@ class PyPardyGui(QtGui.QMainWindow):
 
     # FIXME Handle game ending and release all resources from buzzer API!
     def __del__(self):
-        helper
+        pass
 
     def setWindowSize(self):
         resolution = QtGui.QDesktopWidget().screenGeometry()

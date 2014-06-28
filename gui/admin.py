@@ -54,7 +54,7 @@ class BuzzerConfigPanel(QtGui.QWidget):
             new_button.setIcon(QtGui.QIcon('./icons/buzzer.png'))
             new_button.setIconSize(QtCore.QSize(128, 128))
             vbox.addWidget(new_button)
-            team_name = config.TEAM_NAMES[i+1]
+            team_name = config.TEAM_NAMES[i]
             new_label = QtGui.QLabel(team_name)
             self.team_label_list.append(new_label)
             new_label.setAlignment(QtCore.Qt.AlignCenter |
@@ -132,9 +132,9 @@ class AvailableRoundPanel(QtGui.QWidget):
     def create_fonts(self):
         base_font = 'Linux Biolinum O'
         self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(30)
+        self.title_font.setPointSize(38)
         self.button_font = QtGui.QFont(base_font)
-        self.button_font.setPointSize(20)
+        self.button_font.setPointSize(26)
 
     def setup_ui(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
