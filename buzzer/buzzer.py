@@ -9,6 +9,11 @@ import threading
 import platform
 import usb1
 import libusb1
+import logging
+
+
+logger = logging.getLogger('pyPardy.buzzer')
+
 
 # setting or getting device_id:
 #
@@ -24,6 +29,7 @@ import libusb1
 #    bd.set_device_id(0x01)
 #    del bd
 
+
 # Shared VID/PID for buzzers (see also V-USB)
 USBDEV_VENDOR       = 0x16C0
 USBDEV_PRODUCT      = 0x05DC
@@ -31,6 +37,8 @@ USBDEV_PRODUCT      = 0x05DC
 BUZZER_MAGIC_MARKER = 0xa5
 # Interface to claim
 INTERFACE = 0
+# timeout for USB connection
+USB_TIMEOUT = 250
 
 
 class BuzzerDevice(threading.Thread):
@@ -59,7 +67,10 @@ class BuzzerDevice(threading.Thread):
     def run(self):
         while(self.__keep_running):
             if self.read_interrupt():
-                self.__callback(self.get_device_id())
+                try:
+                    self.__callback(self.get_device_id())
+                except libusb1.USBError:
+                    logger.error('Could not get device id!')
 
     def stop(self):
         self.__keep_running = False
@@ -81,7 +92,7 @@ class BuzzerDevice(threading.Thread):
         self.__handle.controlRead(libusb1.LIBUSB_TYPE_VENDOR |
                                   libusb1.LIBUSB_RECIPIENT_DEVICE |
                                   libusb1.LIBUSB_ENDPOINT_IN,
-                                  0, int(device_id), 0, 1, timeout=500)
+                                  0, int(device_id), 0, 1, timeout=USB_TIMEOUT)
 
     def get_device_id(self):
         """Returns Buzzer ID. uses a dirty flag, to prevent unnecessary USB
@@ -91,7 +102,7 @@ class BuzzerDevice(threading.Thread):
             ret = self.__handle.controlRead(libusb1.LIBUSB_TYPE_VENDOR |
                                             libusb1.LIBUSB_RECIPIENT_DEVICE |
                                             libusb1.LIBUSB_ENDPOINT_IN,
-                                            0, 0x00, 0, 1, timeout=500)
+                                            0, 0x00, 0, 1, timeout=USB_TIMEOUT)
             self.__device_id = int(ret[0])
             self.__device_id_dirty = False
         return self.__device_id
@@ -99,7 +110,7 @@ class BuzzerDevice(threading.Thread):
     def get_device(self):
         return self.__device
 
-    def read_interrupt(self, timeout=500):
+    def read_interrupt(self, timeout=USB_TIMEOUT):
         """Read the USB Interrupt Endpoint. Blocks until byte is read or
         timeout.
         """
@@ -175,6 +186,10 @@ class BuzzerReader(threading.Thread):
                 self.__device_list.remove(d)
         # return False, to *not* cancel the callback
         return False
+
+    def flush_all_devices(self):
+        for d in self.__device_list:
+            d.flush_interrupt_data()
 
 
 if __name__ == '__main__':

@@ -51,8 +51,14 @@ class BuzzerConnector(QtCore.QObject):
         self.buzzer_reader.join()
         del self.buzzer_reader
 
+    def flush_connection(self):
+        self.last_buzzer_id = -1
+        self.buzzer_reader.flush_all_devices()
+
     def on_buzzer_pressed(self, buzzer_id):
-        self.buzzing.emit(buzzer_id)
+        if buzzer_id != self.last_buzzer_id:
+            self.last_buzzer_id = buzzer_id
+            self.buzzing.emit(buzzer_id)
 
 
 def get_buzzer_connector():
