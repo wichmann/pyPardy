@@ -134,6 +134,7 @@ class BuzzerReader(threading.Thread):
                                                events=libusb1.LIBUSB_HOTPLUG_EVENT_DEVICE_ARRIVED,
                                                vendor_id=USBDEV_VENDOR, product_id=USBDEV_PRODUCT)
         self.__keep_running = True
+        self.daemon = True
         self.start()
 
     def stop(self):

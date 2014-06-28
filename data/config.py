@@ -26,7 +26,7 @@ AUDIO_SPEECH = False
 # whether to play sound effects when buzzer was hit
 AUDIO_SFX = False
 # whether to play background music while showing the question
-AUDIO_MUSIC = True
+AUDIO_MUSIC = False
 
 # predefined buzzer ids for teams
 BUZZER_ID_FOR_TEAMS = {1: 1, 2: 2, 3: 3, 4: 4}
