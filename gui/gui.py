@@ -171,7 +171,13 @@ class PyPardyGui(QtGui.QMainWindow):
 
 
 def handle_exit():
-    helper.get_buzzer_connector().close_connection()
+    """Handles closing of the pyQt main window by destroying the python
+    interpreter."""
+    # TODO Close all threads for sub connections so that the application
+    # end automatically!
+    #helper.get_buzzer_connector().close_connection()
+    import sys
+    sys.exit()
 
 
 def start_gui():
