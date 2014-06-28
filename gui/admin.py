@@ -98,6 +98,24 @@ class BuzzerConfigPanel(QtGui.QWidget):
             self.main_gui.show_available_rounds_panel()
 
 
+class HoverButton(QtGui.QPushButton):
+    mouseHover = QtCore.pyqtSignal(bool)
+
+    def __init__(self, parent=None):
+        QtGui.QPushButton.__init__(self, parent)
+        # hide itself
+        helper.hide_widget(self)
+        self.setMouseTracking(True)
+
+    def enterEvent(self, event):
+        helper.show_widget(self)
+        self.mouseHover.emit(True)
+
+    def leaveEvent(self, event):
+        helper.hide_widget(self)
+        self.mouseHover.emit(False)
+
+
 class AvailableRoundPanel(QtGui.QWidget):
     """Panel showing all available rounds."""
     def __init__(self, parent, width, height):
@@ -141,10 +159,19 @@ class AvailableRoundPanel(QtGui.QWidget):
             self.button_box.addWidget(new_button)
             self.button_box.addStretch(1)
         # add button for assigning team buzzer
-        buzzer_config_button = QtGui.QPushButton('Zuordnung der Buzzer ändern...')
+        buzzer_config_button = HoverButton()
+        buzzer_config_button.setText('Zuordnung der Buzzer ändern...')
         buzzer_config_button.setFont(self.button_font)
         buzzer_config_button.clicked.connect(self.on_buzzer_config_button)
+        self.button_box.addStretch(5)
         self.button_box.addWidget(buzzer_config_button)
+        # add button for quitting application
+        quit_button = HoverButton()
+        quit_button.setText('Beenden')
+        quit_button.setFont(self.button_font)
+        quit_button.clicked.connect(self.main_gui.close)
+        self.button_box.addStretch(1)
+        self.button_box.addWidget(quit_button)
         # add space after all buttons are inserted
         self.button_box.addStretch(10)
         # put vbox into hbox to center horizontally

@@ -16,9 +16,6 @@ from data import config
 from gui import helper
 
 
-ANIMATION_TIME = 1500
-
-
 logger = logging.getLogger('pyPardy.gui')
 
 
@@ -151,8 +148,6 @@ class QuestionViewPanel(QtGui.QWidget):
         self.points = game_data.get_points_for_current_question()
         self.current_time = config.QUESTION_TIME
         self.last_buzzed_team = -1
-        # create list of all animation objects
-        self.animation_list = []
         self.setFixedSize(width, height)
         # build gui and slots
         self.create_fonts()
@@ -203,16 +198,16 @@ class QuestionViewPanel(QtGui.QWidget):
         # add button for showing the answer of the question
         self.show_answer_button = QtGui.QPushButton('Antwort...')
         self.show_answer_button.setFont(self.button_font)
-        self.hide_widget(self.show_answer_button)
+        helper.hide_widget(self.show_answer_button)
         self.grid.addWidget(self.show_answer_button, 2, 0)
         # add button for going back to question table
         self.answer_correct_button = QtGui.QPushButton('Richtig!')
         self.answer_correct_button.setFont(self.button_font)
-        self.hide_widget(self.answer_correct_button)
+        helper.hide_widget(self.answer_correct_button)
         self.grid.addWidget(self.answer_correct_button, 2, 1)
         self.answer_incorrect_button = QtGui.QPushButton('Falsch!')
         self.answer_incorrect_button.setFont(self.button_font)
-        self.hide_widget(self.answer_incorrect_button)
+        helper.hide_widget(self.answer_incorrect_button)
         self.grid.addWidget(self.answer_incorrect_button, 2, 2)
 
     def build_labels(self):
@@ -279,54 +274,6 @@ class QuestionViewPanel(QtGui.QWidget):
         self.timer_lcd.display(self.current_time)
         self.timer.stop()
 
-    ##### helper methods #####
-
-    def animate_widget(self, widget, fade_out, hook=None):
-        """Creates an opacity effect for the question label and fades it in or
-        out.
-
-        Per default JLabel has no property 'opacity' so that QPropertyAnimation
-        can not be used without adding a graphics effect from the QT library
-        (QGraphicsOpacityEffect).
-
-        :param widget: widget that should be faded out or in
-        :param fade_out: whether to fade out or in
-        :param hook: method that should be called when animation is over
-        """
-        # set start and stop opacity
-        if fade_out:
-            start_value = 1.0
-            stop_value = 0.0
-        else:
-            start_value = 0.0
-            stop_value = 1.0
-        # generate effect class
-        effect = QtGui.QGraphicsOpacityEffect(widget)
-        widget.setGraphicsEffect(effect)
-        # fade question in/out
-        anim = QtCore.QPropertyAnimation(effect, "opacity")
-        anim.setDuration(ANIMATION_TIME)
-        anim.setStartValue(start_value)
-        anim.setEndValue(stop_value)
-        anim.setEasingCurve(QtCore.QEasingCurve.InOutBack)
-        ###
-        # Add currently constructed animation object to list of all animations
-        # so that they are not destroyed when this method is through. After the
-        # animation has run the objects can live happily ever after in the
-        # list!
-        ###
-        self.animation_list.append(anim)
-        anim.start()
-        if hook:
-            anim.finished.connect(hook)
-
-    def hide_widget(self, widget):
-        # generate effect class
-        effect = QtGui.QGraphicsOpacityEffect(widget)
-        widget.setGraphicsEffect(effect)
-        # set opacity
-        effect.setOpacity(0.0)
-
     ##### slot methods #####
 
     @QtCore.pyqtSlot(int)
@@ -347,8 +294,8 @@ class QuestionViewPanel(QtGui.QWidget):
             # stop timer and fade question out only when buzzered before end
             # of timer
             self.stop_timer()
-            self.animate_widget(self.question_label, True,
-                                self.on_question_fadeout)
+            helper.animate_widget(self.question_label, True,
+                                  self.on_question_fadeout)
 
     @QtCore.pyqtSlot()
     def on_update_lcd(self):
@@ -359,25 +306,25 @@ class QuestionViewPanel(QtGui.QWidget):
         else:
             # stop timer and fade question out
             self.stop_timer()
-            self.animate_widget(self.question_label, True,
-                                self.on_question_fadeout)
+            helper.animate_widget(self.question_label, True,
+                                  self.on_question_fadeout)
 
     @QtCore.pyqtSlot()
     def on_question_fadeout(self):
         logger.info('Question has been faded out.')
-        self.animate_widget(self.show_answer_button, False)
+        helper.animate_widget(self.show_answer_button, False)
 
     @QtCore.pyqtSlot()
     def on_answer_fadein(self):
         logger.info('Question has been faded out.')
-        self.animate_widget(self.answer_correct_button, False)
-        self.animate_widget(self.answer_incorrect_button, False)
+        helper.animate_widget(self.answer_correct_button, False)
+        helper.animate_widget(self.answer_incorrect_button, False)
 
     @QtCore.pyqtSlot()
     def on_show_answer_button(self):
         logger.info('Answer is shown.')
         self.question_label.setText(self.game_data.get_current_answer())
-        self.animate_widget(self.question_label, False, self.on_answer_fadein)
+        helper.animate_widget(self.question_label, False, self.on_answer_fadein)
         self.game_data.mark_question_as_complete()
 
     @QtCore.pyqtSlot(bool)
