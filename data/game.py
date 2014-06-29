@@ -30,6 +30,23 @@ class Game():
         # dictionary with the buzzer id for each team copied from configs
         # default
         self.buzzer_id_list = list(config.BUZZER_ID_FOR_TEAMS)
+        self._current_round_data = None
+
+    @property
+    def current_round_data(self):
+        return self._current_round_data
+
+    @current_round_data.setter
+    def current_round_data(self, value):
+        if value:
+            self._current_round_data = value
+            # read question points from loaded data and set config option
+            try:
+                config.QUESTION_POINTS = int(self._current_round_data['question points'])
+            except KeyError:
+                logger.debug('Round does not include a setting for "question points"!')
+        else:
+            self._current_round_data = None
 
     ##### methods for generating information from raw data #####
 
