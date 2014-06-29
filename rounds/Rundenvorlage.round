@@ -1,0 +1,139 @@
+{
+    "title": "Titel der Runde",
+    "topics": [ 
+
+       {
+            "title": "???",
+            "questions": [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+    
+        {
+            "title": "???",
+            "questions": [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+   
+
+        {
+            "title": "???",
+            "questions": [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+    
+
+        {
+            "title": "???",
+            "questions": [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+  
+
+        {
+            "title": "???",
+            "questions": 
+            [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        }
+    ]
+}

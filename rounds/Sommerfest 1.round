@@ -1,0 +1,141 @@
+{
+    "comment_1" : "Bewegungsspiele",
+    "comment_2" : "Stichfragen zur Entscheidung",
+
+    "title": "Sommerfest 2014 - 1. Runde",
+    "topics": [ 
+        {
+            "title": "Gefundenes",
+            "questions": [
+                {
+                    "question" : "Was wurde im Jahr 1492 gefunden?",
+                    "answer" : "Amerika"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+    
+        {
+            "title": "Up Platt",
+            "questions": 
+            [
+                {
+                    "question" : "Wenn use Katten 'ne Kau was, ...",
+                    "answer" : "måsten we up 'n Balken taun melken!"
+                },
+                {
+                    "question" : "Wecker sick mit Schwienekötels franget, ...",
+                    "answer" : "krich schmeerige Fingers!"
+                },
+                {
+                    "question" : "Pottkiekern",
+                    "answer" : "Neugierige Leuten, die dem Koch in die Töpfe schauen"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+    
+        {
+            "title": "Prominenz",
+            "questions": 
+            [
+                {
+                    "question" : "Er zieht immer den Nippel durch die Lasche.",
+                    "answer" : "Mike Krüger"
+                },
+                {
+                    "question" : "Er hat sehr viele Fragen und immer vier Antworten dazu.",
+                    "answer" : "Günter Jauch"
+                },
+                {
+                    "question" : "Er sorgt für die Verbreitung und den Verkauf von Bären.",
+                    "answer" : "Thomas Gottschalk"
+                },
+                {
+                    "question" : "Früher hat er selbst gesungen, heute beleidigt er nur noch andere.",
+                    "answer" : "Dieter Bohlen"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+
+        {
+            "title": "Tierreich und Pflanzen",
+            "questions": 
+            [
+                {
+                    "question" : "Was ist erst grün, dann rot?",
+                    "answer" : "Frosch im Mixer"
+                },
+                {
+                    "question" : "Welcher Baum wächst im Nordosten des Grundstücks?",
+                    "answer" : "Linde"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+
+        {
+            "title": "Ackerbau",
+            "questions": 
+            [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        }
+    ]
+}
