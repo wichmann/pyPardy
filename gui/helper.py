@@ -42,6 +42,7 @@ class BuzzerConnector(QtCore.QObject):
         super(BuzzerConnector, self).__init__()
         # install callback for buzzer API
         self.buzzer_reader = buzzer.BuzzerReader(self.on_buzzer_pressed)
+        self.last_buzzer_id = -1
 
     def __del__(self):
         self.buzzer_reader.stop()
@@ -56,9 +57,10 @@ class BuzzerConnector(QtCore.QObject):
         self.buzzer_reader.flush_all_devices()
 
     def on_buzzer_pressed(self, buzzer_id):
-        if buzzer_id != self.last_buzzer_id:
-            self.last_buzzer_id = buzzer_id
-            self.buzzing.emit(buzzer_id)
+        self.buzzing.emit(buzzer_id)
+        #if buzzer_id != self.last_buzzer_id:
+        #    self.last_buzzer_id = buzzer_id
+        #    self.buzzing.emit(buzzer_id)
 
 
 def get_buzzer_connector():

@@ -309,7 +309,6 @@ class QuestionViewPanel(QtGui.QWidget):
         instance with slot in this class. After this the question view panel
         will react on all buzzer presses.
         """
-        print('timer abgelaufen...')
         self.startup_timer.stop()
         self.buzzer_connector = helper.get_buzzer_connector()
         self.buzzer_connector.flush_connection()

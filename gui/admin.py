@@ -71,6 +71,7 @@ class BuzzerConfigPanel(QtGui.QWidget):
     def set_signals_and_slots(self):
         """Sets all signals and slots for main window."""
         self.buzzer_connector = helper.get_buzzer_connector()
+        self.buzzer_connector.flush_connection()
         self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
     def close_connection_to_buzzer(self):
