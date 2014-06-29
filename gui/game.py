@@ -580,3 +580,68 @@ class TeamViewPanel(QtGui.QWidget):
             new_points = str(self.game_data.get_points_for_team(key))
             logger.info('Team {} has {} points.'.format(key, new_points))
             self.points_label_dict[key].display(new_points)
+
+
+class GameOverDialog(QtGui.QDialog):
+    """Dialog showing which team has won first place."""
+    def __init__(self, parent, game_data, width, height):
+        """Initialize dialog for showing final score of game.
+
+        :param parent: parent widget
+        :param game_data: instance of Game() containing all necessary
+                          information
+        :param width: width of this dialog box
+        :param height: height of this dialog box
+        """
+        super(GameOverDialog, self).__init__(parent)
+        # set data for this dialog
+        self.game_data = game_data
+        self.main_gui = parent
+        self.setFixedSize(width, height)
+        # build gui and slots
+        self.create_fonts()
+        self.setup_ui()
+        #self.set_signals_and_slots()
+
+    def create_fonts(self):
+        base_font = 'Linux Biolinum O'
+        self.title_font = QtGui.QFont(base_font)
+        self.title_font.setPointSize(42)
+        self.text_font = QtGui.QFont(base_font)
+        self.text_font.setPointSize(24)
+
+    def setup_ui(self):
+        self.grid = QtGui.QGridLayout()
+        self.center_box = QtGui.QVBoxLayout()
+        self.center_box.addSpacing(10)
+        self.center_box.addLayout(self.grid)
+        self.center_box.addSpacing(10)
+        self.setLayout(self.center_box)
+        # set margins for whole layout
+        margin = 40
+        self.grid.setContentsMargins(margin, margin, margin, margin)
+        # build widgets
+        title_label = QtGui.QLabel(self.game_data.get_round_title())
+        title_label.setFont(self.title_font)
+        self.grid.addWidget(title_label, 0, 0, 1, 6)
+        self.build_first_place()
+        self.build_second_place()
+        self.build_third_place()
+
+    def build_first_place(self):
+        place_label = QtGui.QLabel('Team 1')
+        place_label.setFont(self.text_font)
+        place_label.setStyleSheet('border: 1 0 0 0;')
+        self.grid.addWidget(place_label, 1, 1)
+
+    def build_second_place(self):
+        place_label = QtGui.QLabel('Team 2')
+        place_label.setFont(self.text_font)
+        place_label.setStyleSheet('border: 1 0 0 0;')
+        self.grid.addWidget(place_label, 2, 2)
+
+    def build_third_place(self):
+        place_label = QtGui.QLabel('Team 3')
+        place_label.setFont(self.text_font)
+        place_label.setStyleSheet('border: 1 0 0 0;')
+        self.grid.addWidget(place_label, 3, 0)

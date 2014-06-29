@@ -70,6 +70,16 @@ def get_buzzer_connector():
     return STATIC_INSTANCE_OF_BUZZER_CONNECTOR
 
 
+##### Miscellaneous functions for GUI
+
+def center_on_screen(window):
+    """Centers the window on the screen."""
+    screen = QtGui.QDesktopWidget().screenGeometry()
+    size = window.geometry()
+    window.move((screen.width() - size.width()) / 2,
+                (screen.height() - size.height()) / 2)
+
+
 ##### Functions for animating, hiding and showing widgets with opaycity effects
 
 def animate_widget(widget, fade_out, hook=None):

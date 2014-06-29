@@ -41,7 +41,7 @@ class PyPardyGui(QtGui.QMainWindow):
         # build and config all widgets
         self.setup_ui()
         #self.set_background()
-        self.center_on_screen()
+        helper.center_on_screen(self)
         self.set_signals_and_slots()
         # create instance of Game class for saving all necessary data
         self.current_game = game.Game()
@@ -87,13 +87,6 @@ class PyPardyGui(QtGui.QMainWindow):
                               x1: 0, y1: 0, x2: 0, y2: 1,
                               stop: 0 #2198c0, stop: 1 #0d5ca6);""")
 
-    def center_on_screen(self):
-        """Centers the window on the screen."""
-        screen = QtGui.QDesktopWidget().screenGeometry()
-        size = self.geometry()
-        self.move((screen.width() - size.width()) / 2,
-                  (screen.height() - size.height()) / 2)
-
     def set_signals_and_slots(self):
         """Sets all signals and slots for main window."""
         pass
@@ -127,15 +120,18 @@ class PyPardyGui(QtGui.QMainWindow):
         self.current_round_question_panel.update_widgets()
         if self.current_game.is_round_complete():
             logger.info('Round was completed.')
-            QtGui.QMessageBox.information(self, 'Rund komplett!',
-                                          "Die aktuelle Runde des Spiels ist komplett.",
-                                          QtGui.QMessageBox.Ok)
+            #QtGui.QMessageBox.information(self, 'Rund komplett!',
+            #                              "Die aktuelle Runde des Spiels ist komplett.",
+            #                              QtGui.QMessageBox.Ok)
+            dialog = game_ui.GameOverDialog(self, self.current_game, 600, 400)
+            dialog.show()
             self.show_available_rounds_panel()
 
     def show_question(self, topic, question):
         # remove old question view if it exists
         if self.current_question_panel:
             self.stackedWidget.removeWidget(self.current_question_panel)
+            self.current_question_panel.remove_signals_and_slots()
         # save chosen topic and question in Game class
         self.current_game.current_topic = topic
         self.current_game.current_question = question

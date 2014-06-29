@@ -89,6 +89,9 @@ class Game():
         questions = self.current_round_data['topics'][self.current_topic]['questions']
         return questions[self.current_question]['answer']
 
+    def get_round_title(self):
+        return self.current_round_data['title']
+
     ##### methods concerning status of questions #####
 
     def mark_question_as_complete(self):
