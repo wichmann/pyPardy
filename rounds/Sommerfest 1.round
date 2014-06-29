@@ -29,30 +29,33 @@
                 }
             ]
         },
-    
+
+
         {
             "title": "Up Platt",
+            "comment_1": "Pottkiekern -> Neugierige Leuten, die dem Koch in die Töpfe schauen",
+            "comment_2": "Avkaoten un Wagenräer de   -    mot man smiärn ",
             "questions": 
             [
                 {
-                    "question" : "Wenn use Katten 'ne Kau was, ...",
-                    "answer" : "måsten we up 'n Balken taun melken!"
+                    "question" : "De dümsten Buern häbt ...",
+                    "answer" : "de dicksten Kartuffeln"
                 },
                 {
-                    "question" : "Wecker sick mit Schwienekötels franget, ...",
-                    "answer" : "krich schmeerige Fingers!"
+                    "question" : "Wat de Bur nich kennt, ...",
+                    "answer" : "dat frett hei nich"
                 },
                 {
-                    "question" : "Pottkiekern",
-                    "answer" : "Neugierige Leuten, die dem Koch in die Töpfe schauen"
+                    "question" : "Kinner un Besoupene säget ...",
+                    "answer" : "de Wohrheit"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Wenn use Katten 'ne Kau wör, dann ...",
+                    "answer" : "mösten we up 'n Balken taun melken!"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Wecker sick mit Schwienekötels franget,",
+                    "answer" : "krich schmeerige Hande!"
                 }
             ]
         },

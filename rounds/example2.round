@@ -9,17 +9,6 @@
                     "answer" : "Po"
                 }
             ]
-        },
-    
-        {
-            "title": "Städte",
-            "questions": 
-            [
-                {
-                    "question" : "Um ein Zeichen wäre ich als Schnaps in der Karibik gelandet.",
-                    "answer" : "Rom"
-                }
-            ]
         }
     ]
 }
