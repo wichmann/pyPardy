@@ -30,75 +30,80 @@
                 }
             ]
         },
-    
+
         {
-            "title": "???",
+            "title": "Kartenspiele",
             "questions": [
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Aussetzen, zwei ziehen",
+                    "comment" : "Der Name einer Variante dieses Kartenspiels ist das italienische Wort für Eins.",
+                    "answer" : "Mau Mau oder UNO"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Reh, Contra, keine 90",
+                    "answer" : "Doppelkopf"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Dieses Ablege-Spiel kann nur allein gespielt werden.",
+                    "comment" : "???",
+                    "answer" : "Solitär (Patience)"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "18, 20, 2, Null, 4, 7, 30, 3, 5, 6, 40",
+                    "answer" : "Skat"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "All in!",
+                    "comment" : "Texas hold 'em",
+                    "answer" : "Poker"
                 }
             ]
         },
-   
+
+
+
 
         {
-            "title": "???",
+            "title": "Brettspiele",
+            "comment": "Monopoly, Risiko, Siedler"
             "questions": [
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Ey Alter reg' dich nicht auf ???",
+                    "answer" : "Mensch Ärger Dich Nicht"
                 },
                 {
                     "question" : "",
-                    "answer" : ""
+                    "answer" : "Scrabble"
                 },
                 {
                     "question" : "",
-                    "answer" : ""
+                    "answer" : "Schach"
                 },
                 {
                     "question" : "",
-                    "answer" : ""
+                    "answer" : "Dame"
                 },
                 {
                     "question" : "",
-                    "answer" : ""
+                    "answer" : "Mühle"
                 }
             ]
         },
-    
 
         {
-            "title": "???",
+            "title": "Sportarten",
             "questions": [
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Seit wann gibt es die Abseitsregel?",
+                    "answer" : "1863"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "In welchem Jahrzehnt wurde das Elfmeterschießen in die DFB-Regeln aufgenommen?",
+                    "answer" : "1970er"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Wann wurde die gelb-rote Karte eingeführt?",
+                    "answer" : "1991"
                 },
                 {
                     "question" : "",
