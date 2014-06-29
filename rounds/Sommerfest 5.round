@@ -1,0 +1,140 @@
+{
+    "title": "Runde 5",
+    "topics": [ 
+
+       {
+            "title": "Süß und klebrig",
+            "questions": [
+                {
+                    "question" : "\"Neugierig\" wird dieser Nachbar erforscht.",
+                    "answer" : "Mars"
+                },
+                {
+                    "question" : "Eine Reise auf diesem Schiff, endete nach einem Aufstand.",
+                    "answer" : "Bounty"
+                },
+                {
+                    "question" : "Politisch oft nicht ganz korrekt, jedoch wunderbar schaumig",
+                    "answer" : "Schaumkuss"
+                },
+                {
+                    "question" : "Seit 2007 die klasische Anzahl der klebrigsten Bären der Welt. ",
+                    "answer" : "6 (vorher 5)"
+                },
+                {
+                    "question" : "Durchaus auch vor Acht Uhr schon schmackhaft.",
+                    "answer" : "After Eight"
+                }
+            ]
+        },
+    
+        {
+            "title": "Kulturelle Immigranten",
+            "questions": [
+                {
+                    "question" : "Aus diesem Bereich der Welt wurde unsere Zahlen entliehen.",
+                    "answer" : "Arabien (Arabische Ziffern)"
+                },
+                {
+                    "question" : "Klassischer Weise aus Robbenfellen hergestellt, entstammt dieser Begriff aus dem Grönländischen.",
+                    "answer" : "Anorak"
+                },
+                {
+                    "question" : "Diese Quiz-Sendung stammt ursprünglich aus dem Vereinigten Königreich und wurde in über 100 Länder exportiert.",
+                    "answer" : "Wer wird Millionär"
+                },
+                {
+                    "question" : "Der Schwerkraft oft unterlegen, wird dieses Spiel meisst nicht nach den Regeln gespielt.",
+                    "answer" : "Dominos"
+                },
+                {
+                    "question" : "Diese Teigware kommt in vielen verschiedenen Variationen daher und wurde schon vor 4000 Jahren verzehrt.",
+                    "answer" : "Nudeln"
+                }
+            ]
+        },
+   
+
+        {
+            "title": "Schöne alte Welt (a.k.a. Ancient History)",
+            "questions": [
+                {
+                    "question" : "Wie hoch ist die schnellste der beiden üblichen Drehzahlen eines Plattenspielers",
+                    "answer" : "45 min^-1"
+                },
+                {
+                    "question" : "\"Hilfe\", \"Lucy\" ist im \"Garten eines Oktupuses\"!",
+                    "answer" : "Beatles"
+                },
+                {
+                    "question" : "Diese \"trendige\" Frisur machte einen Schal vollkommen überflüssig.",
+                    "answer" : "Vokuhila"
+                },
+                {
+                    "question" : "Ein US-Präsident hat sich für diese Hefegebäck gehalten.",
+                    "answer" : "Berliner"
+                },
+                {
+                    "question" : "\"Eindringlige\" aus dieser Gegend belagerten 1980 die Wohnzimmer auf der ganzen Welt.",
+                    "answer" : "Space (Space Invaders)"
+                }
+            ]
+        },
+    
+
+        {
+            "title": "Tierisch komisch",
+            "questions": [
+                {
+                    "question" : "Was für ein Tier ist Stuart aus \"Stuart Little\"",
+                    "answer" : "Maus"
+                },
+                {
+                    "question" : "In welcher Filmreihe ist das Mammut Manni auf der Flucht vor der Großen Eisschmelze",
+                    "answer" : "Ice Age"
+                },
+                {
+                    "question" : " Wie heißt der \"kleine Eisbär\", der zahlreiche Filmabenteuer überstehen muss",
+                    "answer" : "Lars"
+                },
+                {
+                    "question" : "Ein \"Saft\" führt bei diesen kleinen Geschöpfen zu merkwürdigen Effekten.",
+                    "answer" : "Gummibären(bande)"
+                },
+                {
+                    "question" : "Welches Rehkitz ist befreundet mit Blume und Klopfer?",
+                    "answer" : "Bambi"
+                }
+            ]
+        },
+  
+
+        {
+            "title": "Doctor Who?",
+            "questions": 
+            [
+                {
+                    "question" : "Erst 16 Jahre alt und trotzdem Arzt. Das kann doch nur im TV sein.",
+                    "answer" : "Doogie Howser"
+                },
+                {
+                    "question" : "Dieser ehemalige CSU Politiker hat eigentlich nichts in dieser Kategorie verloren.",
+                    "answer" : "zu Guttenberg"
+                },
+                {
+                    "question" : "Der Sänger dieser Punkband hält entgegen aller Klischees einen Doktortitel.",
+                    "answer" : "Bad Religion"
+                },
+                {
+                    "question" : "Obwohl als Arzt ausgebildet, entschied er sich stattdessen hauptsächlich \"die beste Medizin\" zu verabreichen.",
+                    "answer" : "Eckart von Hirschhausen"
+                },
+                {
+                    "question" : "Dr. Gordon Freeman rettet die Welt mehrfach diser Spielereihe.",
+                    "comment": "TODO: Andere Frage - Mir ist nichts besseres eingefallen."
+                    "answer" : "Half-Life"
+                }
+            ]
+        }
+    ]
+}
