@@ -97,16 +97,17 @@
                     "answer" : "Linde"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Dieses Teil des Elefanten enthält mehr als 40.000 Muskeln und Sehnen",
+                    "answer" : "Rüssel"
                 },
                 {
                     "question" : "",
                     "answer" : ""
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Wären die Eltern dieser Hybrid-Rasse umgekehrt, wäre es ein Maulesel.",
+                    "comment" : "geht auch in Kategorie Landwirtschaft"
+                    "answer" : "Maultier"
                 }
             ]
         },
