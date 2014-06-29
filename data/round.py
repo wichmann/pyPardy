@@ -27,7 +27,7 @@ def get_available_round_data():
     search_directory = '.'
     round_data = []
     os.chdir(search_directory)
-    for filename in glob.glob('*.{}'.format(ROUND_DATA_EXTENSION)):
+    for filename in glob.glob('rounds/*.{}'.format(ROUND_DATA_EXTENSION)):
         data_ok = check_round_file(filename)
         if data_ok:
             round_data.append(filename)
