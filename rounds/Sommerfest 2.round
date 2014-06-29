@@ -6,7 +6,7 @@
     "topics": [ 
 
        {
-            "title": "Verlorene Tage",
+            "title": "Verlorene Zeit",
             "questions": [
                 {
                     "question" : "17. Juni",
@@ -17,12 +17,12 @@
                     "answer" : "Buß- und Bettag"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Diesen Tag bekommt man nur etwa jedes 4. Jahr",
+                    "answer" : "29. Februar (Schaltjahr)"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Dadurch verlieren wir jedes Jahr eine Stunde, die wir erst nach etwa 7 Monaten zurück bekommen",
+                    "answer" : "Sommerzeit"
                 },
                 {
                     "question" : "",
@@ -60,19 +60,16 @@
             ]
         },
 
-
-
-
         {
             "title": "Brettspiele",
-            "comment": "Monopoly, Risiko, Siedler"
+            "comment": "Monopoly, Risiko, Siedler",
             "questions": [
                 {
                     "question" : "Ey Alter reg' dich nicht auf ???",
                     "answer" : "Mensch Ärger Dich Nicht"
                 },
                 {
-                    "question" : "",
+                    "question" : "Der Name dieses Legespiels würde in dem selben 16 Punkte geben",
                     "answer" : "Scrabble"
                 },
                 {
@@ -84,7 +81,7 @@
                     "answer" : "Dame"
                 },
                 {
-                    "question" : "",
+                    "question" : "Drei in einer Reihe und man darf dem Gegner einen Stein weg nehmen",
                     "answer" : "Mühle"
                 }
             ]
@@ -115,31 +112,30 @@
                 }
             ]
         },
-  
 
         {
-            "title": "???",
+            "title": "Tier-Phobien",
             "questions": 
             [
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Taurophobie",
+                    "answer" : "Bullen"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Herpetophobie",
+                    "answer" : "Reptilien/Schlangen"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Scoleciphobie",
+                    "answer" : "Würmer"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Ailurophobie",
+                    "answer" : "Katzen"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Hippophobie",
+                    "answer" : "Pferde"
                 }
             ]
         }
