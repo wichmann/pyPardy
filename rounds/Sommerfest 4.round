@@ -112,24 +112,24 @@
             "questions": 
             [
                 {
-                    "question" : "Die Mutter des Minotaur war Pasiphae, Königin von Kreta, & sein Vater war dieses Tier",
-                    "answer" : "(Kretische) Stier"
+                    "question" : "Dises Wesen aus der Griechischen Mythologie ist halb Mensch und halb Stier",
+                    "answer" : "Minotaur"
                 },
                 {
-                    "question" : "Etwa alle 500 Jahre baut er einen Scheiterhaufen und lässt sich von den Flammen verbrennen",
-                    "answer" : "Phoenix"
+                    "question" : "Dises Wesen aus der Griechischen Mythologie ist halb Mensch und halb Pferd",
+                    "answer" : "Kentaur"
                 },
                 {
-                    "question" : "In der nordischen Mythologie ist Ratatoskr diese Art von Nagetier das den Weltenbaum, Yggdrasil, auf und ab huscht",
-                    "answer" : "Eichhörnchen"
-                },
-                {
-                    "question" : "Diese Kreatur, die (während ihrer 2. Niederkunft) von Herkules getötet wurde, ist ein Nachkomme des 100-köpfigen Typhon",
-                    "answer" : "Hydra"
+                    "question" : "Dieser 3-köpfiger Hund ist der Hüter der Unterwelt",
+                    "answer" : "Kerberos"
                 },
                 {
                     "question" : "Anubis, dem Hüter der Unterwelt, wird häufig als dieser Hund dargestellt",
                     "answer" : "Schakal"
+                },
+                {
+                    "question" : "Verbrennt alle 500 Jahre zu Asche und ersteht daraus wieder auf",
+                    "answer" : "Phoenix"
                 }
             ]
         }

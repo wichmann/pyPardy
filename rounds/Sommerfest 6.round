@@ -1,0 +1,59 @@
+{
+    "title": "Sommerfest 2014 - 6. Runde",
+    "topics": [ 
+
+       {
+            "title": "Hauptstädte",
+            "questions": [
+                {
+                    "question" : "Diese europäische Hauptstadt liegt an der Donau und waren ursprünglich zwei Städte.",
+                    "answer" : "Budapest (Ungarn)"
+                },
+                {
+                    "question" : "Welches ist die nördlichste Hauptstadt der Welt?",
+                    "answer" : "Reykjavik (Island)"
+                },
+                {
+                    "question" : "Welches ist die südlichste Hauptstadt der Welt?",
+                    "answer" : "Wellington (Neuseeland)"
+                },
+                {
+                    "question" : "Der Name dieser asiatischen Hauptstadt bedeuted übersetzt \"Nördliche Hauptstadt\".",
+                    "answer" : "Beijing/Peking (China)"
+                },
+                {
+                    "question" : "Neben Canberra ist dies die einzige andere Hauptstadt auf ihrem Kontinent.",
+                    "answer" : "Port Moresby (Papua-Neuguinea)"
+                }
+            ]
+        },
+        {
+            "title": "Unser Sonnensystem, das unbekannte Wesen",
+            "questions": [
+                {
+                    "question" : "Welches ist der vierte Planet unseres Sonnensystems?",
+                    "answer" : "Mars"
+                },
+                {
+                    "question" : "Welches ist der kleinste (und sonnennächste) Planet?",
+                    "answer" : "Merkur (Pluto ist kein Planet!)"
+                },
+                {
+                    "question" : "Wie heißt der größte Gasriese unseres Sonnensystems?",
+                    "answer" : "Jupiter"
+                },
+                {
+                    "question" : "Wie heißt der größte bekannte Mond unseres Sonnensystems?",
+                    "answer" : "Ganymed"
+                },
+                {
+                    "question" : "Wie heißt der Transneptunische Asteroidengürtel?",
+                    "answer" : "Kuiper Gürtel"
+                },
+                    "question" : "Was ist das größte bisher bekannte Transneptunische Objekt (TNO)?",
+                    "answer" : "Eris"
+                }
+            ]
+        }
+    ]
+}
