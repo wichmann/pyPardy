@@ -3,33 +3,33 @@
     "topics": [ 
 
        {
-            "title": "Süß und klebrig",
+            "title": "Süß<br>und klebrig",
             "questions": [
                 {
-                    "question" : "\"Neugierig\" wird dieser Nachbar erforscht.",
-                    "answer" : "Mars"
+                    "question" : "Durchaus auch vor Acht Uhr schon schmackhaft.",
+                    "answer" : "After Eight"
+                },
+                {
+                    "question" : "Seit 2007 die klassische Anzahl der klebrigsten Bären der Welt.",
+                    "answer" : "6 (vorher 5)"
                 },
                 {
                     "question" : "Eine Reise auf diesem Schiff, endete nach einem Aufstand.",
                     "answer" : "Bounty"
                 },
                 {
-                    "question" : "Politisch oft nicht ganz korrekt, jedoch wunderbar schaumig",
+                    "question" : "Politisch oft nicht ganz korrekt, jedoch wunderbar schaumig.",
                     "answer" : "Schaumkuss"
                 },
                 {
-                    "question" : "Seit 2007 die klasische Anzahl der klebrigsten Bären der Welt. ",
-                    "answer" : "6 (vorher 5)"
-                },
-                {
-                    "question" : "Durchaus auch vor Acht Uhr schon schmackhaft.",
-                    "answer" : "After Eight"
+                    "question" : "\"Neugierig\" wird dieser weit entfernte Nachbar erforscht.",
+                    "answer" : "Mars"
                 }
             ]
         },
     
         {
-            "title": "Kulturelle Immigranten",
+            "title": "Kulturelle<br>Immigranten",
             "questions": [
                 {
                     "question" : "Aus diesem Bereich der Welt wurde unsere Zahlen entliehen.",
@@ -44,23 +44,23 @@
                     "answer" : "Wer wird Millionär"
                 },
                 {
-                    "question" : "Der Schwerkraft oft unterlegen, wird dieses Spiel meisst nicht nach den Regeln gespielt.",
-                    "answer" : "Dominos"
+                    "question" : "Der Schwerkraft oft unterlegen, wird dieses Spiel meist nicht nach den Regeln gespielt.",
+                    "answer" : "Domino"
                 },
                 {
-                    "question" : "Diese Teigware kommt in vielen verschiedenen Variationen daher und wurde schon vor 4000 Jahren verzehrt.",
-                    "answer" : "Nudeln"
+                    "question" : "Im neupersischen wurde es Peste (پسته) genannt und bei uns ist es als salziger Snack bekannt.",
+                    "answer" : "Pistazie"
                 }
             ]
         },
    
 
         {
-            "title": "Schöne alte Welt (a.k.a. Ancient History)",
+            "title": "Schöne<br>alte Welt",
             "questions": [
                 {
                     "question" : "Wie hoch ist die schnellste der beiden üblichen Drehzahlen eines Plattenspielers",
-                    "answer" : "45 min^-1"
+                    "answer" : "45 min⁻¹"
                 },
                 {
                     "question" : "\"Hilfe\", \"Lucy\" ist im \"Garten eines Oktupuses\"!",
@@ -75,15 +75,15 @@
                     "answer" : "Berliner"
                 },
                 {
-                    "question" : "\"Eindringlige\" aus dieser Gegend belagerten 1980 die Wohnzimmer auf der ganzen Welt.",
-                    "answer" : "Space (Space Invaders)"
+                    "question" : "Während es ab 1989 bei der Jugend Stapelkünste förderte, förderte es bei allen anderen vor allem Aggressionen.",
+                    "answer" : "Tetris"
                 }
             ]
         },
     
 
         {
-            "title": "Tierisch komisch",
+            "title": "Tierisch<br>komisch",
             "questions": [
                 {
                     "question" : "Was für ein Tier ist Stuart aus \"Stuart Little\"",
@@ -108,31 +108,30 @@
             ]
         },
   
-
         {
             "title": "Doctor Who?",
             "questions": 
             [
+
                 {
-                    "question" : "Erst 16 Jahre alt und trotzdem Arzt. Das kann doch nur im TV sein.",
-                    "answer" : "Doogie Howser"
-                },
-                {
-                    "question" : "Dieser ehemalige CSU Politiker hat eigentlich nichts in dieser Kategorie verloren.",
-                    "answer" : "zu Guttenberg"
-                },
-                {
-                    "question" : "Der Sänger dieser Punkband hält entgegen aller Klischees einen Doktortitel.",
-                    "answer" : "Bad Religion"
+                    "question" : "Dieser ehemalige CSU Politiker hat eigentlich nichts mehr in dieser Kategorie verloren.",
+                    "answer" : "Karl-Theodor ... zu Guttenberg"
                 },
                 {
                     "question" : "Obwohl als Arzt ausgebildet, entschied er sich stattdessen hauptsächlich \"die beste Medizin\" zu verabreichen.",
                     "answer" : "Eckart von Hirschhausen"
                 },
                 {
-                    "question" : "Dr. Gordon Freeman rettet die Welt mehrfach diser Spielereihe.",
-                    "comment": "TODO: Andere Frage - Mir ist nichts besseres eingefallen.",
-                    "answer" : "Half-Life"
+                    "question" : "Erst 16 Jahre alt und trotzdem Arzt. Das kann doch nur im TV sein!",
+                    "answer" : "Doogie Howser"
+                },
+                {
+                    "question" : "Doktor, mit Sitz in Bielefeld, der weltweit viele Menschen in Ernährungsfragen berät.",
+                    "answer" : "Dr. Oetker"
+                },
+                {
+                    "question" : "Von Arthur Conan Doyle erschaffener Charakter, der seit 1887 dem exzentrischen Helden zur Seite steht.",
+                    "answer" : "Dr. John H. Watson"
                 }
             ]
         }
