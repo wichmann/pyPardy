@@ -1,0 +1,136 @@
+{
+    "title": "Runde 2",
+    "topics": [ 
+
+        {
+            "title": "Suchbabenstalat",
+            "questions": [
+                {
+                    "question" : "Eingeschränkte Sicht: Dobel Neben",
+                    "answer" : "Bodennebel"
+                },
+                {
+                    "question" : "Chemisches Element: Senf oft Kohl",
+                    "answer" : "Kohlenstoff"
+                },
+                {
+                    "question" : "Unerwünschter Gesichts-Überhang: Klo nippend",
+                    "answer" : "Doppelkinn"
+                },
+                {
+                    "question" : "Sahniges Werkzeug: Heb Retorten",
+                    "answer" : "Tortenheber"
+                },
+                {
+                    "question" : "Helmuts Mädchen: Klare Maengel",
+                    "answer" : "Angela Merkel"
+                }
+            ]
+        },
+
+        {
+            "title": "Kartenspiele",
+            "questions": [
+                {
+                    "question" : "Aussetzen, zwei ziehen",
+                    "answer" : "Mau Mau oder UNO"
+                },
+                {
+                    "question" : "Reh, Contra, keine 90",
+                    "answer" : "Doppelkopf"
+                },
+                {
+                    "question" : "Dieses Ablege-Spiel kann nur allein gespielt werden.",
+                    "answer" : "Solitär (Patience)"
+                },
+                {
+                    "question" : "18, 20, 2, Null, 4, 7, 30, 3, 5, 6, 40",
+                    "answer" : "Skat"
+                },
+                {
+                    "question" : "All in!",
+                    "answer" : "Poker"
+                }
+            ]
+        },
+
+        {
+            "title": "Brettspiele",
+            "questions": [
+                {
+                    "question" : "Ey Alter, reg' dich nicht auf!",
+                    "answer" : "Mensch Ärger Dich Nicht"
+                },
+                {
+                    "question" : "Der Name dieses Legespiels würde im selbigen mindestens 16 Punkte geben.",
+                    "answer" : "Scrabble"
+                },
+                {
+                    "question" : "Welteroberung mit drei Würfeln.",
+                    "answer" : "Risiko"
+                },
+                {
+                    "question" : "Business für Dummies.",
+                    "answer" : "Monopoly"
+                },
+                {
+                    "question" : "Bauer schlägt Frau!",
+                    "comment": "Bauernopfer, Königsmord!",
+                    "answer" : "Schach"
+                }
+            ]
+        },
+
+       {
+            "title": "Feuchtgebiete",
+            "questions": [
+                {
+                    "question" : "Was ist mal Nass, mal Trocken?",
+                    "answer" : "Watt"
+                },
+                {
+                    "question" : "Der längste Fluss der Welt",
+                    "answer" : "Nil (6670 km)"
+                },
+                {
+                    "question" : "Am häufigsten in der Bibel erwähnter Fluss",
+                    "answer" : "Jordan"
+                },
+                {
+                    "question" : "Schottische Wort für See",
+                    "answer" : "Loch"
+                },
+                {
+                    "question" : "Überdachtes, urbanes Feuchtgebiet.",
+                    "answer" : "Schwimmbad"
+                }
+            ]
+        },
+
+       {
+            "title": "Lokales",
+            "questions": [
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+    ]
+}

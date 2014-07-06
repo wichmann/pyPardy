@@ -1,0 +1,135 @@
+{
+    "title": "Runde Schwer",
+    "topics": [ 
+
+       {
+            "title": "Kapitale Städte",
+            "questions": [
+                {
+                    "question" : "Diese europäische Hauptstadt liegt an der Donau und waren ursprünglich zwei Städte.",
+                    "answer" : "Budapest (Ungarn)"
+                },
+                {
+                    "question" : "Welches ist die nördlichste Hauptstadt der Welt?",
+                    "answer" : "Reykjavik (Island)"
+                },
+                {
+                    "question" : "Welches ist die südlichste Hauptstadt der Welt?",
+                    "answer" : "Wellington (Neuseeland)"
+                },
+                {
+                    "question" : "Der Name dieser asiatischen Hauptstadt bedeuted übersetzt \"Nördliche Hauptstadt\".",
+                    "answer" : "Beijing/Peking (China)"
+                },
+                {
+                    "question" : "Neben Canberra ist dies die einzige andere Hauptstadt auf ihrem Kontinent.",
+                    "answer" : "Port Moresby (Papua-Neuguinea)"
+                }
+            ]
+        },
+        {
+            "title": "Das Leben, das Universum...",
+            "questions": [
+                {
+                    "question" : "Wie heißt das näheste andere Planetensystem?",
+                    "answer" : "Alpha Centauri"
+                },
+                {
+                    "question" : "Wie heißt der größte Mond unseres Sonnensystems?",
+                    "answer" : "Ganymed"
+                },
+                {
+                    "question" : "Wie heißt der transneptunische Asteroidengürtel?",
+                    "answer" : "Kuiper Gürtel"
+                },
+                {
+                    "question" : "Was ist das größte bisher bekannte Transneptunische Objekt?",
+                    "answer" : "Eris"
+                },
+                {
+                    "question" : "Wie lang ist ein galaktisches Jahr?",
+                    "answer" : "225-250 Millionen Jahre"
+                },
+            ]
+        }
+   
+        {
+            "title": "Sehenswerte Filme",
+            "questions": [
+                {
+                    "question" : "Die Orca ist Quints \"zu kleines Boot\" in diesem 70er-Jahre-Blockbuster",
+                    "answer" : "Der weiße Hai"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "In diesem Katastrophenfilm von 1972 kentert ein Ozeandampfer & die Star-Besetzung kämpft ums überleben.",
+                    "answer" : "Die Höllenfahrt der Poseidon (Poseidon Inferno)"
+                },
+                {
+                    "question" : "Das Raumschiff in diesem Film schafft den \"Kessel Run in unter 12 parsec\".",
+                    "answer" : "Korsal Flug"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+
+        {
+            "title": "Big 5",
+            "questions": [
+                {
+                    "question" : "Von den 5 ständigen Mitgliedern im UN Sicherheitsrat, hat dieser Staat die größte Bevölkerung",
+                    "answer" : "China"
+                },
+                {
+                    "question" : "Der moderne Olypische Fünfkampf besteht aus Reiten, Laufen, Schwimmen, Schießen und Zweikampf in diesem Sport",
+                    "answer" : "Fechten"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                },
+                {
+                    "question" : "Wie heißt die oberste Einteilung in der klassischen Taxonimie?",
+                    "answer" : "Reiche"
+                },
+                {
+                    "question" : "Neben süß, sauer, salzig und bitter ist dies die 5. Geschmacksqualität, die z.B. in einem Gericht mit Rindfleisch und Sojasoße vorkommt",
+                    "answer" : "Umami"
+                }
+            ]
+        },
+
+        {
+            "title": "Tiere in der Mythologie",
+            "questions": 
+            [
+                {
+                    "question" : "Dises Wesen aus der Griechischen Mythologie ist halb Mensch und halb Stier",
+                    "answer" : "Minotaur"
+                },
+                {
+                    "question" : "Dises Wesen aus der Griechischen Mythologie ist halb Mensch und halb Pferd",
+                    "answer" : "Kentaur"
+                },
+                {
+                    "question" : "Dieser 3-köpfiger Hund ist der Hüter der Unterwelt",
+                    "answer" : "Kerberos"
+                },
+                {
+                    "question" : "Anubis, dem Hüter der Unterwelt, wird häufig als dieser Hund dargestellt",
+                    "answer" : "Schakal"
+                },
+                {
+                    "question" : "Verbrennt alle 500 Jahre zu Asche und ersteht daraus wieder auf",
+                    "answer" : "Phoenix"
+                }
+            ]
+        }
+    ]
+}

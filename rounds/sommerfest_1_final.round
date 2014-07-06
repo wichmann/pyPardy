@@ -1,0 +1,134 @@
+{
+    "title": "Runde 1",
+    "topics": [ 
+        {
+            "title": "Stadt/Land/Fluss",
+            "questions": [
+                {
+                    "question" : "Hüpft durch Hügel und Tal.",
+                    "answer" : "Hase"
+                },
+                {
+                    "question" : "Land des fünften Monats.",
+                    "answer" : "Mailand"
+                },
+                {
+                    "question" : "Um ein Zeichen wäre ich als Schnaps in der Karibik gelandet.",
+                    "answer" : "Rom"
+                },
+                {
+                    "question" : "Stadt der untergehenden Sonne.",
+                    "answer" : "Helsinki"
+                },
+                {
+                    "question" : "Ein Teil des menschlichen Körpers.",
+                    "answer" : "Po"
+                }
+            ]
+        },
+        {
+            "title": "Up Platt",
+            "questions": 
+            [
+                {
+                    "question" : "De dümsten Buern häbt ...",
+                    "answer" : "de dicksten Kartuffeln"
+                },
+                {
+                    "question" : "Wat de Bur nich kennt, ...",
+                    "answer" : "dat frett hei nich"
+                },
+                {
+                    "question" : "Wenn use Katten 'ne Kau wör, dann ...",
+                    "answer" : "mösten we up 'n Balken taun melken!"
+                },
+                {
+                    "question" : "Kinner un Besoupene säget ...",
+                    "answer" : "de Wohrheit"
+                },
+                {
+                    "question" : "Wecker sick mit Schwienekötels franget,",
+                    "answer" : "krich schmeerige Hande!"
+                }
+            ]
+        },
+        {
+            "title": "Prominenz",
+            "questions": 
+            [
+                {
+                    "question" : "Er zieht immer den Nippel durch die Lasche.",
+                    "answer" : "Mike Krüger"
+                },
+                {
+                    "question" : "Er hat sehr viele Fragen und immer vier Antworten dazu.",
+                    "answer" : "Günter Jauch"
+                },
+                {
+                    "question" : "Er sorgt für die Verbreitung und den Verkauf von Bären.",
+                    "answer" : "Thomas Gottschalk"
+                },
+                {
+                    "question" : "Früher hat er selbst gesungen, heute beleidigt er nur noch andere.",
+                    "answer" : "Dieter Bohlen"
+                },
+                {
+                    "question" : "",
+                    "answer" : ""
+                }
+            ]
+        },
+        {
+            "title": "Aaaahhh!!!",
+            "questions": 
+            [
+                {
+                    "question" : "Arachnophobie",
+                    "answer" : "Angst vor Spinnen."
+                },
+                {
+                    "question" : "Klaustrophobie",
+                    "answer" : "Angst vor engen Räumen."
+                },
+                {
+                    "question" : "Agoraphobie",
+                    "answer" : "Angst vor weiten Plätzen und Menschenansammlungen."
+                },
+                {
+                    "question" : "Hippophobie",
+                    "answer" : "Angst vor Pferden."
+                },
+                {
+                    "question" : "Triskaidekaphobie",
+                    "answer" : "Angst vor der Zahl Dreizehn."
+                }
+            ]
+        },
+        {
+            "title": "Der Ball ist Rund...",
+            "questions": [
+                {
+                    "question" : "In welchen Jahren wurde Deutschland Fussball-Weltmeister?",
+                    "answer" : "1954, 1974 und 1990."
+                },
+                {
+                    "question" : "In welchem Jahrzehnt wurde das Elfmeterschießen in die DFB-Regeln aufgenommen?",
+                    "answer" : "1970er"
+                },
+                {
+                    "question" : "Aus wie vielen Lederstücken besteht ein Fussball?",
+                    "answer" : "Zwölf Fünfecken und 20 Sechsecken"
+                },
+                {
+                    "question" : "Die meisten Tore die in einer Bundesliga-Partie erzielt wurden?",
+                    "answer" : "7:6 -> 13 (1. FC Kaiserslautern gegen SV Meppen am 11.06.1997)"
+                },
+                {
+                    "question" : "Welcher Verein ist der Rekordhalter im Auf- und Absteigen in der Bundesliga?",
+                    "answer" : "1. FC Nürnberg"
+                }
+            ]
+        },
+    ]
+}
+
