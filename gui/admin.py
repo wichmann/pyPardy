@@ -152,8 +152,10 @@ class AvailableRoundPanel(QtGui.QWidget):
         self.button_box.addStretch(2)
         # add buttons for all available rounds
         data = round.get_available_round_data()
-        for filename in data:
-            new_button = QtGui.QPushButton(filename)
+        for title, filename in data:
+            new_button = QtGui.QPushButton(title)
+            new_button.title = title
+            new_button.filename = filename
             new_button.resize(new_button.sizeHint())
             new_button.setSizePolicy(QtGui.QSizePolicy.Expanding,
                                      QtGui.QSizePolicy.Expanding)
@@ -190,7 +192,7 @@ class AvailableRoundPanel(QtGui.QWidget):
 
     @QtCore.pyqtSlot()
     def on_button_click(self):
-        filename_to_load = self.sender().text()
+        filename_to_load = self.sender().filename
         logger.info('File "{}" should be loaded...'.format(filename_to_load))
         self.main_gui.show_round_table(filename_to_load)
 

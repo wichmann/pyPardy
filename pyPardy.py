@@ -43,8 +43,8 @@ if __name__ == '__main__':
     logger = create_logger()
     logger.info('Starting pyPardy...')
     list_of_round_files = round.get_available_round_data()
-    for file in list_of_round_files:
-        data = round.load_round_data_file(file)
-        if DEBUG:
+    if DEBUG:
+        for title, filename in list_of_round_files:
+            data = round.load_round_data_file(filename)
             round.pprint_round_data(data)
     gui.start_gui()

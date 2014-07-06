@@ -14,6 +14,7 @@ import json
 
 
 ROUND_DATA_EXTENSION = 'round'
+ROUND_DATA_PATH = 'rounds/'
 
 
 def get_available_round_data():
@@ -22,15 +23,18 @@ def get_available_round_data():
 
     Only files with '.round' extension are recognized!
 
-    :returns: all available files with round data
+    :returns: all available rounds including their name and the filename with
+              the round data
     """
     search_directory = '.'
     round_data = []
     os.chdir(search_directory)
-    for filename in glob.glob('rounds/*.{}'.format(ROUND_DATA_EXTENSION)):
+    extension = '*.{}'.format(ROUND_DATA_EXTENSION)
+    for filename in glob.glob(os.path.join(ROUND_DATA_PATH, extension)):
         data_ok = check_round_file(filename)
+        title = load_round_data_file(filename)['title']
         if data_ok:
-            round_data.append(filename)
+            round_data.append((title, filename))
     return round_data
 
 
