@@ -35,9 +35,9 @@ QUESTION_POINTS = 100
 # whether to use text-to-speech to read question
 AUDIO_SPEECH = False
 # whether to play sound effects when buzzer was hit
-AUDIO_SFX = False
+AUDIO_SFX = True
 # whether to play background music while showing the question
-AUDIO_MUSIC = False
+AUDIO_MUSIC = True
 
 
 ##### Graphics related settings #####

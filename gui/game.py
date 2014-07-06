@@ -204,6 +204,8 @@ class QuestionViewPanel(QtGui.QWidget):
         self.setup_ui()
         self.set_signals_and_slots()
         self.start_timer()
+        # audio methods
+        self.init_audio()
         self.play_background_music()
         self.read_question()
 
@@ -377,6 +379,7 @@ class QuestionViewPanel(QtGui.QWidget):
         if self.last_buzzed_team == -1:
             # stop background music and play buzzer sound
             # FIXME self.background_music.stop()
+            self.background_music.stop()
             self.play_buzzer_sound()
             # get team id from buzzer id
             team_id = self.game_data.get_team_by_buzzer_id(buzzer_id)
@@ -405,6 +408,7 @@ class QuestionViewPanel(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def on_question_fadeout(self):
         logger.info('Question has been faded out.')
+        self.background_music.stop()
         self.show_answer_button.setEnabled(True)
         helper.animate_widget(self.show_answer_button, False)
 
@@ -450,7 +454,19 @@ class QuestionViewPanel(QtGui.QWidget):
                 self.game_data.add_points_to_team(self.last_buzzed_team)
         self.main_gui.back_to_round_table()
 
-    ##### methods concering sound/audio #####
+    ##### methods concerning sound/audio #####
+
+    def init_audio(self):
+        # create background music object
+        self.audio_output = Phonon.AudioOutput(Phonon.MusicCategory)
+        self.background_music = Phonon.MediaObject()
+        Phonon.createPath(self.background_music, self.audio_output)
+        self.background_music.setCurrentSource(Phonon.MediaSource('./sounds/jeopardy.wav'))
+        # create buzzer sound object
+        self.audio_output2 = Phonon.AudioOutput(Phonon.MusicCategory)
+        self.buzzer_sound = Phonon.MediaObject()
+        Phonon.createPath(self.buzzer_sound, self.audio_output2)
+        self.buzzer_sound.setCurrentSource(Phonon.MediaSource('./sounds/buzzer.wav'))
 
     def read_question(self):
         if config.AUDIO_SPEECH:
@@ -459,19 +475,11 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def play_buzzer_sound(self):
         if config.AUDIO_SFX:
-            buzzer_sound = QtGui.QSound('./sounds/buzzer.wav')
-            buzzer_sound.play()
+            self.buzzer_sound.play()
 
     def play_background_music(self):
         if config.AUDIO_MUSIC:
-            #self.background_music = QtGui.QSound('./sounds/jeopardy.wav')
-            #self.background_music.setLoops(-1)
-            #self.background_music.play()
-            output = Phonon.AudioOutput(Phonon.MusicCategory)
-            m_media = Phonon.MediaObject()
-            Phonon.createPath(m_media, output)
-            m_media.setCurrentSource(Phonon.MediaSource('./sounds/jeopardy.wav'))
-            m_media.play()
+            self.background_music.play()
 
 
 class TeamViewPanel(QtGui.QWidget):

@@ -34,6 +34,6 @@ programs, so give the developers lots of thanks sometime!
 
 * Some cliparts from opencliparts.org: 
    - http://openclipart.org/detail/190592/button-by-tobbi-190592
-* Some free sound files from freesound.org
+* Some free sound files:
    - https://www.freesound.org/people/hypocore/sounds/164089/
-* 
+   - http://soundbible.com/1491-Zen-Buddhist-Temple-Bell.html

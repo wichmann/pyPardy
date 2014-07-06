@@ -8,12 +8,15 @@ Main window of pyPardy
 """
 
 import logging
+
 from PyQt4 import QtGui
 from PyQt4 import QtCore
+from PyQt4.phonon import Phonon
 
 from data import round
 from data import game
 from data import config
+
 from gui import game as game_ui
 from gui import admin
 from gui import helper
@@ -45,6 +48,7 @@ class PyPardyGui(QtGui.QMainWindow):
         self.set_signals_and_slots()
         # create instance of Game class for saving all necessary data
         self.current_game = game.Game()
+        self.init_audio()
 
     # FIXME Handle game ending and release all resources from buzzer API!
     def __del__(self):
@@ -91,6 +95,13 @@ class PyPardyGui(QtGui.QMainWindow):
         """Sets all signals and slots for main window."""
         pass
 
+    def init_audio(self):
+        # create game end sound object
+        self.audio_output = Phonon.AudioOutput(Phonon.MusicCategory)
+        self.game_end_sound = Phonon.MediaObject()
+        Phonon.createPath(self.game_end_sound, self.audio_output)
+        self.game_end_sound.setCurrentSource(Phonon.MediaSource('./sounds/temple_bell.wav'))
+
     ##### slot methods #####
 
     @QtCore.pyqtSlot()
@@ -120,9 +131,7 @@ class PyPardyGui(QtGui.QMainWindow):
         self.current_round_question_panel.update_widgets()
         if self.current_game.is_round_complete():
             logger.info('Round was completed.')
-            #QtGui.QMessageBox.information(self, 'Rund komplett!',
-            #                              "Die aktuelle Runde des Spiels ist komplett.",
-            #                              QtGui.QMessageBox.Ok)
+            self.game_end_sound.play()
             dialog = game_ui.GameOverDialog(self, self.current_game, 600, 400)
             dialog.show()
             self.show_available_rounds_panel()
@@ -173,11 +182,7 @@ class PyPardyGui(QtGui.QMainWindow):
 def handle_exit():
     """Handles closing of the pyQt main window by destroying the python
     interpreter."""
-    # TODO Close all threads for sub connections so that the application
-    # end automatically!
-    #helper.get_buzzer_connector().close_connection()
-    import sys
-    sys.exit()
+    pass
 
 
 def start_gui():
