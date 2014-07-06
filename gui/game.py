@@ -50,15 +50,20 @@ class QuestionTablePanel(QtGui.QWidget):
         self.set_signals_and_slots()
 
     def create_fonts(self):
-        base_font = 'Linux Biolinum O'
-        # TODO Load font from shipped file!
-        #QtGui.QFontDatabase.addApplicationFont()
-        self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(46)
-        self.topic_font = QtGui.QFont(base_font)
-        self.topic_font.setPointSize(24)
-        self.question_font = QtGui.QFont(base_font)
-        self.question_font.setPointSize(56)
+        if config.LOW_RESOLUTION:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(32)
+            self.topic_font = QtGui.QFont(config.BASE_FONT)
+            self.topic_font.setPointSize(18)
+            self.question_font = QtGui.QFont(config.BASE_FONT)
+            self.question_font.setPointSize(42)
+        else:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(46)
+            self.topic_font = QtGui.QFont(config.BASE_FONT)
+            self.topic_font.setPointSize(24)
+            self.question_font = QtGui.QFont(config.BASE_FONT)
+            self.question_font.setPointSize(56)
 
     def setup_ui(self):
         self.box_layout = QtGui.QHBoxLayout()
@@ -207,11 +212,16 @@ class QuestionViewPanel(QtGui.QWidget):
         self.close_connection_to_buzzer()
 
     def create_fonts(self):
-        base_font = 'Linux Biolinum O'
-        self.question_font = QtGui.QFont(base_font)
-        self.question_font.setPointSize(42)
-        self.button_font = QtGui.QFont(base_font)
-        self.button_font.setPointSize(24)
+        if config.LOW_RESOLUTION:
+            self.question_font = QtGui.QFont(config.BASE_FONT)
+            self.question_font.setPointSize(32)
+            self.button_font = QtGui.QFont(config.BASE_FONT)
+            self.button_font.setPointSize(18)
+        else:
+            self.question_font = QtGui.QFont(config.BASE_FONT)
+            self.question_font.setPointSize(42)
+            self.button_font = QtGui.QFont(config.BASE_FONT)
+            self.button_font.setPointSize(24)
 
     def setup_ui(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
@@ -281,7 +291,6 @@ class QuestionViewPanel(QtGui.QWidget):
         self.timer_lcd.resize(300, 300)
         self.timer_lcd.setSegmentStyle(QtGui.QLCDNumber.Flat)
         self.timer_lcd.setFrameStyle(QtGui.QFrame.NoFrame)
-        #self.timer_lcd.setStyleSheet("border: 0px")
         #self.set_lcd_colors()
         self.grid.addWidget(self.timer_lcd, 2, 3)
 
@@ -492,15 +501,22 @@ class TeamViewPanel(QtGui.QWidget):
         self.setup_ui()
 
     def create_fonts(self):
-        base_font = 'Linux Biolinum O'
+        # set point size depending on settings and orientation
         if self.orientation == self.VERTICAL_ORIENTATION:
-            self.team_font = QtGui.QFont(base_font)
-            self.team_font.setPointSize(28)
+            if config.LOW_RESOLUTION:
+                point_size = 22
+            else:
+                point_size = 28
         elif self.orientation == self.HORIZONTAL_ORIENTATION:
-            self.team_font = QtGui.QFont(base_font)
-            self.team_font.setPointSize(32)
+            if config.LOW_RESOLUTION:
+                point_size = 26
+            else:
+                point_size = 32
         else:
             raise NotImplementedError()
+        # set font with specified name and size
+        self.team_font = QtGui.QFont(config.BASE_FONT)
+        self.team_font.setPointSize(point_size)
 
     def setup_ui(self):
         if self.orientation == self.VERTICAL_ORIENTATION:
@@ -604,11 +620,16 @@ class GameOverDialog(QtGui.QDialog):
         #self.set_signals_and_slots()
 
     def create_fonts(self):
-        base_font = 'Linux Biolinum O'
-        self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(42)
-        self.text_font = QtGui.QFont(base_font)
-        self.text_font.setPointSize(24)
+        if config.LOW_RESOLUTION:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(34)
+            self.text_font = QtGui.QFont(config.BASE_FONT)
+            self.text_font.setPointSize(18)
+        else:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(42)
+            self.text_font = QtGui.QFont(config.BASE_FONT)
+            self.text_font.setPointSize(24)
 
     def setup_ui(self):
         self.grid = QtGui.QGridLayout()

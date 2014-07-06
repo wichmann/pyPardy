@@ -14,19 +14,42 @@ import logging
 logger = logging.getLogger('pyPardy.data')
 
 
+# name of the application that is shown in the GUI
 APP_NAME = "pyPardy!"
+# whether debug mode is activated
+DEBUG = False
+
+
+##### Game related settings #####
+
 # maximum number of teams
 MAX_TEAM_NUMBER = 3
 # time for answering a questions in seconds
 QUESTION_TIME = 10
 # points that are added for every question in a given topic
 QUESTION_POINTS = 100
+
+
+##### Audio related settings #####
+
 # whether to use text-to-speech to read question
 AUDIO_SPEECH = False
 # whether to play sound effects when buzzer was hit
 AUDIO_SFX = False
 # whether to play background music while showing the question
 AUDIO_MUSIC = False
+
+
+##### Graphics related settings #####
+
+# font name for most of the GUI
+BASE_FONT = 'Linux Biolinum O'
+# whether to design graphical user interface for lower resolutions,
+# e.g. 1024x768
+LOW_RESOLUTION = True
+
+
+##### Buzzer related settings #####
 
 # predefined buzzer ids for teams
 BUZZER_ID_FOR_TEAMS = [1, 2, 3, 4]

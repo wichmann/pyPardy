@@ -37,9 +37,12 @@ class BuzzerConfigPanel(QtGui.QWidget):
     #    self.close_connection_to_buzzer()
 
     def create_fonts(self):
-        base_font = 'Linux Biolinum O'
-        self.label_font = QtGui.QFont(base_font)
-        self.label_font.setPointSize(30)
+        if config.LOW_RESOLUTION:
+            self.label_font = QtGui.QFont(config.BASE_FONT)
+            self.label_font.setPointSize(22)
+        else:
+            self.label_font = QtGui.QFont(config.BASE_FONT)
+            self.label_font.setPointSize(30)
 
     def setup_ui(self):
         #self.setSizePolicy(QtGui.QSizePolicy.Expanding,
@@ -131,12 +134,17 @@ class AvailableRoundPanel(QtGui.QWidget):
         self.set_signals_and_slots()
 
     def create_fonts(self):
-        base_font = 'Linux Biolinum O'
-        self.title_font = QtGui.QFont(base_font)
-        self.title_font.setPointSize(42)
-        self.button_font = QtGui.QFont(base_font)
-        self.button_font.setPointSize(36)
-
+        if config.LOW_RESOLUTION:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(32)
+            self.button_font = QtGui.QFont(config.BASE_FONT)
+            self.button_font.setPointSize(24)
+        else:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(42)
+            self.button_font = QtGui.QFont(config.BASE_FONT)
+            self.button_font.setPointSize(36)
+            
     def setup_ui(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
                            QtGui.QSizePolicy.Expanding)
