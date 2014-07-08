@@ -61,20 +61,28 @@
                     "answer" : "Der weiße Hai"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Er spielte als Harry Callahan eine harten Typen?",
+                    "answer" : "Clint Eastwood"
                 },
                 {
                     "question" : "In diesem Katastrophenfilm von 1972 kentert ein Ozeandampfer & die Star-Besetzung kämpft ums überleben.",
                     "answer" : "Die Höllenfahrt der Poseidon (Poseidon Inferno)"
                 },
                 {
-                    "question" : "Das Raumschiff in diesem Film schafft den \"Kessel Run in unter 12 parsec\".",
-                    "answer" : "Korsal Flug"
+                    "question" : "Das Raumschiff in diesem Film schafft den \"Korsal Flug in unter 12 parsec\".",
+                    "answer" : "Rasender Falke"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Er war ein Space Cowboy, war auf der Jagd und hat eine Zeit lang nur Schwarz getragen.",
+                    "answer" : "Tommy Lee Jones"
+                },
+                {
+                    "question" : "Als Mr. & Mrs. Smith schossen sie ums sich.",
+                    "answer" : "Angelina Jolie und Brad Pitt"
+                },
+                {
+                    "question" : "Dieser Schauspieler reiste zurück in die Vergangenheit und die Zunkunft.",
+                    "answer" : "Michael J. Fox"
                 }
             ]
         },
@@ -83,23 +91,31 @@
             "title": "Big 5",
             "questions": [
                 {
-                    "question" : "Von den 5 ständigen Mitgliedern im UN Sicherheitsrat, hat dieser Staat die größte Bevölkerung",
+                    "question" : "Von den 5 ständigen Mitgliedern im UN Sicherheitsrat, hat dieser Staat die größte Bevölkerung.",
                     "answer" : "China"
                 },
                 {
-                    "question" : "Der moderne Olypische Fünfkampf besteht aus Reiten, Laufen, Schwimmen, Schießen und Zweikampf in diesem Sport",
+                    "question" : "Der moderne Olypische Fünfkampf besteht aus Reiten, Laufen, Schwimmen, Schießen und Zweikampf in diesem Sport.",
                     "answer" : "Fechten"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Zusammen werden diese Elemente als Quintessenz bezeichnet.",
+                    "answer" : "Feuer, Wasser, Erde, Luft, Äther"
                 },
                 {
-                    "question" : "Wie heißt die oberste Einteilung in der klassischen Taxonimie?",
+                    "question" : "Fünf, auf die man nicht verzichten kann!",
+                    "answer" : "Sehen, Hören, Riechen, Schmecken, Tastsinn"
+                },
+                {
+                    "question" : "Die fünf Trophäen für jeden Großwildjäger: Löwe, Elefant, Büffel, Nashorn und ...",
+                    "answer" : "Leopard"
+                },
+                {
+                    "question" : "Wie heißt die oberste Einteilung in der klassischen Taxonomie?",
                     "answer" : "Reiche"
                 },
                 {
-                    "question" : "Neben süß, sauer, salzig und bitter ist dies die 5. Geschmacksqualität, die z.B. in einem Gericht mit Rindfleisch und Sojasoße vorkommt",
+                    "question" : "Neben süß, sauer, salzig und bitter ist dies die 5. Geschmacksqualität, die z.B. in einem Gericht mit Rindfleisch und Sojasoße vorkommt.",
                     "answer" : "Umami"
                 }
             ]
