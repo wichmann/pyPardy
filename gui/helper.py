@@ -146,16 +146,27 @@ def animate_widget(widget, fade_out, hook=None):
 
 
 def hide_widget(widget):
-    # generate effect class
-    effect = QtGui.QGraphicsOpacityEffect(widget)
-    widget.setGraphicsEffect(effect)
-    # set opacity
-    effect.setOpacity(0.0)
+    set_opacity_for_widget(widget, 0.0)
 
 
 def show_widget(widget):
+    set_opacity_for_widget(widget, 1.0)
+
+
+def set_opacity_for_widget(widget, opacity):
+    """Sets opacity for a given widget. Not all widgets provide an opacity
+    property that can be changed by using stylesheets. For those widgets
+    this function provides a QGraphicsOpacityEffect and sets the opacity of
+    the effect object to the given value.
+
+    It should work with all pyQt widgets?!
+
+    :param widget: widget for which to set the opacity
+    :param opacity: value for the opacity that should be set, should be a float
+                    between 0.0 and 1.0.
+    """
     # generate effect class
     effect = QtGui.QGraphicsOpacityEffect(widget)
     widget.setGraphicsEffect(effect)
     # set opacity
-    effect.setOpacity(1.0)
+    effect.setOpacity(float(opacity))
