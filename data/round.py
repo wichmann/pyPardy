@@ -16,6 +16,7 @@ import os
 import json
 import logging
 
+from data.helper import memoized
 
 logger = logging.getLogger('pyPardy.data')
 
@@ -53,6 +54,7 @@ def check_round_file(filename):
     return True
 
 
+@memoized
 def load_round_data_file(filename):
     """Loads a given round data file and returns data from it.
 
