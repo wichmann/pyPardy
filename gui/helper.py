@@ -8,6 +8,8 @@ Helper classes for the gui of pyPardy.
 """
 
 import logging
+import time
+
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
@@ -21,6 +23,10 @@ logger = logging.getLogger('pyPardy.gui')
 ANIMATION_TIME = 750
 # singleton instance that is returned by get_buzzer_connector() function
 STATIC_INSTANCE_OF_BUZZER_CONNECTOR = None
+# whether to debounce buzzers
+DEBOUNCE_BUZZER = True
+# debounce interval in s
+DEBOUNCE_INTERVAL = 0.500
 
 
 # list of all animation objects
@@ -34,6 +40,14 @@ class BuzzerConnector(QtCore.QObject):
     This class should NEVER be manually instanciated! For getting a new
     BuzzerConnector the module-level function get_buzzer_connector() should
     be used.
+
+    By using the constants DEBOUNCE_BUZZER and DEBOUNCE_INTERVAL it is possible
+    to define the behaviour of the connected buzzers. If DEBOUNCE_BUZZER is
+    True a signal from the buzzer will only emitted when the current buzzer id
+    is different than the last buzzed id or the given interval is elapsed!
+
+    NOTE: Debouncing uses time.monotonic() which is only part of Python since
+    version 3.3!
     """
     # define a QT signal to react on buzzer presses
     buzzing = QtCore.pyqtSignal(int)
@@ -43,6 +57,7 @@ class BuzzerConnector(QtCore.QObject):
         # install callback for buzzer API
         self.buzzer_reader = buzzer.BuzzerReader(self.on_buzzer_pressed)
         self.last_buzzer_id = -1
+        self.last_buzzer_time = 0
 
     def __del__(self):
         self.buzzer_reader.stop()
@@ -57,10 +72,17 @@ class BuzzerConnector(QtCore.QObject):
         self.buzzer_reader.flush_all_devices()
 
     def on_buzzer_pressed(self, buzzer_id):
-        self.buzzing.emit(buzzer_id)
-        #if buzzer_id != self.last_buzzer_id:
-        #    self.last_buzzer_id = buzzer_id
-        #    self.buzzing.emit(buzzer_id)
+        if DEBOUNCE_BUZZER:
+            # get current time and check if DEBOUNCE_INTERVAL has elapsed
+            current_time = time.monotonic()
+            time_difference = current_time - self.last_buzzer_time
+            print('{}, {}'.format(current_time, time_difference))
+            if buzzer_id != self.last_buzzer_id or time_difference > DEBOUNCE_INTERVAL:
+                self.last_buzzer_time = current_time
+                self.last_buzzer_id = buzzer_id
+                self.buzzing.emit(buzzer_id)
+        else:
+            self.buzzing.emit(buzzer_id)
 
 
 def get_buzzer_connector():

@@ -17,7 +17,7 @@ pyPardy is released under the GNU General Public License v2 or newer.
 
 REQUIREMENTS
 ------------
-pyPardy requires Python 3.
+pyPardy requires at least Python 3.3.
 
 For the correct rendering the font "Linux Biolinum O" has to be installed.
 
