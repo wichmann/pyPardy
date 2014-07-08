@@ -76,7 +76,6 @@ class BuzzerConnector(QtCore.QObject):
             # get current time and check if DEBOUNCE_INTERVAL has elapsed
             current_time = time.monotonic()
             time_difference = current_time - self.last_buzzer_time
-            print('{}, {}'.format(current_time, time_difference))
             if buzzer_id != self.last_buzzer_id or time_difference > DEBOUNCE_INTERVAL:
                 self.last_buzzer_time = current_time
                 self.last_buzzer_id = buzzer_id
