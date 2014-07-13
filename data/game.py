@@ -16,6 +16,10 @@ from data import config
 logger = logging.getLogger('pyPardy.data')
 
 
+# file name for storing information about points of all teams
+POINTS_FILE = './points.log'
+
+
 class Game():
     """Contains all necessary information about the current game.
 
@@ -31,6 +35,13 @@ class Game():
         # default
         self.buzzer_id_list = list(config.BUZZER_ID_FOR_TEAMS)
         self._current_round_data = None
+        # open file for saving points information of all rounds
+        self.points_file = open(POINTS_FILE, 'a')
+
+    def __del__(self):
+        # close file when destroying this object
+        #self.points_file.close()
+        pass
 
     @property
     def current_round_data(self):
@@ -40,6 +51,9 @@ class Game():
     def current_round_data(self, value):
         if value:
             self._current_round_data = value
+            # write info to points file
+            self.points_file.write('===== New round: {} =====\n'.format(self.get_round_title()))
+            self.points_file.flush()
             # read question points from loaded data and set config option
             try:
                 config.QUESTION_POINTS = int(self._current_round_data['question points'])
@@ -119,8 +133,16 @@ class Game():
 
     ##### methods concerning points and team management #####
 
+    def write_current_points_to_file(self):
+        self.points_file.write('----- ')
+        for team_id, team in self.team_points_dict.items():
+            self.points_file.write(' * {}: {} * '.format(team_id, team))
+        self.points_file.write(' -----\n')
+        self.points_file.flush()
+
     def add_points_to_team(self, team_id):
         self.team_points_dict[team_id] += (self.current_question + 1) * config.QUESTION_POINTS
+        self.write_current_points_to_file()
 
     def get_points_for_team(self, team_id):
         return self.team_points_dict[team_id]
