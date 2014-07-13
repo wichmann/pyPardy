@@ -47,6 +47,8 @@ BASE_FONT = 'Linux Biolinum O'
 # whether to design graphical user interface for lower resolutions,
 # e.g. 1024x768
 LOW_RESOLUTION = True
+# whether to show main GUI in fullscreen mode
+FULLSCREEN = True
 
 
 ##### Buzzer related settings #####

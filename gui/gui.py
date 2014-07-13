@@ -55,15 +55,19 @@ class PyPardyGui(QtGui.QMainWindow):
         pass
 
     def setWindowSize(self):
-        resolution = QtGui.QDesktopWidget().screenGeometry()
-        self.WIDTH = resolution.width()
-        self.HEIGHT = resolution.height()
+        if config.FULLSCREEN:
+            resolution = QtGui.QDesktopWidget().screenGeometry()
+            self.WIDTH = resolution.width()
+            self.HEIGHT = resolution.height()
+            self.showFullScreen()
+        else:
+            self.WIDTH = 1024
+            self.HEIGHT = 768
 
     def setup_ui(self):
         """Initializes the UI by displaying all available rounds."""
         # set size of window
         self.resize(self.WIDTH, self.HEIGHT)
-        self.showFullScreen()
         self.setWindowTitle(config.APP_NAME)
         self.setWindowIcon(QtGui.QIcon('icons/buzzer.png'))
         # build stacked widget for all current and coming panels
