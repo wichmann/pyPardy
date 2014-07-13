@@ -144,6 +144,9 @@ class Game():
         self.team_points_dict[team_id] += (self.current_question + 1) * config.QUESTION_POINTS
         self.write_current_points_to_file()
 
+    def correct_points_by_100(self, team_id):
+        self.team_points_dict[team_id] += config.QUESTION_POINTS
+
     def get_points_for_team(self, team_id):
         return self.team_points_dict[team_id]
 

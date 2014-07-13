@@ -13,6 +13,7 @@ from PyQt4 import QtCore
 from PyQt4.phonon import Phonon
 
 from data import config
+from data import game
 from gui import helper
 
 
@@ -132,7 +133,13 @@ class QuestionTablePanel(QtGui.QWidget):
         else:
             return
         # react to cursor keys
+        list_of_keys = [QtCore.Qt.Key_1, QtCore.Qt.Key_2, QtCore.Qt.Key_3,
+                        QtCore.Qt.Key_4, QtCore.Qt.Key_5, QtCore.Qt.Key_6]
         key = event.key()
+        for i in range(config.MAX_TEAM_NUMBER):
+            if key == list_of_keys[i]:
+                self.game_data.correct_points_by_100(i)
+                self.team_view_panel.on_update_points()
         if key == QtCore.Qt.Key_D:
             self.focus_specific_button(topic + 1, question)
         elif key == QtCore.Qt.Key_A:
