@@ -20,7 +20,7 @@ logger = logging.getLogger('pyPardy.gui')
 
 
 # time before a buzzer press has any effect
-STARTUP_TIME = 3000
+STARTUP_TIME = 0
 # step that will be used to decrease game time
 GAME_TIME_STEP = 100
 # factor to divide given time in seconds into part of that
@@ -54,9 +54,9 @@ class QuestionTablePanel(QtGui.QWidget):
             self.title_font = QtGui.QFont(config.BASE_FONT)
             self.title_font.setPointSize(32)
             self.topic_font = QtGui.QFont(config.BASE_FONT)
-            self.topic_font.setPointSize(18)
+            self.topic_font.setPointSize(16)
             self.question_font = QtGui.QFont(config.BASE_FONT)
-            self.question_font.setPointSize(42)
+            self.question_font.setPointSize(36)
         else:
             self.title_font = QtGui.QFont(config.BASE_FONT)
             self.title_font.setPointSize(46)
@@ -72,7 +72,7 @@ class QuestionTablePanel(QtGui.QWidget):
         self.box_layout.addLayout(self.build_table())
         # add team view widget
         self.team_view_panel = TeamViewPanel(self, self.game_data,
-                                             200, self.height(),
+                                             150, self.height(),
                                              TeamViewPanel.VERTICAL_ORIENTATION)
         self.box_layout.addWidget(self.team_view_panel, QtCore.Qt.AlignCenter |
                                   QtCore.Qt.AlignRight)
@@ -216,7 +216,7 @@ class QuestionViewPanel(QtGui.QWidget):
     def create_fonts(self):
         if config.LOW_RESOLUTION:
             self.question_font = QtGui.QFont(config.BASE_FONT)
-            self.question_font.setPointSize(32)
+            self.question_font.setPointSize(30)
             self.button_font = QtGui.QFont(config.BASE_FONT)
             self.button_font.setPointSize(18)
         else:
@@ -241,16 +241,16 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def build_info_button(self):
         # add buttons for topic and points
-        topic_button = QtGui.QPushButton(self.topic)
+        topic_button = QtGui.QPushButton(helper.replace_line_breaks(self.topic))
         topic_button.setEnabled(False)
+        topic_button.setStyleSheet('background-color: yellow;')
         topic_button.setFont(self.button_font)
-        #self.grid.addWidget(topic_button, 0, 0, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
-        self.grid.addWidget(topic_button, 0, 0)
-        points_button = QtGui.QPushButton(str(self.points))
+        self.grid.addWidget(topic_button, 0, 0, QtCore.Qt.AlignTop)
+        points_button = QtGui.QPushButton(helper.replace_line_breaks(str(self.points)))
         points_button.setEnabled(False)
+        points_button.setStyleSheet('background-color: yellow;')
         points_button.setFont(self.button_font)
-        #self.grid.addWidget(points_button, 0, 1, QtCore.Qt.AlignTop | QtCore.Qt.AlignLeft)
-        self.grid.addWidget(points_button, 0, 1)
+        self.grid.addWidget(points_button, 0, 1, QtCore.Qt.AlignTop)
 
     def build_control_buttons(self):
         # add button for showing the answer of the question
@@ -258,18 +258,21 @@ class QuestionViewPanel(QtGui.QWidget):
         self.show_answer_button.setFont(self.button_font)
         self.show_answer_button.setEnabled(False)
         helper.hide_widget(self.show_answer_button)
-        self.grid.addWidget(self.show_answer_button, 2, 0)
+        self.grid.addWidget(self.show_answer_button, 2, 0,
+                            QtCore.Qt.AlignBottom)
         # add button for going back to question table
         self.answer_correct_button = QtGui.QPushButton('Richtig!')
         self.answer_correct_button.setFont(self.button_font)
         self.answer_correct_button.setEnabled(False)
         helper.hide_widget(self.answer_correct_button)
-        self.grid.addWidget(self.answer_correct_button, 2, 1)
+        self.grid.addWidget(self.answer_correct_button, 2, 1,
+                            QtCore.Qt.AlignBottom)
         self.answer_incorrect_button = QtGui.QPushButton('Falsch!')
         self.answer_incorrect_button.setFont(self.button_font)
         self.answer_incorrect_button.setEnabled(False)
         helper.hide_widget(self.answer_incorrect_button)
-        self.grid.addWidget(self.answer_incorrect_button, 2, 2)
+        self.grid.addWidget(self.answer_incorrect_button, 2, 2,
+                            QtCore.Qt.AlignBottom)
 
     def build_labels(self):
         # add question label
@@ -277,12 +280,12 @@ class QuestionViewPanel(QtGui.QWidget):
         self.question_label.setFont(self.question_font)
         self.question_label.setLineWidth(25)
         self.question_label.setWordWrap(True)
-        self.question_label.setAlignment(QtCore.Qt.AlignCenter |
+        self.question_label.setAlignment(QtCore.Qt.AlignTop |
                                          QtCore.Qt.AlignHCenter)
         self.grid.addWidget(self.question_label, 1, 0, 1, 4)
         # add team view panel for showing team that buzzered first
         self.team_view_panel = TeamViewPanel(self, self.game_data,
-                                             600, 250,
+                                             450, 150,
                                              TeamViewPanel.HORIZONTAL_ORIENTATION)
         self.grid.addWidget(self.team_view_panel, 0, 2, 1, 2,
                             QtCore.Qt.AlignTop | QtCore.Qt.AlignRight)
@@ -290,11 +293,13 @@ class QuestionViewPanel(QtGui.QWidget):
     def build_timer_widgets(self):
         # add timer
         self.timer_lcd = QtGui.QLCDNumber(self)
-        self.timer_lcd.resize(300, 300)
+        self.timer_lcd.setFixedSize(250, 150)
+        #self.timer_lcd.resize(300, 200)
         self.timer_lcd.setSegmentStyle(QtGui.QLCDNumber.Flat)
         self.timer_lcd.setFrameStyle(QtGui.QFrame.NoFrame)
         #self.set_lcd_colors()
-        self.grid.addWidget(self.timer_lcd, 2, 3)
+        self.grid.addWidget(self.timer_lcd, 2, 3,
+                            QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
 
     def set_lcd_colors(self):
         # get the palette
@@ -434,7 +439,7 @@ class QuestionViewPanel(QtGui.QWidget):
         logger.info('Answer is shown.')
         # build string with question and answer
         string = self.game_data.get_current_question()
-        string += '<br><br>–<br><br>'
+        string += '<br>–<br>'
         string += self.game_data.get_current_answer()
         # fade in label with question and answer
         self.question_label.setText(string)
@@ -485,6 +490,9 @@ class QuestionViewPanel(QtGui.QWidget):
 class TeamViewPanel(QtGui.QWidget):
     """Panel showing all teams including their current points.
 
+    TODO: Handle size automatically without depending on width and height from
+    parent widget!
+
     :param game_data: instance of Game class including all game information
     """
     # constants for orientation parameter
@@ -512,9 +520,9 @@ class TeamViewPanel(QtGui.QWidget):
         # set point size depending on settings and orientation
         if self.orientation == self.VERTICAL_ORIENTATION:
             if config.LOW_RESOLUTION:
-                point_size = 22
+                point_size = 20
             else:
-                point_size = 28
+                point_size = 26
         elif self.orientation == self.HORIZONTAL_ORIENTATION:
             if config.LOW_RESOLUTION:
                 point_size = 26

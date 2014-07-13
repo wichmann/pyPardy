@@ -101,6 +101,13 @@ def center_on_screen(window):
                 (screen.height() - size.height()) / 2)
 
 
+def replace_line_breaks(string):
+    """Replaces HTML-style line breaks with new-line characters to be used in
+    QPushButton etc.
+    """
+    return string.replace('<br>', '\n')
+
+
 ##### Functions for animating, hiding and showing widgets with opaycity effects
 
 def animate_widget(widget, fade_out, hook=None):
