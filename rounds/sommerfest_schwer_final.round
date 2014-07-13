@@ -1,5 +1,5 @@
 {
-    "title": "Runde Schwer",
+    "title": "Sommerfest 2014 - Schwere Runde",
     "topics": [ 
 
        {
@@ -31,7 +31,7 @@
             "title": "Das Leben,<br>das Universum...",
             "questions": [
                 {
-                    "question" : "Wie heißt das näheste andere Planetensystem?",
+                    "question" : "Wie heißt das uns am nächsten liegende Planetensystem?",
                     "answer" : "Alpha Centauri"
                 },
                 {
@@ -40,7 +40,7 @@
                 },
                 {
                     "question" : "Wie heißt der transneptunische Asteroidengürtel?",
-                    "answer" : "Kuiper Gürtel"
+                    "answer" : "Kuiper-Gürtel"
                 },
                 {
                     "question" : "Was ist das größte bisher bekannte Transneptunische Objekt?",
@@ -61,7 +61,7 @@
                     "answer" : "Der weiße Hai"
                 },
                 {
-                    "question" : "Er spielte als Harry Callahan eine harten Typen?",
+                    "question" : "Er spielte als Harry Callahan einen harten Typen?",
                     "answer" : "Clint Eastwood"
                 },
                 {
@@ -110,7 +110,11 @@
             "questions": 
             [
                 {
-                    "question" : "Dises mythologische Wesen ist halb Mensch und halb Stier",
+                    "question" : "Verbrennt alle 500 Jahre zu Asche und ersteht daraus wieder auf",
+                    "answer" : "Phoenix"
+                },
+                {
+                    "question" : "Dieses mythologische Wesen ist halb Mensch und halb Stier",
                     "answer" : "Minotaur"
                 },
                 {
@@ -118,16 +122,12 @@
                     "answer" : "Zerberus"
                 },
                 {
-                    "question" : "Anubis, dem Hüter der Unterwelt, wird häufig als dieser Hund dargestellt",
+                    "question" : "Anubis, der Hüter der Unterwelt, wird häufig als dieser Hund dargestellt",
                     "answer" : "Schakal"
                 },
                 {
-                    "question" : "Dises mythologische Wesen ist halb Mensch und halb Pferd",
+                    "question" : "Dieses mythologische Wesen ist halb Mensch und halb Pferd",
                     "answer" : "Zentaur"
-                },
-                {
-                    "question" : "Verbrennt alle 500 Jahre zu Asche und ersteht daraus wieder auf",
-                    "answer" : "Phoenix"
                 }
             ]
         }
