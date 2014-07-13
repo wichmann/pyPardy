@@ -25,7 +25,7 @@ DEBUG = False
 # maximum number of teams
 MAX_TEAM_NUMBER = 3
 # time for answering a questions in seconds
-QUESTION_TIME = 10
+QUESTION_TIME = 60
 # points that are added for every question in a given topic
 QUESTION_POINTS = 100
 

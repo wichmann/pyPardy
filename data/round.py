@@ -21,10 +21,16 @@ from data.helper import memoized
 logger = logging.getLogger('pyPardy.data')
 
 
+# file extension for all round data files
 ROUND_DATA_EXTENSION = 'round'
+# directory for searching round data files
 ROUND_DATA_PATH = 'rounds/'
+# black list containing round data files that should not be used
+ROUND_DATA_BLACK_LIST = ('Rundenvorlage.round', )
 
+# maximum number of topics per round
 MAXIMUM_TOPIC_COUNT = 6
+# maximum number of questions per topic
 MAXIMUM_QUESTION_COUNT = 7
 
 
@@ -44,8 +50,10 @@ def get_available_round_data():
     for filename in glob.glob(os.path.join(ROUND_DATA_PATH, extension)):
         data_ok = check_round_file(filename)
         title = load_round_data_file(filename)['title']
-        if data_ok:
+        filename_without_path = os.path.basename(filename)
+        if data_ok and filename_without_path not in ROUND_DATA_BLACK_LIST:
             round_data.append((title, filename))
+    round_data.sort()
     return round_data
 
 
