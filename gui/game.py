@@ -241,15 +241,17 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def build_info_button(self):
         # add buttons for topic and points
+        INFO_BUTTON_STYLE = 'background-color: yellow;'
+        # border-radius: 20px; border-width: 4px;'
         topic_button = QtGui.QPushButton(helper.replace_line_breaks(self.topic))
         topic_button.setEnabled(False)
-        topic_button.setStyleSheet('background-color: yellow;')
         topic_button.setFont(self.button_font)
+        topic_button.setStyleSheet(INFO_BUTTON_STYLE)
         self.grid.addWidget(topic_button, 0, 0, QtCore.Qt.AlignTop)
         points_button = QtGui.QPushButton(helper.replace_line_breaks(str(self.points)))
         points_button.setEnabled(False)
-        points_button.setStyleSheet('background-color: yellow;')
         points_button.setFont(self.button_font)
+        points_button.setStyleSheet(INFO_BUTTON_STYLE)
         self.grid.addWidget(points_button, 0, 1, QtCore.Qt.AlignTop)
 
     def build_control_buttons(self):
@@ -383,7 +385,6 @@ class QuestionViewPanel(QtGui.QWidget):
         logger.info('Buzzer ({}) was pressed.'.format(buzzer_id))
         if self.last_buzzed_team == -1:
             # stop background music and play buzzer sound
-            # FIXME self.background_music.stop()
             self.background_music.stop()
             self.play_buzzer_sound()
             # get team id from buzzer id
@@ -515,6 +516,8 @@ class TeamViewPanel(QtGui.QWidget):
         self.setFixedSize(width, height)
         self.create_fonts()
         self.setup_ui()
+        # set style sheet for all team labels
+        self.highlight_team(-1)
 
     def create_fonts(self):
         # set point size depending on settings and orientation
@@ -598,9 +601,10 @@ class TeamViewPanel(QtGui.QWidget):
         """Highlights a given team identified by its team id. All other teams
         will be unhighlighted!
         """
+        SELECTED_STYLE = 'background: red; border-radius: 15px; border-width: 4px;'
         for id, team_label in self.team_label_dict.items():
             if team_id == id:
-                team_label.setStyleSheet('background: red')
+                team_label.setStyleSheet(SELECTED_STYLE)
             else:
                 team_label.setStyleSheet('')
 
