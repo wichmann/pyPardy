@@ -108,27 +108,27 @@
         },
 
        {
-            "title": "Lokales",
+            "title": "Sauerei",
             "questions": [
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Trotz des brutalen Namens, handelt es sich hierbei lediglich um eine beliebte Beschäftigung bei Kindergeburtstagen.",
+                    "answer" : "Schnitzeljagd"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "\"Hauptdarsteller\" eines tierischen Familienfilms von 1995.",
+                    "answer" : "Babe (Ein Schweinchen namens Babe)"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Diese kostbare Delikatesse wurde früher mit Hilfe von Schweinen gesucht.",
+                    "answer" : "Trüffel"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Ländercode von Saudi-Arabien.",
+                    "answer" : "SAU"
                 },
                 {
-                    "question" : "",
-                    "answer" : ""
+                    "question" : "Name des Offshorebauwerkes, dass für die Sauerei im Golf von Mexiko 2010 verantwortlich war.",
+                    "answer" : "Deepwater Horizon"
                 }
             ]
         }

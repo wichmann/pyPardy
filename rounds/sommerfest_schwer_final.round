@@ -54,7 +54,7 @@
         },
    
         {
-            "title": "Sehenswerte Filme",
+            "title": "Sehenswertes",
             "questions": [
                 {
                     "question" : "Die Orca ist Quints \"zu kleines Boot\" in diesem 70er-Jahre-Blockbuster",
@@ -65,20 +65,12 @@
                     "answer" : "Clint Eastwood"
                 },
                 {
-                    "question" : "In diesem Katastrophenfilm von 1972 kentert ein Ozeandampfer & die Star-Besetzung kämpft ums überleben.",
-                    "answer" : "Die Höllenfahrt der Poseidon (Poseidon Inferno)"
-                },
-                {
-                    "question" : "Das Raumschiff in diesem Film schafft den \"Korsal Flug in unter 12 parsec\".",
-                    "answer" : "Rasender Falke"
-                },
-                {
                     "question" : "Er war ein Space Cowboy, war auf der Jagd und hat eine Zeit lang nur Schwarz getragen.",
                     "answer" : "Tommy Lee Jones"
                 },
                 {
-                    "question" : "Als Mr. & Mrs. Smith schossen sie ums sich.",
-                    "answer" : "Angelina Jolie und Brad Pitt"
+                    "question" : "Brad und Angelina schossen in diesem Film um sich.",
+                    "answer" : "Mr. & Mrs. Smith"
                 },
                 {
                     "question" : "Dieser Schauspieler reiste zurück in die Vergangenheit und die Zunkunft.",
@@ -95,51 +87,43 @@
                     "answer" : "China"
                 },
                 {
-                    "question" : "Der moderne Olypische Fünfkampf besteht aus Reiten, Laufen, Schwimmen, Schießen und Zweikampf in diesem Sport.",
+                    "question" : "Der moderne Olypische Fünfkampf besteht aus Reiten, Laufen, Schwimmen, Schießen und ...",
                     "answer" : "Fechten"
                 },
                 {
-                    "question" : "Zusammen werden diese Elemente als Quintessenz bezeichnet.",
-                    "answer" : "Feuer, Wasser, Erde, Luft, Äther"
-                },
-                {
-                    "question" : "Fünf, auf die man nicht verzichten kann!",
-                    "answer" : "Sehen, Hören, Riechen, Schmecken, Tastsinn"
-                },
-                {
-                    "question" : "Die fünf Trophäen für jeden Großwildjäger: Löwe, Elefant, Büffel, Nashorn und ...",
-                    "answer" : "Leopard"
-                },
-                {
-                    "question" : "Wie heißt die oberste Einteilung in der klassischen Taxonomie?",
-                    "answer" : "Reiche"
+                    "question" : "Die fünf Trophäen für jeden Großwildjäger: Löwe, Elefant, Leopard, Nashorn und ...",
+                    "answer" : "Büffel"
                 },
                 {
                     "question" : "Neben süß, sauer, salzig und bitter ist dies die 5. Geschmacksqualität, die z.B. in einem Gericht mit Rindfleisch und Sojasoße vorkommt.",
                     "answer" : "Umami"
+                },
+                {
+                    "question" : "Die klassische Taxonomie teilt die Welt der Biologie ein, in die 5 ...",
+                    "answer" : "Reiche"
                 }
             ]
         },
 
         {
-            "title": "Tiere in der Mythologie",
+            "title": "\"Tiere\"",
             "questions": 
             [
                 {
-                    "question" : "Dises Wesen aus der Griechischen Mythologie ist halb Mensch und halb Stier",
+                    "question" : "Dises mythologische Wesen ist halb Mensch und halb Stier",
                     "answer" : "Minotaur"
                 },
                 {
-                    "question" : "Dises Wesen aus der Griechischen Mythologie ist halb Mensch und halb Pferd",
-                    "answer" : "Kentaur"
-                },
-                {
-                    "question" : "Dieser 3-köpfiger Hund ist der Hüter der Unterwelt",
-                    "answer" : "Kerberos"
+                    "question" : "Dieser mythologische 3-köpfiger Hund ist der Hüter der Unterwelt",
+                    "answer" : "Zerberus"
                 },
                 {
                     "question" : "Anubis, dem Hüter der Unterwelt, wird häufig als dieser Hund dargestellt",
                     "answer" : "Schakal"
+                },
+                {
+                    "question" : "Dises mythologische Wesen ist halb Mensch und halb Pferd",
+                    "answer" : "Zentaur"
                 },
                 {
                     "question" : "Verbrennt alle 500 Jahre zu Asche und ersteht daraus wieder auf",
