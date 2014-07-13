@@ -26,7 +26,7 @@ ROUND_DATA_EXTENSION = 'round'
 # directory for searching round data files
 ROUND_DATA_PATH = 'rounds/'
 # black list containing round data files that should not be used
-ROUND_DATA_BLACK_LIST = ('Rundenvorlage.round', )
+ROUND_DATA_BLACK_LIST = ('Rundenvorlage.round', 'Sommerfest 6.round')
 
 # maximum number of topics per round
 MAXIMUM_TOPIC_COUNT = 6

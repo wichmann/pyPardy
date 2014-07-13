@@ -609,7 +609,7 @@ class TeamViewPanel(QtGui.QWidget):
         """Highlights a given team identified by its team id. All other teams
         will be unhighlighted!
         """
-        SELECTED_STYLE = 'background: red; border-radius: 15px; border-width: 4px;'
+        SELECTED_STYLE = 'background: red; color: white; border-radius: 15px; border-width: 4px;'
         for id, team_label in self.team_label_dict.items():
             if team_id == id:
                 team_label.setStyleSheet(SELECTED_STYLE)
