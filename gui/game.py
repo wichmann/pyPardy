@@ -467,6 +467,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.audio_output = Phonon.AudioOutput(Phonon.MusicCategory)
         self.background_music = Phonon.MediaObject()
         Phonon.createPath(self.background_music, self.audio_output)
+        self.background_music.finished.connect(self.background_music.play)
         self.background_music.setCurrentSource(Phonon.MediaSource('./sounds/jeopardy.wav'))
         # create buzzer sound object
         self.audio_output2 = Phonon.AudioOutput(Phonon.MusicCategory)
