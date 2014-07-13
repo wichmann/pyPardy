@@ -5,7 +5,7 @@
             "title": "Stadt/Land/Fluss",
             "questions": [
                 {
-                    "question" : "Hüpft durch Hügel und Tal.",
+                    "question" : "Hüpft durch Tal und Hügel.",
                     "answer" : "Hase"
                 },
                 {
@@ -73,7 +73,7 @@
                     "answer" : "Dieter Bohlen"
                 },
                 {
-                    "question" : "Sie stieg auf einen ... und Sang!",
+                    "question" : "Sie stieg auf einen ... und sang!",
                     "answer" : "Andrea Berg"
                 }
             ]

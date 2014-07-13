@@ -3,7 +3,7 @@
     "topics": [ 
 
        {
-            "title": "Kapitale Städte",
+            "title": "Kapitale<br>Städte",
             "questions": [
                 {
                     "question" : "Diese europäische Hauptstadt liegt an der Donau und waren ursprünglich zwei Städte.",
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "title": "Das Leben, das Universum...",
+            "title": "Das Leben,<br>das Universum...",
             "questions": [
                 {
                     "question" : "Wie heißt das näheste andere Planetensystem?",
