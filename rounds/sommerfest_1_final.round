@@ -109,7 +109,7 @@
             "questions": [
                 {
                     "question" : "In welchen Jahren wurde Deutschland Fussball-Weltmeister?",
-                    "answer" : "1954, 1974 und 1990."
+                    "answer" : "1954, 1974, 1990 und 2014."
                 },
                 {
                     "question" : "In welchem Jahrzehnt wurde das Elfmeterschießen in die DFB-Regeln aufgenommen?",
@@ -117,7 +117,7 @@
                 },
                 {
                     "question" : "Wer war Torschützenkönig der aktuellen WM?",
-                    "answer" : "James Rodríguez"
+                    "answer" : "James Rodríguez (6 Tore)"
                 },
                 {
                     "question" : "Die meisten Tore die in einer Bundesliga-Partie erzielt wurden?",
