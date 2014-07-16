@@ -423,6 +423,7 @@ class QuestionViewPanel(QtGui.QWidget):
         logger.info('Question has been faded out.')
         self.background_music.stop()
         self.show_answer_button.setEnabled(True)
+        self.show_answer_button.setFocus()
         helper.animate_widget(self.show_answer_button, False)
 
     @QtCore.pyqtSlot()
@@ -433,12 +434,14 @@ class QuestionViewPanel(QtGui.QWidget):
             # right and wrong
             self.answer_correct_button.setEnabled(True)
             self.answer_incorrect_button.setEnabled(True)
+            self.answer_correct_button.setFocus()
             helper.animate_widget(self.answer_correct_button, False)
             helper.animate_widget(self.answer_incorrect_button, False)
         else:
             # otherwise just show one of the buttons to get back
             # to the question view table
             self.answer_correct_button.setText('Zurück')
+            self.answer_correct_button.setFocus()
             self.answer_correct_button.setEnabled(True)
             helper.animate_widget(self.answer_correct_button, False)
 
