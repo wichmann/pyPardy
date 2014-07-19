@@ -15,9 +15,9 @@ logger = logging.getLogger('pyPardy.data')
 
 
 # name of the application that is shown in the GUI
-APP_NAME = "Sommerfest 2014!"
+APP_NAME = "Sommerfest 2014"
 # whether debug mode is activated
-DEBUG = True
+DEBUG = False
 
 
 ##### Game related settings #####
@@ -48,7 +48,7 @@ BASE_FONT = 'Linux Biolinum O'
 # e.g. 1024x768
 LOW_RESOLUTION = True
 # whether to show main GUI in fullscreen mode
-FULLSCREEN = False
+FULLSCREEN = True
 # whether to use a high contrast theme
 HIGH_CONTRAST = True
 

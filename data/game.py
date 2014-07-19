@@ -129,6 +129,7 @@ class Game():
             for question in range(self.get_number_of_questions(topic)):
                 if not self.was_question_completed(topic, question):
                     return False
+        self.fix_ranking()
         return True
 
     ##### methods concerning points and team management #####
@@ -149,6 +150,27 @@ class Game():
 
     def get_points_for_team(self, team_id):
         return self.team_points_dict[team_id]
+
+    def fix_ranking(self):
+        self.ranking = {}
+        # create a set with all different points from the teams and sort them
+        # in reverse order...
+        list_of_points = sorted(set(self.team_points_dict.values()), reverse=True)
+        place = 1
+        # ...get for each and every points all teams that got the same amount
+        # of points and count the places through to assign them to the teams.
+        for place_points in list_of_points:
+            for team in range(config.MAX_TEAM_NUMBER):
+                if self.team_points_dict[team] == place_points:
+                    self.ranking[place] = team
+                    place += 1
+
+    def get_placed_team(self, place):
+        if self.is_round_complete() and place in self.ranking:
+            return (config.TEAM_NAMES[self.ranking[place]],
+                    self.get_points_for_team(self.ranking[place]))
+        else:
+            return ()
 
     def set_buzzer_id_for_team(self, team_id, buzzer_id):
         """Sets buzzer id for a team.
