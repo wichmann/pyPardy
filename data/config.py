@@ -38,6 +38,8 @@ AUDIO_SPEECH = False
 AUDIO_SFX = True
 # whether to play background music while showing the question
 AUDIO_MUSIC = True
+# whether to loop background music
+LOOP_BACKGROUND_MUSIC = False
 
 
 ##### Graphics related settings #####

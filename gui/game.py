@@ -253,10 +253,9 @@ class QuestionViewPanel(QtGui.QWidget):
     def build_info_button(self):
         # add buttons for topic and points
         if config.HIGH_CONTRAST:        
-            INFO_BUTTON_STYLE = 'background-color: yellow; color: black'
+            INFO_BUTTON_STYLE = 'color: black;'
         else:
             INFO_BUTTON_STYLE = 'background-color: yellow;'
-            # border-radius: 20px; border-width: 4px;'
         topic_button = QtGui.QPushButton(helper.replace_line_breaks(self.topic))
         topic_button.setEnabled(False)
         topic_button.setFont(self.button_font)
@@ -484,7 +483,8 @@ class QuestionViewPanel(QtGui.QWidget):
         self.audio_output = Phonon.AudioOutput(Phonon.MusicCategory)
         self.background_music = Phonon.MediaObject()
         Phonon.createPath(self.background_music, self.audio_output)
-        self.background_music.finished.connect(self.background_music.play)
+        if config.LOOP_BACKGROUND_MUSIC:
+            self.background_music.finished.connect(self.background_music.play)
         self.background_music.setCurrentSource(Phonon.MediaSource('./sounds/jeopardy.wav'))
         # create buzzer sound object
         self.audio_output2 = Phonon.AudioOutput(Phonon.MusicCategory)
@@ -674,6 +674,7 @@ class GameOverDialog(QtGui.QDialog):
             self.points_font.setPointSize(20)
 
     def setup_ui(self):
+        self.place_style = 'border:2px solid black;'
         self.grid = QtGui.QGridLayout()
         center_box = QtGui.QVBoxLayout()
         title_label = QtGui.QLabel(self.game_data.get_round_title())
@@ -697,7 +698,7 @@ class GameOverDialog(QtGui.QDialog):
         place_label = QtGui.QLabel(team_name)
         place_label.setFont(self.team_font)
         place_label.setAlignment(QtCore.Qt.AlignCenter)
-        place_label.setStyleSheet('border: 1 0 0 0;')
+        place_label.setStyleSheet(self.place_style)
         box.addWidget(place_label, QtCore.Qt.AlignHCenter)
         points_label = QtGui.QLabel(str(points))
         points_label.setFont(self.points_font)
@@ -711,7 +712,7 @@ class GameOverDialog(QtGui.QDialog):
         place_label = QtGui.QLabel(team_name)
         place_label.setFont(self.team_font)
         place_label.setAlignment(QtCore.Qt.AlignCenter)
-        place_label.setStyleSheet('border: 1 0 0 0;')
+        place_label.setStyleSheet(self.place_style)
         box.addWidget(place_label, QtCore.Qt.AlignHCenter)
         points_label = QtGui.QLabel(str(points))
         points_label.setFont(self.points_font)
@@ -725,7 +726,7 @@ class GameOverDialog(QtGui.QDialog):
         place_label = QtGui.QLabel(team_name)
         place_label.setFont(self.team_font)
         place_label.setAlignment(QtCore.Qt.AlignCenter)
-        place_label.setStyleSheet('border: 1 0 0 0;')
+        place_label.setStyleSheet(self.place_style)
         box.addWidget(place_label, QtCore.Qt.AlignHCenter)
         points_label = QtGui.QLabel(str(points))
         points_label.setFont(self.points_font)
