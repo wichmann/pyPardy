@@ -30,6 +30,7 @@ class BuzzerConfigPanel(QtGui.QWidget):
         self.setFixedSize(width, height)
         self.create_fonts()
         self.setup_ui()
+        helper.whitefy(self)
         self.set_signals_and_slots()
 
     #def __del__(self):
@@ -132,6 +133,7 @@ class AvailableRoundPanel(QtGui.QWidget):
         self.create_fonts()
         self.setup_ui()
         self.set_signals_and_slots()
+        helper.whitefy(self)
 
     def create_fonts(self):
         if config.LOW_RESOLUTION:
@@ -167,6 +169,8 @@ class AvailableRoundPanel(QtGui.QWidget):
             new_button.resize(new_button.sizeHint())
             new_button.setSizePolicy(QtGui.QSizePolicy.Expanding,
                                      QtGui.QSizePolicy.Expanding)
+            if config.HIGH_CONTRAST:
+                helper.whitefy(new_button)
             new_button.setFont(self.button_font)
             new_button.clicked.connect(self.on_button_click)
             self.button_box.addWidget(new_button)

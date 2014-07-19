@@ -15,9 +15,9 @@ logger = logging.getLogger('pyPardy.data')
 
 
 # name of the application that is shown in the GUI
-APP_NAME = "pyPardy!"
+APP_NAME = "Sommerfest 2014!"
 # whether debug mode is activated
-DEBUG = False
+DEBUG = True
 
 
 ##### Game related settings #####
@@ -48,7 +48,9 @@ BASE_FONT = 'Linux Biolinum O'
 # e.g. 1024x768
 LOW_RESOLUTION = True
 # whether to show main GUI in fullscreen mode
-FULLSCREEN = True
+FULLSCREEN = False
+# whether to use a high contrast theme
+HIGH_CONTRAST = True
 
 
 ##### Buzzer related settings #####
@@ -56,7 +58,7 @@ FULLSCREEN = True
 # predefined buzzer ids for teams
 BUZZER_ID_FOR_TEAMS = [1, 2, 3, 4]
 # predefined team names
-TEAM_NAMES = ['Team 1', 'Team A', 'Team α', 'Team あ']
+TEAM_NAMES = ['Rot', 'Grün', 'Gelb', 'Blau']
 
 
 def load_config_from_file():

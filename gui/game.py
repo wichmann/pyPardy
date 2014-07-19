@@ -48,6 +48,7 @@ class QuestionTablePanel(QtGui.QWidget):
         self.setFixedSize(width, height)
         self.create_fonts()
         self.setup_ui()
+        helper.whitefy(self)
         self.set_signals_and_slots()
 
     def create_fonts(self):
@@ -107,6 +108,8 @@ class QuestionTablePanel(QtGui.QWidget):
                 new_button = QtGui.QPushButton(button_text)
                 new_button.setSizePolicy(QtGui.QSizePolicy.Expanding,
                                          QtGui.QSizePolicy.Expanding)
+                if config.HIGH_CONTRAST:
+                    helper.whitefy(new_button)
                 # set topic and question number inside each QButton
                 new_button.topic_count = topic_count
                 new_button.question_count = question_count
@@ -209,6 +212,7 @@ class QuestionViewPanel(QtGui.QWidget):
         # build gui and slots
         self.create_fonts()
         self.setup_ui()
+        helper.whitefy(self)
         self.set_signals_and_slots()
         self.start_timer()
         # audio methods
@@ -248,8 +252,11 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def build_info_button(self):
         # add buttons for topic and points
-        INFO_BUTTON_STYLE = 'background-color: yellow;'
-        # border-radius: 20px; border-width: 4px;'
+        if config.HIGH_CONTRAST:        
+            INFO_BUTTON_STYLE = 'background-color: yellow; color: black'
+        else:
+            INFO_BUTTON_STYLE = 'background-color: yellow;'
+            # border-radius: 20px; border-width: 4px;'
         topic_button = QtGui.QPushButton(helper.replace_line_breaks(self.topic))
         topic_button.setEnabled(False)
         topic_button.setFont(self.button_font)

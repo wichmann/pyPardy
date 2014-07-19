@@ -14,6 +14,7 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 
 from buzzer import buzzer
+from data import config
 
 
 logger = logging.getLogger('pyPardy.gui')
@@ -176,3 +177,10 @@ def set_opacity_for_widget(widget, opacity):
     widget.setGraphicsEffect(effect)
     # set opacity
     effect.setOpacity(float(opacity))
+
+def whitefy(widget):
+    if config.HIGH_CONTRAST:
+        p = widget.palette()
+        widget.setAutoFillBackground(True)
+        p.setColor(widget.backgroundRole(), QtCore.Qt.white)
+        widget.setPalette(p)
