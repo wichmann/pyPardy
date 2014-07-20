@@ -39,9 +39,11 @@ def create_logger():
 
 if __name__ == '__main__':
     logger = create_logger()
-    logger.info('Starting pyPardy...')
-    list_of_round_files = round.get_available_round_data()
+    logger.info('Starting pyPardy...')   
+    config.load_config_from_file()
     if config.DEBUG:
+        # print all available round data to stdout when in debug mode
+        list_of_round_files = round.get_available_round_data()
         for title, filename in list_of_round_files:
             data = round.load_round_data_file(filename)
             round.pprint_round_data(data)

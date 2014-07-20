@@ -9,15 +9,18 @@ Configuration module for pyPardy.
 
 
 import logging
+import json
 
 
 logger = logging.getLogger('pyPardy.data')
 
 
 # name of the application that is shown in the GUI
-APP_NAME = "pyPardy"
+APP_NAME = 'pyPardy'
 # whether debug mode is activated
 DEBUG = False
+# file name for configuration data
+CONFIG_FILE_NAME = 'settings.json'
 
 
 ##### Game related settings #####
@@ -70,13 +73,46 @@ TEAM_NAMES = ['Rot', 'Grün', 'Gelb', 'Blau']
 
 
 def load_config_from_file():
+    """Loads configuration settings from file and stores the values in global
+    variables.
+
+    Alternative code:
+    # globals().update(the_dict) or locals().update(the_dict).
+    """
     logger.info('Loading config from file...')
-    raise NotImplementedError()
+    with open(CONFIG_FILE_NAME, 'r') as config_file:
+        data = json.load(config_file)
+        for element, value in data.items():
+            # if element is variable in this module...
+            if element in globals():
+                # set global variable in this module when type is correct
+                try:
+                    setting = globals()[element]
+                    if type(setting) == int:
+                        globals()[element] = int(value)
+                    elif type(setting) == bool:
+                        globals()[element] = bool(value)
+                    elif type(setting) == str:
+                        globals()[element] = str(value)
+                    elif type(setting) == list:
+                        globals()[element] = list(value)
+                    else:
+                        raise ValueError()
+                except ValueError:
+                    logger.error('Wrong data type in settings file, ignoring value for "{}" element!'.format(element))
 
 
 def save_config_to_file():
     logger.info('Saving config to file...')
-    raise NotImplementedError()
+    with open(CONFIG_FILE_NAME, 'w') as config_file:
+        # build dict with all info
+        config_data = dict()
+        for var in globals().keys():
+            if not var.startswith("__") and all(char.isupper() or char == '_' for char in var):
+                config_data[var] = eval(var)
+        # dict( (name,eval(name)) for name in ['some','list','of','vars'] )
+        # save dict to json file
+        json.dump(config_data, config_file)
 
 
 if __name__ == '__main__':

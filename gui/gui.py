@@ -189,7 +189,7 @@ class PyPardyGui(QtGui.QMainWindow):
 def handle_exit():
     """Handles closing of the pyQt main window by destroying the python
     interpreter."""
-    pass
+    config.save_config_to_file()
 
 
 def start_gui():
@@ -199,7 +199,7 @@ def start_gui():
     app.aboutToQuit.connect(handle_exit)
     main = PyPardyGui()
     main.show()
-    sys.exit(app.exec_())
+    app.exec_()
 
 
 if __name__ == "__main__":
