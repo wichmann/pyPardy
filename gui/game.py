@@ -255,7 +255,7 @@ class QuestionViewPanel(QtGui.QWidget):
         if config.HIGH_CONTRAST:        
             INFO_BUTTON_STYLE = 'color: black;'
         else:
-            INFO_BUTTON_STYLE = 'background-color: yellow;'
+            INFO_BUTTON_STYLE = 'background-color: yellow; color: black;'
         topic_button = QtGui.QPushButton(helper.replace_line_breaks(self.topic))
         topic_button.setEnabled(False)
         topic_button.setFont(self.button_font)
@@ -406,11 +406,7 @@ class QuestionViewPanel(QtGui.QWidget):
             # update gui widgets
             self.team_view_panel.highlight_team(team_id)
             if self.timer.isActive():
-                # stop timer and fade question out only when buzzered before end
-                # of timer
-                self.stop_timer()
-                helper.animate_widget(self.question_label, True,
-                                      self.on_question_fadeout)
+                self.on_question_time_end()
 
     @QtCore.pyqtSlot()
     def on_update_lcd(self):
@@ -419,14 +415,24 @@ class QuestionViewPanel(QtGui.QWidget):
             self.current_time -= 1
             self.timer_lcd.display('{0:01}'.format(self.current_time / GAME_TIME_FACTOR))
         else:
-            # stop timer and fade question out
-            self.stop_timer()
+            self.on_question_time_end()
+
+    def on_question_time_end(self):
+        # stop timer and fade question out only when buzzered before end of
+        # timer
+        self.stop_timer()
+        if config.HIDE_QUESTION:
+            # fade question label out
+            logger.info('Question has been faded out.')
             helper.animate_widget(self.question_label, True,
                                   self.on_question_fadeout)
+        else:
+            # do not hide question label but do what would be done when
+            # hiding the question label
+            self.on_question_fadeout()
 
     @QtCore.pyqtSlot()
     def on_question_fadeout(self):
-        logger.info('Question has been faded out.')
         self.background_music.stop()
         self.show_answer_button.setEnabled(True)
         self.show_answer_button.setFocus()
@@ -460,7 +466,12 @@ class QuestionViewPanel(QtGui.QWidget):
         string += self.game_data.get_current_answer()
         # fade in label with question and answer
         self.question_label.setText(string)
-        helper.animate_widget(self.question_label, False, self.on_answer_fadein)
+        if config.HIDE_QUESTION:
+            # fade question label in ONLY when it was not faded out before
+            helper.animate_widget(self.question_label, False)
+        else:
+            # else do what would be done when question had to be faded in
+            self.on_answer_fadein()
         self.game_data.mark_question_as_complete()
 
     @QtCore.pyqtSlot(bool)
@@ -471,9 +482,12 @@ class QuestionViewPanel(QtGui.QWidget):
 
         :param answer_correct: whether the given answer was correct
         """
-        if answer_correct:
-            if self.last_buzzed_team != -1:
+        if self.last_buzzed_team != -1:
+            if answer_correct:
                 self.game_data.add_points_to_team(self.last_buzzed_team)
+            else:
+                if config.PENALTY_WRONG_ANSWERS:
+                    self.game_data.subtract_points_from_team(self.last_buzzed_team)
         self.main_gui.back_to_round_table()
 
     ##### methods concerning sound/audio #####
@@ -667,7 +681,7 @@ class GameOverDialog(QtGui.QDialog):
             self.points_font.setPointSize(20)
         else:
             self.title_font = QtGui.QFont(config.BASE_FONT)
-            self.title_font.setPointSize(42)
+            self.title_font.setPointSize(36)
             self.team_font = QtGui.QFont(config.BASE_FONT)
             self.team_font.setPointSize(26)
             self.points_font = QtGui.QFont(config.BASE_FONT)

@@ -15,7 +15,7 @@ logger = logging.getLogger('pyPardy.data')
 
 
 # name of the application that is shown in the GUI
-APP_NAME = "Sommerfest 2014"
+APP_NAME = "pyPardy"
 # whether debug mode is activated
 DEBUG = False
 
@@ -28,6 +28,12 @@ MAX_TEAM_NUMBER = 3
 QUESTION_TIME = 60
 # points that are added for every question in a given topic
 QUESTION_POINTS = 100
+# whether to decrease points when team answer wrongly
+PENALTY_WRONG_ANSWERS = True
+# whether to add points from all played round
+ADD_ROUND_POINTS = True
+# whether to hide question after buzzer was pressed
+HIDE_QUESTION = False
 
 
 ##### Audio related settings #####
@@ -35,9 +41,9 @@ QUESTION_POINTS = 100
 # whether to use text-to-speech to read question
 AUDIO_SPEECH = False
 # whether to play sound effects when buzzer was hit
-AUDIO_SFX = True
+AUDIO_SFX = False
 # whether to play background music while showing the question
-AUDIO_MUSIC = True
+AUDIO_MUSIC = False
 # whether to loop background music
 LOOP_BACKGROUND_MUSIC = False
 
@@ -48,11 +54,11 @@ LOOP_BACKGROUND_MUSIC = False
 BASE_FONT = 'Linux Biolinum O'
 # whether to design graphical user interface for lower resolutions,
 # e.g. 1024x768
-LOW_RESOLUTION = True
+LOW_RESOLUTION = False
 # whether to show main GUI in fullscreen mode
 FULLSCREEN = True
 # whether to use a high contrast theme
-HIGH_CONTRAST = True
+HIGH_CONTRAST = False
 
 
 ##### Buzzer related settings #####

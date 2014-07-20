@@ -30,7 +30,7 @@ class Game():
     error.
     """
     def __init__(self):
-        self.reset_game()
+        self.reset_game(reset_points=True)
         # dictionary with the buzzer id for each team copied from configs
         # default
         self.buzzer_id_list = list(config.BUZZER_ID_FOR_TEAMS)
@@ -145,6 +145,10 @@ class Game():
         self.team_points_dict[team_id] += (self.current_question + 1) * config.QUESTION_POINTS
         self.write_current_points_to_file()
 
+    def subtract_points_from_team(self, team_id):
+        self.team_points_dict[team_id] -= (self.current_question + 1) * config.QUESTION_POINTS
+        self.write_current_points_to_file() 
+
     def correct_points_by_100(self, team_id):
         self.team_points_dict[team_id] += config.QUESTION_POINTS
 
@@ -197,7 +201,7 @@ class Game():
                 return team
         return -1
 
-    def reset_game(self):
+    def reset_game(self, reset_points=False):
         """Reset all internal variables for the next game."""
         self.filename = ''
         self.current_round_data = None
@@ -208,53 +212,8 @@ class Game():
         # list with all questions that have been played before
         self.played_questions_list = []
         # dictionary with points for all teams
-        self.team_points_dict = dict.fromkeys(range(config.MAX_TEAM_NUMBER), 0)
-
-
-class Team():
-    last_used_team_id = 0
-
-    def __init__(self, team_name, buzzer_id):
-        self.team_name = team_name
-        self.buzzer_id = buzzer_id
-        # increment team id and assign it
-        Team.last_used_team_id += 1
-        self.team_id = Team.last_used_team_id
-
-
-class Teams():
-    def __init__(self):
-        self.team_list = []
-
-    def add_team(self, team_name, buzzer_id=0):
-        if buzzer_id == 0:
-            logger.warning('No buzzer id assigned yet!')
-        new_team = Team(team_name, buzzer_id)
-        self.teamList.append(new_team)
-        team_list_string = ', '.join(str(i) for i in self.getTeamList())
-        logger.info("New team list: {}".format(team_list_string))
-
-    def remove_team(self, team_name):
-        for team in self.team_list:
-            if team.get_team_list() == team_name:
-                self.team_list.remove(team)
-
-    def get_team_by_name(self, team_name):
-        for team in self.team_list:
-            if team.team_name == team_name:
-                return team
-
-    def load_teams_from_file(self):
-        logger.error("Loading teams not yet implemented.")
-
-    def save_teams_to_file(self):
-        logger.error("Saving teams not yet implemented.")
-
-    def get_team_list(self):
-        team_names_list = []
-        for team in self.teamList:
-            team_names_list.append(team.team_name)
-        return team_names_list
+        if not config.ADD_ROUND_POINTS or reset_points:
+            self.team_points_dict = dict.fromkeys(range(config.MAX_TEAM_NUMBER), 0)
 
 
 if __name__ == '__main__':
