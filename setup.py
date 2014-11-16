@@ -27,5 +27,5 @@ setup(
     license='LICENSE',
     description='Jeopardy(tm) game system',
     options=dict(build_exe=buildOptions),
-    executables=executables
+    executables=executables, requires=['PyQt4']
 )

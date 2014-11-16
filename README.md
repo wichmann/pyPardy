@@ -17,7 +17,7 @@ pyPardy is released under the GNU General Public License v2 or newer.
 
 REQUIREMENTS
 ------------
-pyPardy requires at least Python 3.3.
+pyPardy requires at least Python 3.3. It requires also PyQt4 and PyQt4.phonon.
 
 For the correct rendering the font "Linux Biolinum O" has to be installed.
 
@@ -43,6 +43,9 @@ THIRD PARTY SOFTWARE
 pyPardy includes parts of or links with the following software packages and 
 programs, so give the developers lots of thanks sometime! 
 
+* PyQt, Phonon, Qt under GPL or LGPL license.
+* libusb under LGPL license.
+* python-libusb1 binding under GPL license.
 * Some cliparts from opencliparts.org: 
    - http://openclipart.org/detail/190592/button-by-tobbi-190592
 * Some free sound files:

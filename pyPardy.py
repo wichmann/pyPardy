@@ -6,8 +6,10 @@ pyPardy
 Main starter for pyPardy.
 
 Python dependencies:
- -
- -
+ - PyQt4.phonon
+ - libusb
+ - python-libusb1
+ - espeak
 
 @author: Christian Wichmann
 """
