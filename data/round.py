@@ -69,7 +69,7 @@ def load_round_data_file(filename):
     :param filename: filename to load round data from
     :returns: data from round data file
     """
-    json_data_file = open(filename)
+    json_data_file = open(filename, encoding='utf8')
     data = json.load(json_data_file)
     if not verify_round_data(data):
         logger.error('Error in round data file: {}.'.format(filename))

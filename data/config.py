@@ -59,7 +59,7 @@ BASE_FONT = 'Linux Biolinum O'
 # e.g. 1024x768
 LOW_RESOLUTION = False
 # whether to show main GUI in fullscreen mode
-FULLSCREEN = True
+FULLSCREEN = False
 # whether to use a high contrast theme
 HIGH_CONTRAST = False
 
@@ -80,26 +80,29 @@ def load_config_from_file():
     # globals().update(the_dict) or locals().update(the_dict).
     """
     logger.info('Loading config from file...')
-    with open(CONFIG_FILE_NAME, 'r') as config_file:
-        data = json.load(config_file)
-        for element, value in data.items():
-            # if element is variable in this module...
-            if element in globals():
-                # set global variable in this module when type is correct
-                try:
-                    setting = globals()[element]
-                    if type(setting) == int:
-                        globals()[element] = int(value)
-                    elif type(setting) == bool:
-                        globals()[element] = bool(value)
-                    elif type(setting) == str:
-                        globals()[element] = str(value)
-                    elif type(setting) == list:
-                        globals()[element] = list(value)
-                    else:
-                        raise ValueError()
-                except ValueError:
-                    logger.error('Wrong data type in settings file, ignoring value for "{}" element!'.format(element))
+    try:
+        with open(CONFIG_FILE_NAME, 'r') as config_file:
+            data = json.load(config_file)
+            for element, value in data.items():
+                # if element is variable in this module...
+                if element in globals():
+                    # set global variable in this module when type is correct
+                    try:
+                        setting = globals()[element]
+                        if type(setting) == int:
+                            globals()[element] = int(value)
+                        elif type(setting) == bool:
+                            globals()[element] = bool(value)
+                        elif type(setting) == str:
+                            globals()[element] = str(value)
+                        elif type(setting) == list:
+                            globals()[element] = list(value)
+                        else:
+                            raise ValueError()
+                    except ValueError:
+                        logger.error('Wrong data type in settings file, ignoring value for "{}" element!'.format(element))
+    except FileNotFoundError as e:
+        logger.error('Configuration file not found!')
 
 
 def save_config_to_file():
