@@ -99,6 +99,24 @@ def get_buzzer_connector():
 
 
 ##### Miscellaneous functions for GUI
+ 
+class HoverButton(QtGui.QPushButton):
+    mouseHover = QtCore.pyqtSignal(bool)
+
+    def __init__(self, parent=None):
+        QtGui.QPushButton.__init__(self, parent)
+        # hide itself
+        hide_widget(self)
+        self.setMouseTracking(True)
+
+    def enterEvent(self, event):
+        show_widget(self)
+        self.mouseHover.emit(True)
+
+    def leaveEvent(self, event):
+        hide_widget(self)
+        self.mouseHover.emit(False)
+
 
 def center_on_screen(window):
     """Centers the window on the screen."""

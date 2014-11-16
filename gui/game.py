@@ -13,8 +13,8 @@ from PyQt4 import QtCore
 from PyQt4.phonon import Phonon
 
 from data import config
-from data import game
 from gui import helper
+import data.helper
 
 
 logger = logging.getLogger('pyPardy.gui')
@@ -36,14 +36,26 @@ class QuestionTablePanel(QtGui.QWidget):
     """
     # define signal to be used to update widgets inside this QuestionTablePanel
     table_shown = QtCore.pyqtSignal()
+    
+    # define a QT signal to react on buzzer presses
+    question_button_pressed = QtCore.pyqtSignal(int, int)
 
-    def __init__(self, parent, game_data, width, height):
-        """Initialize panel for displaying all questions."""
+    def __init__(self, parent, game_data, width, height, add_team_panel=True):
+        """Initialize panel for displaying all questions.
+        
+        :param parent: parent widget
+        :param game_data: game data instance for the currently running game
+        :param width: width of this widget
+        :param height: height of this widget
+        :param add_team_panel: whether to include a team panel left of the
+                               question table, default value is True
+        """
         super(QuestionTablePanel, self).__init__(parent)
         logger.info('Generating question table for round "{}"'
                     .format(game_data.current_round_data['title']))
         self.game_data = game_data
         self.main_gui = parent
+        self.add_team_panel = add_team_panel
         self.button_list = []
         self.setFixedSize(width, height)
         self.create_fonts()
@@ -73,11 +85,12 @@ class QuestionTablePanel(QtGui.QWidget):
         # build table
         self.box_layout.addLayout(self.build_table())
         # add team view widget
-        self.team_view_panel = TeamViewPanel(self, self.game_data,
-                                             150, self.height(),
-                                             TeamViewPanel.VERTICAL_ORIENTATION)
-        self.box_layout.addWidget(self.team_view_panel, QtCore.Qt.AlignCenter |
-                                  QtCore.Qt.AlignRight)
+        if self.add_team_panel:
+            self.team_view_panel = TeamViewPanel(self, self.game_data,
+                                                 150, self.height(),
+                                                 TeamViewPanel.VERTICAL_ORIENTATION)
+            self.box_layout.addWidget(self.team_view_panel, QtCore.Qt.AlignCenter |
+                                      QtCore.Qt.AlignRight)
 
     def build_table(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
@@ -122,7 +135,8 @@ class QuestionTablePanel(QtGui.QWidget):
 
     def set_signals_and_slots(self):
         """Sets all signals and slots for question table panel."""
-        self.table_shown.connect(self.team_view_panel.on_update_points)
+        if self.add_team_panel:
+            self.table_shown.connect(self.team_view_panel.on_update_points)
 
     def keyPressEvent(self, event):
         """Handle key events for cursor keys to navigate questions."""
@@ -142,7 +156,8 @@ class QuestionTablePanel(QtGui.QWidget):
         for i in range(config.MAX_TEAM_NUMBER):
             if key == list_of_keys[i]:
                 self.game_data.correct_points_by_100(i)
-                self.team_view_panel.on_update_points()
+                if self.add_team_panel:
+                    self.team_view_panel.on_update_points()
         if key == QtCore.Qt.Key_D:
             self.focus_specific_button(topic + 1, question)
         elif key == QtCore.Qt.Key_A:
@@ -186,7 +201,7 @@ class QuestionTablePanel(QtGui.QWidget):
         question = self.sender().question_count
         logger.info('Question {} from topic {} should be shown...'
                     .format(question, topic))
-        self.main_gui.show_question(topic, question)
+        self.question_button_pressed.emit(topic, question)
 
 
 class QuestionViewPanel(QtGui.QWidget):
@@ -347,10 +362,15 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def remove_signals_and_slots(self):
         """Sets all signals and slots for question view."""
-        self.show_answer_button.clicked.disconnect()
-        self.answer_incorrect_button.clicked.disconnect()
-        self.answer_correct_button.clicked.disconnect()
-        self.buzzer_connector.buzzing.disconnect()
+        # Try to disconnect but catch exception when no function has been
+        # connected to this signal!
+        try:
+            self.show_answer_button.clicked.disconnect()
+            self.answer_incorrect_button.clicked.disconnect()
+            self.answer_correct_button.clicked.disconnect()
+            self.buzzer_connector.buzzing.disconnect()
+        except:
+            pass
 
     def keyPressEvent(self, event):
         """Handle key events for choosing teams instead of buzzering and
@@ -368,8 +388,13 @@ class QuestionViewPanel(QtGui.QWidget):
         """Closes the connection between the BuzzerConnector and the callable
         method 'on_buzzer_pressed' on this class.
         """
-        self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
-        self.buzzer_connector = None
+        # Try to disconnect but catch exception when no function has been
+        # connected to this signal!
+        try:
+            self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
+            self.buzzer_connector = None
+        except:
+            pass
 
     ##### game timer methods #####
 
@@ -507,7 +532,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.buzzer_sound.setCurrentSource(Phonon.MediaSource('./sounds/buzzer.wav'))
 
     def read_question(self):
-        if config.AUDIO_SPEECH:
+        if config.AUDIO_SPEECH and data.helper.module_exists('espeak'):
             from espeak import espeak
             espeak.synth(self.game_data.get_current_question())
 
@@ -702,13 +727,13 @@ class GameOverDialog(QtGui.QDialog):
         margin = 40
         self.grid.setContentsMargins(margin, margin, margin, margin)
         # build widgets
-        self.build_first_place()
-        self.build_second_place()
-        self.build_third_place()
+        self.grid.addLayout(self.build_place(1), 1, 1)
+        self.grid.addLayout(self.build_place(2), 2, 2)
+        self.grid.addLayout(self.build_place(3), 3, 0)
 
-    def build_first_place(self):
+    def build_place(self, place):
         box = QtGui.QVBoxLayout()
-        team_name, points = self.game_data.get_placed_team(1)
+        team_name, points = self.game_data.get_placed_team(place)
         place_label = QtGui.QLabel(team_name)
         place_label.setFont(self.team_font)
         place_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -718,32 +743,4 @@ class GameOverDialog(QtGui.QDialog):
         points_label.setFont(self.points_font)
         points_label.setAlignment(QtCore.Qt.AlignCenter)
         box.addWidget(points_label, QtCore.Qt.AlignHCenter)
-        self.grid.addLayout(box, 1, 1)
-
-    def build_second_place(self):
-        box = QtGui.QVBoxLayout()
-        team_name, points = self.game_data.get_placed_team(2)
-        place_label = QtGui.QLabel(team_name)
-        place_label.setFont(self.team_font)
-        place_label.setAlignment(QtCore.Qt.AlignCenter)
-        place_label.setStyleSheet(self.place_style)
-        box.addWidget(place_label, QtCore.Qt.AlignHCenter)
-        points_label = QtGui.QLabel(str(points))
-        points_label.setFont(self.points_font)
-        points_label.setAlignment(QtCore.Qt.AlignCenter)
-        box.addWidget(points_label, QtCore.Qt.AlignHCenter)
-        self.grid.addLayout(box, 2, 2)
-
-    def build_third_place(self):
-        box = QtGui.QVBoxLayout()
-        team_name, points = self.game_data.get_placed_team(3)
-        place_label = QtGui.QLabel(team_name)
-        place_label.setFont(self.team_font)
-        place_label.setAlignment(QtCore.Qt.AlignCenter)
-        place_label.setStyleSheet(self.place_style)
-        box.addWidget(place_label, QtCore.Qt.AlignHCenter)
-        points_label = QtGui.QLabel(str(points))
-        points_label.setFont(self.points_font)
-        points_label.setAlignment(QtCore.Qt.AlignCenter)
-        box.addWidget(points_label, QtCore.Qt.AlignHCenter)
-        self.grid.addLayout(box, 3, 0)
+        return box       

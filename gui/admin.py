@@ -10,6 +10,8 @@ Administrative widgets of pyPardy.
 import logging
 from PyQt4 import QtGui
 from PyQt4 import QtCore
+from PyQt4 import QtDeclarative
+# QtQml
 
 from data import round
 from data import config
@@ -30,12 +32,9 @@ class BuzzerConfigPanel(QtGui.QWidget):
         self.setFixedSize(width, height)
         self.create_fonts()
         self.setup_ui()
-        helper.whitefy(self)
+        if config.HIGH_CONTRAST:
+            helper.whitefy(self)
         self.set_signals_and_slots()
-
-    #def __del__(self):
-    #    # stop threads inside buzzer API
-    #    self.close_connection_to_buzzer()
 
     def create_fonts(self):
         if config.LOW_RESOLUTION:
@@ -73,14 +72,13 @@ class BuzzerConfigPanel(QtGui.QWidget):
         self.team_label_list[0].setStyleSheet("color: red")
 
     def set_signals_and_slots(self):
-        """Sets all signals and slots for main window."""
+        """Sets all signals and slots for buzzer configuation window."""
         self.buzzer_connector = helper.get_buzzer_connector()
         self.buzzer_connector.flush_connection()
         self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
     def close_connection_to_buzzer(self):
         self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
-        #self.buzzer_connector.buzzer_reader.stop()
         self.buzzer_connector = None
 
     @QtCore.pyqtSlot(int)
@@ -103,24 +101,6 @@ class BuzzerConfigPanel(QtGui.QWidget):
             self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
             self.close_connection_to_buzzer()
             self.main_gui.show_available_rounds_panel()
-
-
-class HoverButton(QtGui.QPushButton):
-    mouseHover = QtCore.pyqtSignal(bool)
-
-    def __init__(self, parent=None):
-        QtGui.QPushButton.__init__(self, parent)
-        # hide itself
-        helper.hide_widget(self)
-        self.setMouseTracking(True)
-
-    def enterEvent(self, event):
-        helper.show_widget(self)
-        self.mouseHover.emit(True)
-
-    def leaveEvent(self, event):
-        helper.hide_widget(self)
-        self.mouseHover.emit(False)
 
 
 class AvailableRoundPanel(QtGui.QWidget):
@@ -176,14 +156,28 @@ class AvailableRoundPanel(QtGui.QWidget):
             self.button_box.addWidget(new_button)
             self.button_box.addStretch(1)
         # add button for assigning team buzzer
-        buzzer_config_button = HoverButton()
+        buzzer_config_button = helper.HoverButton()
         buzzer_config_button.setText('Zuordnung der Buzzer ändern...')
         buzzer_config_button.setFont(self.button_font)
         buzzer_config_button.clicked.connect(self.on_buzzer_config_button)
         self.button_box.addStretch(5)
         self.button_box.addWidget(buzzer_config_button)
+        # add button for configuration
+        config_button = helper.HoverButton()
+        config_button.setText('Konfiguration')
+        config_button.setFont(self.button_font)
+        config_button.clicked.connect(self.on_config_button)
+        self.button_box.addStretch(1)
+        self.button_box.addWidget(config_button)
+        # add button for information panel
+        info_button = helper.HoverButton()
+        info_button.setText('Information')
+        info_button.setFont(self.button_font)
+        info_button.clicked.connect(self.on_information_button)
+        self.button_box.addStretch(1)
+        self.button_box.addWidget(info_button)
         # add button for quitting application
-        quit_button = HoverButton()
+        quit_button = helper.HoverButton()
         quit_button.setText('Beenden')
         quit_button.setFont(self.button_font)
         quit_button.clicked.connect(self.main_gui.close)
@@ -212,3 +206,54 @@ class AvailableRoundPanel(QtGui.QWidget):
     def on_buzzer_config_button(self):
         logger.info('Changing buzzer configuration...')
         self.main_gui.show_buzzer_config_panel()
+
+    @QtCore.pyqtSlot()
+    def on_information_button(self):
+        logger.info('Showing information about game...')
+        self.main_gui.show_information_panel()
+
+    @QtCore.pyqtSlot()
+    def on_config_button(self):
+        logger.info('Showing configuration panel...')
+        self.main_gui.show_config_panel()
+
+
+class ConfigurationPanel(QtGui.QWidget):
+    """Shows a panel to config all settings for pyPardy."""
+    def __init__(self, parent, game_data, width, height):
+        super(ConfigurationPanel, self).__init__(parent)
+        self.main_gui = parent
+        self.game_data = game_data
+        self.setFixedSize(width, height)
+        self.create_fonts()
+        self.setup_ui()
+        self.set_signals_and_slots()
+
+    def create_fonts(self):
+        if config.LOW_RESOLUTION:
+            self.label_font = QtGui.QFont(config.BASE_FONT)
+            self.label_font.setPointSize(22)
+        else:
+            self.label_font = QtGui.QFont(config.BASE_FONT)
+            self.label_font.setPointSize(30)
+
+    def setup_ui(self):
+        hbox = QtGui.QVBoxLayout()
+        #x = QtQml.qmlRegisterType('slideswitch/slideswitch.qml', 1, 0, 'SlideSwitch')
+        x = QtDeclarative.QDeclarativeView()
+        x.setSource(QtCore.QUrl('gui/slideswitch/slideswitch.qml'))
+        x.setResizeMode(QtDeclarative.QDeclarativeView.SizeRootObjectToView)
+        hbox.addWidget(x)
+        # add button for returning to menu
+        back_button = QtGui.QPushButton('Zurück')
+        back_button.clicked.connect(self.on_back_button)
+        hbox.addWidget(back_button, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+        self.setLayout(hbox)
+
+    def set_signals_and_slots(self):
+        """Sets all signals and slots."""
+        pass
+
+    @QtCore.pyqtSlot()
+    def on_back_button(self):
+        self.main_gui.show_available_rounds_panel()
