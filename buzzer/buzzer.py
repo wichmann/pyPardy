@@ -7,6 +7,7 @@ instance of BuzzerReader with a callback as an argument.
 
 import threading
 import platform
+import time
 import usb1
 import libusb1
 import logging
@@ -209,6 +210,8 @@ class BuzzerReaderPoller(threading.Thread):
         try:
             while True:
                 self.check_for_new_devices()
+                # stop for half a second before checking again
+                time.sleep(0.5)
         except (KeyboardInterrupt, SystemExit):
             pass
         self.__context.exit()
