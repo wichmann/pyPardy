@@ -120,7 +120,7 @@ class BuzzerDevice(threading.Thread):
             if temp == BUZZER_MAGIC_MARKER:
                 return True
             else:
-                raise libusb1.USBError
+                raise libusb1.USBError('Wrong buzzer marker!')
         except libusb1.USBError:
             return False
         return False
@@ -192,7 +192,67 @@ class BuzzerReader(threading.Thread):
             d.flush_interrupt_data()
 
 
+class BuzzerReaderPoller(threading.Thread):
+    def __init__(self, callback):
+        super().__init__()
+        self.__callback = callback
+        self.__devices_already_registered = {}
+        self.__context = self.init_context()
+        self.__keep_running = True
+        self.daemon = True
+        self.start()
+
+    def stop(self):
+        self.__keep_running = False
+
+    def run(self):
+        try:
+            while True:
+                self.check_for_new_devices()
+        except (KeyboardInterrupt, SystemExit):
+            pass
+        self.__context.exit()
+
+    def check_for_new_devices(self):
+        # check for new devices
+        newly_found_devices = {}
+        found_devices = []
+        for device in self.__context.getDeviceList():
+            if (device.getVendorID() == USBDEV_VENDOR and
+                device.getProductID() == USBDEV_PRODUCT):
+                bus_id = device.getBusNumber()
+                device_address = device.getDeviceAddress()
+                x = (bus_id, device_address)
+                if x not in self.__devices_already_registered:
+                    print('New buzzer: {}'.format(x))
+                    bd = BuzzerDevice(device, self.__callback)
+                    bd.daemon = True
+                    bd.start()
+                    newly_found_devices[x] = bd
+                found_devices.append(x)
+        # delete old devices that are not there anymore
+        list_of_old_devices = []
+        for key, device in self.__devices_already_registered.items():
+            if key not in found_devices:
+                self.__devices_already_registered[key].stop()
+                list_of_old_devices.append(key)
+        for device in list_of_old_devices:
+            print('Deleting old device {}.'.format(device))
+            del self.__devices_already_registered[device]
+        self.__devices_already_registered.update(newly_found_devices)
+
+    def init_context(self):
+        context = usb1.USBContext()
+        #if not context.hasCapability(libusb1.LIBUSB_CAP_HAS_HOTPLUG):
+        #    print('Hotplug support is missing. Please update your libusb version.')
+        return context
+
+    def flush_all_devices(self):
+        for k, d in self.__devices_already_registered.items():
+            d.flush_interrupt_data()
+
+
 if __name__ == '__main__':
     def callback(buzzer_id):
         print(buzzer_id)
-    BuzzerReader(callback)
+    BuzzerReaderPoller(callback)

@@ -56,7 +56,13 @@ class BuzzerConnector(QtCore.QObject):
     def __init__(self):
         super(BuzzerConnector, self).__init__()
         # install callback for buzzer API
-        self.buzzer_reader = buzzer.BuzzerReader(self.on_buzzer_pressed)
+        import platform
+        if platform.system() == 'Linux':
+            self.buzzer_reader = buzzer.BuzzerReader(self.on_buzzer_pressed)
+        elif platform.system() == 'Windows':
+            self.buzzer_reader = buzzer.BuzzerReaderPoller(self.on_buzzer_pressed)
+        else:
+            logger.error('Your OS is not supported!')
         self.last_buzzer_id = -1
         self.last_buzzer_time = 0
 
