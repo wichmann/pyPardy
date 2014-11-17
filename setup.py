@@ -5,10 +5,17 @@ from cx_Freeze import setup, Executable
 
 
 # Dependencies are automatically detected, but it might need fine tuning.
-includefiles = ['windows/libusb-1.0.dll', ('icons/buzzer.png', 'icons/buzzer.png'), 'README.md', 'LICENSE']
+includefiles = ['windows/libusb-1.0.dll',
+				('icons/buzzer.png', 'icons/buzzer.png'),
+				'README.md',
+				'LICENSE',
+				'C:\\Windows\\SysWOW64\\msvcr110.dll']
 excludes = []
 packages = []
-buildOptions = {'packages':packages, 'excludes':excludes, 'include_files':includefiles}
+buildOptions = {'packages': packages,
+				'excludes': excludes,
+				'include_files':includefiles
+				}
 
 # GUI applications require a different base on Windows (the default is for a
 # console application).
