@@ -5,7 +5,10 @@ from cx_Freeze import setup, Executable
 
 
 # Dependencies are automatically detected, but it might need fine tuning.
-buildOptions = dict(packages=[], excludes=[])
+includefiles = ['windows/libusb-1.0.dll', ('icons/buzzer.png', 'icons/buzzer.png'), 'README.md', 'LICENSE']
+excludes = []
+packages = []
+buildOptions = {'packages':packages, 'excludes':excludes, 'include_files':includefiles}
 
 # GUI applications require a different base on Windows (the default is for a
 # console application).
@@ -43,5 +46,6 @@ setup(
     ],
     options=dict(build_exe=buildOptions),
     executables=executables, requires=['PyQt4', 'libusb1'],
-    data_files=[('.', 'windows/libusb-1.0.dll')],
+    #data_files=[('libs', 'windows/libusb-1.0.dll'),
+	#			('icons', 'icons/buzzer.png')],
 )
