@@ -32,11 +32,13 @@ QUESTION_TIME = 60
 # points that are added for every question in a given topic
 QUESTION_POINTS = 100
 # whether to decrease points when team answer wrongly
-PENALTY_WRONG_ANSWERS = True
+PENALTY_WRONG_ANSWERS = False
 # whether to add points from all played round
 ADD_ROUND_POINTS = True
 # whether to hide question after buzzer was pressed
 HIDE_QUESTION = False
+# whether to allow multiple teams to answer a single question
+ALLOW_ALL_TEAMS_TO_ANSWER = True
 
 
 ##### Audio related settings #####
@@ -115,7 +117,7 @@ def save_config_to_file():
                 config_data[var] = eval(var)
         # dict( (name,eval(name)) for name in ['some','list','of','vars'] )
         # save dict to json file
-        json.dump(config_data, config_file)
+        json.dump(config_data, config_file, indent=4, sort_keys=True)
 
 
 if __name__ == '__main__':

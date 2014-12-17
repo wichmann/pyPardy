@@ -207,7 +207,11 @@ class QuestionViewPanel(QtGui.QWidget):
         self.topic = game_data.get_topic_name()
         self.points = game_data.get_points_for_current_question()
         self.current_time = config.QUESTION_TIME * GAME_TIME_FACTOR
+        # identifies the id of the team that buzzed
         self.last_buzzed_team = -1
+        # identifies the buzzer ids of all teams that have already buzzed for
+        # this question
+        self.already_buzzed_teams = list()
         self.setFixedSize(width, height)
         # build gui and slots
         self.create_fonts()
@@ -251,7 +255,9 @@ class QuestionViewPanel(QtGui.QWidget):
         self.build_timer_widgets()
 
     def build_info_button(self):
-        # add buttons for topic and points
+        """Builds and add buttons to this panel for showing currently chosen
+        topic as well as the currently played questions points."""
+        # set style according to high contrast setting
         if config.HIGH_CONTRAST:        
             INFO_BUTTON_STYLE = 'color: black;'
         else:
@@ -355,6 +361,7 @@ class QuestionViewPanel(QtGui.QWidget):
     def keyPressEvent(self, event):
         """Handle key events for choosing teams instead of buzzering and
         control by keyboard."""
+        print('KEY!!!!')
         if event.isAutoRepeat():
             return
         list_of_keys = [QtCore.Qt.Key_1, QtCore.Qt.Key_2, QtCore.Qt.Key_3,
@@ -396,7 +403,8 @@ class QuestionViewPanel(QtGui.QWidget):
 
         :param buzzer_id: buzzer id delivered by BuzzerReader()"""
         logger.info('Buzzer ({}) was pressed.'.format(buzzer_id))
-        if self.last_buzzed_team == -1:
+        logger.info('Already pressed buzzers: {}'.format(self.already_buzzed_teams))
+        if self.last_buzzed_team == -1 and buzzer_id not in self.already_buzzed_teams:
             # stop background music and play buzzer sound
             self.background_music.stop()
             self.play_buzzer_sound()
@@ -433,33 +441,65 @@ class QuestionViewPanel(QtGui.QWidget):
 
     @QtCore.pyqtSlot()
     def on_question_fadeout(self):
+        """Called after one team has buzzed and the question has been faded
+        out if that is set in options. Shows the button for showing the
+        correct answer or the evaluation buttons."""
         self.background_music.stop()
+        if config.ALLOW_ALL_TEAMS_TO_ANSWER:
+            # show buttons for inputting whether answer was correct
+            self.on_answer_fadein()
+        else:
+            # show button that allows to show the correct answer
+            self.fade_in_answer_button()
+            
+    def fade_in_answer_button(self, new_text_for_button=''):
+        if new_text_for_button:
+            self.show_answer_button.setText(new_text_for_button)
         self.show_answer_button.setEnabled(True)
         self.show_answer_button.setFocus()
         helper.animate_widget(self.show_answer_button, False)
 
     @QtCore.pyqtSlot()
     def on_answer_fadein(self):
-        logger.info('Question has been faded out.')
+        logger.info('Showing buttons to input whether the given answer is correct.')
         if self.last_buzzed_team != -1:
-            # if one of the buzzers was pressed, show buttons for
-            # right and wrong
-            self.answer_correct_button.setEnabled(True)
-            self.answer_incorrect_button.setEnabled(True)
-            self.answer_correct_button.setFocus()
-            helper.animate_widget(self.answer_correct_button, False)
-            helper.animate_widget(self.answer_incorrect_button, False)
+            # if one of the buzzers was pressed, show buttons for right and
+            # wrong
+            self.show_evaluation_buttons()
         else:
-            # otherwise just show one of the buttons to get back
-            # to the question view table
+            # otherwise just show one of the buttons to get back to the
+            # question view table
             self.answer_correct_button.setText('Zurück')
             self.answer_correct_button.setFocus()
             self.answer_correct_button.setEnabled(True)
             helper.animate_widget(self.answer_correct_button, False)
 
+    def show_evaluation_buttons(self):
+        self.answer_correct_button.setEnabled(True)
+        self.answer_incorrect_button.setEnabled(True)
+        self.answer_correct_button.setFocus()
+        helper.animate_widget(self.answer_correct_button, False)
+        helper.animate_widget(self.answer_incorrect_button, False)
+
+    def hide_evaluation_buttons(self):
+        self.answer_correct_button.setEnabled(False)
+        self.answer_incorrect_button.setEnabled(False)        
+        helper.animate_widget(self.answer_correct_button, True)
+        helper.animate_widget(self.answer_incorrect_button, True)
+
     @QtCore.pyqtSlot()
     def on_show_answer_button(self):
-        logger.info('Answer is shown.')
+        if config.ALLOW_ALL_TEAMS_TO_ANSWER:
+            logger.info('Button to return to question panel was pressed.')
+            self.main_gui.back_to_round_table()
+        else:
+            logger.info('Button to show correct answer was pressed.')
+            self.show_correct_answer()
+            self.game_data.mark_question_as_complete()
+            
+    def show_correct_answer(self):
+        """Gets correct answer and shows it in the main text field. If the
+        text field was hidden after a buzzer was pressed it is faded in!"""
         # build string with question and answer
         string = self.game_data.get_current_question()
         string += '<br>–<br>'
@@ -472,7 +512,6 @@ class QuestionViewPanel(QtGui.QWidget):
         else:
             # else do what would be done when question had to be faded in
             self.on_answer_fadein()
-        self.game_data.mark_question_as_complete()
 
     @QtCore.pyqtSlot(bool)
     def on_back_button(self, answer_correct):
@@ -482,15 +521,54 @@ class QuestionViewPanel(QtGui.QWidget):
 
         :param answer_correct: whether the given answer was correct
         """
-        if self.last_buzzed_team != -1:
-            if answer_correct:
-                self.game_data.add_points_to_team(self.last_buzzed_team)
-            else:
-                if config.PENALTY_WRONG_ANSWERS:
-                    self.game_data.subtract_points_from_team(self.last_buzzed_team)
-        self.main_gui.back_to_round_table()
+        if config.ALLOW_ALL_TEAMS_TO_ANSWER:
+            # handle situation when after incorrect answer of one team the
+            # other teams get a chance to answer
+            if self.last_buzzed_team != -1:
+                if answer_correct:
+                    # show answer on screen, show back button to return to the
+                    # question panel and handle points for team that has
+                    # answered the question correctly
+                    self.show_correct_answer()
+                    # handle correctly answered question in game data 
+                    self.game_data.add_points_to_team(self.last_buzzed_team)
+                    self.game_data.mark_question_as_complete()
+                    # update user interface
+                    self.hide_evaluation_buttons()
+                    self.team_view_panel.on_update_points()
+                    self.fade_in_answer_button('Zurück')
+                else:
+                    # store buzzer id for team that has buzzed and answered
+                    # wrongly, subtract points for that team and continue with
+                    # game until next team buzzers
+                    buzzer_id = config.BUZZER_ID_FOR_TEAMS[self.last_buzzed_team]
+                    # TODO Check if dict from config module should be used
+                    # directly here?!
+                    self.already_buzzed_teams.append(buzzer_id)
+                    if config.PENALTY_WRONG_ANSWERS:
+                        self.game_data.subtract_points_from_team(self.last_buzzed_team)
+                    # unhighlight all teams in panel and deactivate team that
+                    # has already answered the current question
+                    self.team_view_panel.highlight_team(-1)
+                    self.team_view_panel.deactivate_team(self.last_buzzed_team)
+                    self.team_view_panel.on_update_points()
+                    # reset id of team that has buzzered
+                    self.last_buzzed_team = -1
+                    # hide buttons
+                    self.hide_evaluation_buttons()
+                    # resume game timer and bg music
+                    self.timer.start()
+                    self.play_background_music()
+        else:
+            if self.last_buzzed_team != -1:
+                if answer_correct:
+                    self.game_data.add_points_to_team(self.last_buzzed_team)
+                else:
+                    if config.PENALTY_WRONG_ANSWERS:
+                        self.game_data.subtract_points_from_team(self.last_buzzed_team)
+            self.main_gui.back_to_round_table()
 
-    ##### methods concerning sound/audio #####
+    ##### methods concerning sound effects and bg music #####
 
     def init_audio(self):
         # create background music object
@@ -539,6 +617,9 @@ class TeamViewPanel(QtGui.QWidget):
         self.main_gui = parent
         self.points_label_dict = {}
         self.team_label_dict = {}
+        # data for styling the team labels correctly
+        self.highlighted_team = -1
+        self.deactivated_teams = list()
         # set orientation for team view panel
         if orientation == self.HORIZONTAL_ORIENTATION or orientation == self.VERTICAL_ORIENTATION:
             self.orientation = orientation
@@ -630,16 +711,36 @@ class TeamViewPanel(QtGui.QWidget):
         self.setLayout(layout)
 
     def highlight_team(self, team_id):
-        """Highlights a given team identified by its team id. All other teams
-        will be unhighlighted!
+        """Highlights a given team identified by its team id. Only one team at
+        a time can be highlighted, all other teams will be unhighlighted!
+
+        If called with the team id '-1' all teams will be unhighlighted.
         """
+        if team_id < -1:
+            raise ValueError('Invalid team id.')
+        self.highlighted_team = team_id
+        self.update_styles()
+
+    def deactivate_team(self, team_id):
+        """Deactivates a given team identified by its team id. More than one
+        team can be deactivated at a time. It is not checked whether all teams
+        in the game are deactivated!"""
+        if team_id < 0:
+            raise ValueError('Invalid team id.')
+        self.deactivated_teams.append(team_id)
+        self.update_styles()
+
+    def update_styles(self):
         SELECTED_STYLE = 'background: red; color: white; border-radius: 15px; border-width: 4px;'
+        DEACTIVATED_STYLE = 'background: grey; color: grey; border-radius: 15px; border-width: 4px;'
         for id, team_label in self.team_label_dict.items():
-            if team_id == id:
+            if id in self.deactivated_teams:
+                team_label.setStyleSheet(DEACTIVATED_STYLE)
+            elif id == self.highlighted_team:
                 team_label.setStyleSheet(SELECTED_STYLE)
             else:
                 team_label.setStyleSheet('')
-
+    
     @QtCore.pyqtSlot()
     def on_update_points(self):
         """Sets all signals and slots for question view."""
