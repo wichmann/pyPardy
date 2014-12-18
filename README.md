@@ -3,7 +3,9 @@ pyPardy
 
 DESCRIPTION
 -----------
-pyPardy is a game similar to Jeopardy(tm).
+pyPardy is a game similar to Jeopardy(tm). To be used with pardyBuzz game show buzzer [1].
+
+[1] http://github.com/erebos42/pardyBuzz
 
 
 KNOWN PROBLEMS AND BUGS
@@ -33,9 +35,9 @@ and choose the INF file as new driver.
 
 Next you have to copy the file libusb.dll into "C:\Windows\SysWOW64". This
 version contains experimental support for USB-HotPlug under Windows and was
-compiled from [1] as 32bit DLL with Visual Studio 2012 under Windows 7 64bit.
+compiled from [2] as 32bit DLL with Visual Studio 2012 under Windows 7 64bit.
 
-[1] http://github.com/dickens/libusbx-hp/commit/6cba5d96767b205fc653e3273fba81b59f1e1492
+[2] http://github.com/dickens/libusbx-hp/commit/6cba5d96767b205fc653e3273fba81b59f1e1492
 
 
 THIRD PARTY SOFTWARE
