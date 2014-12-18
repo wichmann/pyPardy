@@ -815,7 +815,7 @@ class GameOverDialog(QtGui.QDialog):
         self.close_button.clicked.connect(self.close)
 
     def setup_ui(self):
-        self.place_style = 'background: yellow; padding: 10px; border:2px solid black;'
+        self.place_style = 'background: yellow; border:1px solid grey;'
         self.grid = QtGui.QGridLayout()
         center_box = QtGui.QVBoxLayout()
         title_label = QtGui.QLabel(self.game_data.get_round_title())
