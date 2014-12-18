@@ -787,10 +787,13 @@ class GameOverDialog(QtGui.QDialog):
         self.game_data = game_data
         self.main_gui = parent
         self.setFixedSize(width, height)
+        # remove window decorations from this dialog
+        #self.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
+        #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
         # build gui and slots
         self.create_fonts()
         self.setup_ui()
-        #self.set_signals_and_slots()
+        self.set_signals_and_slots()
 
     def create_fonts(self):
         if config.LOW_RESOLUTION:
@@ -808,8 +811,11 @@ class GameOverDialog(QtGui.QDialog):
             self.points_font = QtGui.QFont(config.BASE_FONT)
             self.points_font.setPointSize(20)
 
+    def set_signals_and_slots(self):
+        self.close_button.clicked.connect(self.close)
+
     def setup_ui(self):
-        self.place_style = 'border:2px solid black;'
+        self.place_style = 'background: yellow; padding: 10px; border:2px solid black;'
         self.grid = QtGui.QGridLayout()
         center_box = QtGui.QVBoxLayout()
         title_label = QtGui.QLabel(self.game_data.get_round_title())
@@ -826,6 +832,12 @@ class GameOverDialog(QtGui.QDialog):
         self.build_first_place()
         self.build_second_place()
         self.build_third_place()
+        self.build_button()
+
+    def build_button(self):
+        self.close_button = QtGui.QPushButton('Schließen')
+        self.close_button.setFont(self.points_font)
+        self.grid.addWidget(self.close_button, 4, 2)#,QtCore.Qt.AlignBottom)
 
     def build_first_place(self):
         box = QtGui.QVBoxLayout()
