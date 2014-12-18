@@ -138,10 +138,14 @@ class QuestionTablePanel(QtGui.QWidget):
         # react to cursor keys
         list_of_keys = [QtCore.Qt.Key_1, QtCore.Qt.Key_2, QtCore.Qt.Key_3,
                         QtCore.Qt.Key_4, QtCore.Qt.Key_5, QtCore.Qt.Key_6]
+        # get key code and modifiers that were pressed
+        modifiers = event.modifiers()
         key = event.key()
         for i in range(config.MAX_TEAM_NUMBER):
             if key == list_of_keys[i]:
-                self.game_data.correct_points_by_100(i)
+                # add or subtract points for given team depending on whether
+                # the CONTROL key was pressed
+                self.game_data.correct_points_by_100(i, not (modifiers == QtCore.Qt.ControlModifier))
                 self.team_view_panel.on_update_points()
         if key == QtCore.Qt.Key_D:
             self.focus_specific_button(topic + 1, question)

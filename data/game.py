@@ -142,15 +142,32 @@ class Game():
         self.points_file.flush()
 
     def add_points_to_team(self, team_id):
+        if team_id not in self.team_points_dict:
+            raise ValueError('Invalid team id!')
         self.team_points_dict[team_id] += (self.current_question + 1) * config.QUESTION_POINTS
         self.write_current_points_to_file()
 
     def subtract_points_from_team(self, team_id):
+        if team_id not in self.team_points_dict:
+            raise ValueError('Invalid team id!')
         self.team_points_dict[team_id] -= (self.current_question + 1) * config.QUESTION_POINTS
         self.write_current_points_to_file() 
 
-    def correct_points_by_100(self, team_id):
-        self.team_points_dict[team_id] += config.QUESTION_POINTS
+    def correct_points_by_100(self, team_id, add_points=True):
+        """Corrects points for a given team by the number of points for a
+        correct answer of the easiest question in a game round.
+
+        :param team_id: id of the team for which points should be added or
+                        subtracted
+        :param add_points: whether to add points for given team or to subtract
+                           them
+        """
+        if team_id not in self.team_points_dict:
+            raise ValueError('Invalid team id!')
+        if add_points:
+            self.team_points_dict[team_id] += config.QUESTION_POINTS
+        else:
+            self.team_points_dict[team_id] -= config.QUESTION_POINTS
 
     def get_points_for_team(self, team_id):
         return self.team_points_dict[team_id]
