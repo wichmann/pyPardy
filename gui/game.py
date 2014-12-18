@@ -165,6 +165,7 @@ class QuestionTablePanel(QtGui.QWidget):
         for button in self.button_list:
             if button.topic_count == topic and button.question_count == question:
                 button.setFocus()
+                break
 
     def update_widgets(self):
         # check which questions were played already
@@ -207,9 +208,9 @@ class QuestionViewPanel(QtGui.QWidget):
         self.topic = game_data.get_topic_name()
         self.points = game_data.get_points_for_current_question()
         self.current_time = config.QUESTION_TIME * GAME_TIME_FACTOR
-        # identifies the id of the team that buzzed
+        # identifier for id of the team that buzzed
         self.last_buzzed_team = -1
-        # identifies the buzzer ids of all teams that have already buzzed for
+        # identifier for buzzer ids of all teams that have already buzzed for
         # this question
         self.already_buzzed_teams = list()
         self.setFixedSize(width, height)
@@ -361,7 +362,6 @@ class QuestionViewPanel(QtGui.QWidget):
     def keyPressEvent(self, event):
         """Handle key events for choosing teams instead of buzzering and
         control by keyboard."""
-        print('KEY!!!!')
         if event.isAutoRepeat():
             return
         list_of_keys = [QtCore.Qt.Key_1, QtCore.Qt.Key_2, QtCore.Qt.Key_3,
@@ -446,7 +446,7 @@ class QuestionViewPanel(QtGui.QWidget):
         correct answer or the evaluation buttons."""
         self.background_music.stop()
         if config.ALLOW_ALL_TEAMS_TO_ANSWER:
-            # show buttons for inputting whether answer was correct
+            # show evaluation buttons
             self.on_answer_fadein()
         else:
             # show button that allows to show the correct answer
@@ -461,7 +461,7 @@ class QuestionViewPanel(QtGui.QWidget):
 
     @QtCore.pyqtSlot()
     def on_answer_fadein(self):
-        logger.info('Showing buttons to input whether the given answer is correct.')
+        logger.info('Showing evaluation buttons...')
         if self.last_buzzed_team != -1:
             # if one of the buzzers was pressed, show buttons for right and
             # wrong
@@ -477,7 +477,7 @@ class QuestionViewPanel(QtGui.QWidget):
     def show_evaluation_buttons(self):
         self.answer_correct_button.setEnabled(True)
         self.answer_incorrect_button.setEnabled(True)
-        self.answer_correct_button.setFocus()
+        #self.answer_correct_button.setFocus()
         helper.animate_widget(self.answer_correct_button, False)
         helper.animate_widget(self.answer_incorrect_button, False)
 
@@ -515,29 +515,32 @@ class QuestionViewPanel(QtGui.QWidget):
 
     @QtCore.pyqtSlot(bool)
     def on_back_button(self, answer_correct):
-        """Handles a pressed back button. Either the given answer was correct
-        or not. Depending on that the points in the game data object are
-        adjusted.
+        """Handles a pressed evaluation button. Either the given answer was
+        correct or not. Depending on that the points in the game data object
+        are adjusted.
 
         :param answer_correct: whether the given answer was correct
         """
+        # TODO Refactor this mess!
         if config.ALLOW_ALL_TEAMS_TO_ANSWER:
             # handle situation when after incorrect answer of one team the
             # other teams get a chance to answer
             if self.last_buzzed_team != -1:
+                # handle button when one team has buzzered
                 if answer_correct:
+                    logger.info('Question was answered correctly!')
                     # show answer on screen, show back button to return to the
                     # question panel and handle points for team that has
                     # answered the question correctly
-                    self.show_correct_answer()
-                    # handle correctly answered question in game data 
+                    self.handle_question_revealing()
+                    # award points for correctly answered question
                     self.game_data.add_points_to_team(self.last_buzzed_team)
-                    self.game_data.mark_question_as_complete()
                     # update user interface
                     self.hide_evaluation_buttons()
                     self.team_view_panel.on_update_points()
                     self.fade_in_answer_button('Zurück')
                 else:
+                    logger.info('Question was answered incorrectly!')
                     # store buzzer id for team that has buzzed and answered
                     # wrongly, subtract points for that team and continue with
                     # game until next team buzzers
@@ -556,10 +559,23 @@ class QuestionViewPanel(QtGui.QWidget):
                     self.last_buzzed_team = -1
                     # hide buttons
                     self.hide_evaluation_buttons()
-                    # resume game timer and bg music
-                    self.timer.start()
-                    self.play_background_music()
+                    # resume game timer and bg music if game has not ended yet
+                    if len(self.already_buzzed_teams) < config.MAX_TEAM_NUMBER:
+                        self.timer.start()
+                        self.play_background_music()
+                        self.setFocus()
+                    else:
+                        self.handle_question_revealing()
+                        #self.fade_in_answer_button('Zurück')
+            else:
+                # handle button when game has ended because time is elapsed
+                self.handle_question_revealing()
+                self.show_correct_answer()
+                self.main_gui.back_to_round_table()
         else:
+            # handle button when only one team is allowed to answer the
+            # question, after that the game always returns to the question
+            # table
             if self.last_buzzed_team != -1:
                 if answer_correct:
                     self.game_data.add_points_to_team(self.last_buzzed_team)
@@ -567,6 +583,10 @@ class QuestionViewPanel(QtGui.QWidget):
                     if config.PENALTY_WRONG_ANSWERS:
                         self.game_data.subtract_points_from_team(self.last_buzzed_team)
             self.main_gui.back_to_round_table()
+
+    def handle_question_revealing(self):
+        self.show_correct_answer()
+        self.game_data.mark_question_as_complete()
 
     ##### methods concerning sound effects and bg music #####
 
