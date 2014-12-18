@@ -1,0 +1,33 @@
+{
+    "title": "Test-Runde",
+    "topics": [ 
+        {
+            "title": "Stadt - Land -<br>Fluss",
+            "questions": [
+                {
+                    "question" : "Hüpft durch Tal und Hügel.",
+                    "answer" : "Hase"
+                },
+                {
+                    "question" : "Stadt der untergehenden Sonne.",
+                    "answer" : "Helsinki"
+                }
+            ]
+        },
+        {
+            "title": "Up Platt",
+            "questions": 
+            [
+                {
+                    "question" : "De dümsten Buern häbt ...",
+                    "answer" : "de dicksten Kartuffeln"
+                },
+                {
+                    "question" : "Wecker sick mit Schwienekötels franget,",
+                    "answer" : "krich schmeerige Hande!"
+                }
+            ]
+        }
+    ]
+}
+
