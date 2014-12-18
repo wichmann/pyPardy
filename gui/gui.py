@@ -131,8 +131,14 @@ class PyPardyGui(QtGui.QMainWindow):
     def back_to_round_table(self):
         """Handles the transition from question view panel back to the table
         with all questions of the round."""
+        # show the rounds question table
         self.stackedWidget.setCurrentWidget(self.current_round_question_panel)
         self.current_round_question_panel.update_widgets()
+        # remove old question view widget
+        if self.current_question_panel:
+            self.current_question_panel = None
+            #del self.current_question_panel
+        # handle end of round
         if self.current_game.is_round_complete():
             logger.info('Round was completed.')
             if config.AUDIO_SFX:

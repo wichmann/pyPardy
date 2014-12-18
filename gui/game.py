@@ -231,7 +231,6 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def __del__(self):
         self.remove_signals_and_slots()
-        self.close_connection_to_buzzer()
 
     def create_fonts(self):
         if config.LOW_RESOLUTION:
@@ -357,11 +356,14 @@ class QuestionViewPanel(QtGui.QWidget):
         self.buzzer_connector.buzzing.connect(self.on_buzzer_pressed)
 
     def remove_signals_and_slots(self):
-        """Sets all signals and slots for question view."""
+        """Sets all signals and slots for question view. Closes also the
+        connection between the BuzzerConnector and the callable method
+        'on_buzzer_pressed' on this class."""
         self.show_answer_button.clicked.disconnect()
         self.answer_incorrect_button.clicked.disconnect()
         self.answer_correct_button.clicked.disconnect()
-        self.buzzer_connector.buzzing.disconnect()
+        self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
+        self.buzzer_connector = None
 
     def keyPressEvent(self, event):
         """Handle key events for choosing teams instead of buzzering and
@@ -374,13 +376,6 @@ class QuestionViewPanel(QtGui.QWidget):
         for i in range(config.MAX_TEAM_NUMBER):
             if key == list_of_keys[i]:
                 self.on_buzzer_pressed(self.game_data.buzzer_id_list[i])
-
-    def close_connection_to_buzzer(self):
-        """Closes the connection between the BuzzerConnector and the callable
-        method 'on_buzzer_pressed' on this class.
-        """
-        self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
-        self.buzzer_connector = None
 
     ##### game timer methods #####
 
