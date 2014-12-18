@@ -34,7 +34,7 @@ QUESTION_POINTS = 100
 # whether to decrease points when team answer wrongly
 PENALTY_WRONG_ANSWERS = False
 # whether to add points from all played round
-ADD_ROUND_POINTS = True
+ADD_ROUND_POINTS = False
 # whether to hide question after buzzer was pressed
 HIDE_QUESTION = False
 # whether to allow multiple teams to answer a single question
