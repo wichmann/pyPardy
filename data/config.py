@@ -104,7 +104,7 @@ def load_config_from_file():
                     except ValueError:
                         logger.error('Wrong data type in settings file, ignoring value for "{}" element!'.format(element))
     except FileNotFoundError as e:
-        logger.error('Configuration file not found!')
+        logger.error('Configuration file not found: ' + e)
 
 
 def save_config_to_file():

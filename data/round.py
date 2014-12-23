@@ -77,6 +77,17 @@ def load_round_data_file(filename):
     return data
 
 
+def save_round_data_file(filename, data):
+    """Saves current round data into a file.
+
+    :param data: round data to save to file
+    :param filename: filename to save round data to
+    """
+    json_data_file = open(filename, 'w', encoding='utf8')
+    json.dump(data, json_data_file, indent=4, sort_keys=True)
+    json_data_file.close()
+
+
 def verify_round_data(data):
     """Verifys the loaded round data from file.
 
