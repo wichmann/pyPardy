@@ -3,9 +3,15 @@ pyPardy
 =======
 
 TODO:
-* Use unittest (Unit testing framework)
+* Improve editor for round data files.
+* Improve game ending dialog.
+* Add screen to change config settings.
+* Add unit tests. (Unit testing framework?)
+* Add support for questions with image/audio/video data.
+  Use tags inside round data files -> image-data, audio-data, video-data
+* Support round data files that include media files (e.g. as zipped files).
+* Improve source code of question view panel (code depends on whether other
+  teams should be allowed to answer questions after one team has answered
+  incorrectly)
 * 
 * 
-* 
-
-
