@@ -34,7 +34,7 @@ class PyPardyGui(QtGui.QMainWindow):
         """Initialize main window for pyPardy."""
         logger.info('Building main window of pyPardy...')
         QtGui.QMainWindow.__init__(self, parent)
-        self.setWindowSize()
+        self.set_window_size()
         # define all panels that are used inside the QStackedWidget
         self.available_rounds_panel = None
         self.current_round_question_panel = None
@@ -54,7 +54,7 @@ class PyPardyGui(QtGui.QMainWindow):
     def __del__(self):
         pass
 
-    def setWindowSize(self):
+    def set_window_size(self):
         if config.FULLSCREEN:
             resolution = QtGui.QDesktopWidget().screenGeometry()
             self.WIDTH = resolution.width()
@@ -122,9 +122,10 @@ class PyPardyGui(QtGui.QMainWindow):
         # remove old question table if it exists
         if self.current_round_question_panel:
             self.stackedWidget.removeWidget(self.current_round_question_panel)
-        # create new question table
+        # create new question table and connect it to method of this class
         self.current_round_question_panel = game_ui.QuestionTablePanel(self, self.current_game,
                                                                        self.WIDTH, self.HEIGHT)
+        self.current_round_question_panel.question_button_pressed.connect(self.show_question)
         self.stackedWidget.addWidget(self.current_round_question_panel)
         self.stackedWidget.setCurrentWidget(self.current_round_question_panel)
 
@@ -190,6 +191,17 @@ class PyPardyGui(QtGui.QMainWindow):
                                                            self.HEIGHT)
         self.stackedWidget.addWidget(self.buzzer_config_panel)
         self.stackedWidget.setCurrentWidget(self.buzzer_config_panel)
+
+    def show_config_panel(self):
+        config_panel = admin.ConfigurationPanel(self,
+                                                self.current_game,
+                                                self.WIDTH,
+                                                self.HEIGHT)
+        self.stackedWidget.addWidget(config_panel)
+        self.stackedWidget.setCurrentWidget(config_panel)
+
+    def show_information_panel(self):
+        pass
 
 
 def handle_exit():
