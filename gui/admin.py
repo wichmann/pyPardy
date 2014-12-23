@@ -126,7 +126,7 @@ class AvailableRoundPanel(QtGui.QWidget):
             self.title_font.setPointSize(42)
             self.button_font = QtGui.QFont(config.BASE_FONT)
             self.button_font.setPointSize(36)
-            
+
     def setup_ui(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
                            QtGui.QSizePolicy.Expanding)
@@ -238,21 +238,87 @@ class ConfigurationPanel(QtGui.QWidget):
             self.label_font.setPointSize(30)
 
     def setup_ui(self):
-        hbox = QtGui.QVBoxLayout()
+        vbox = QtGui.QVBoxLayout()
         #x = QtQml.qmlRegisterType('slideswitch/slideswitch.qml', 1, 0, 'SlideSwitch')
         x = QtDeclarative.QDeclarativeView()
         x.setSource(QtCore.QUrl('gui/slideswitch/slideswitch.qml'))
         x.setResizeMode(QtDeclarative.QDeclarativeView.SizeRootObjectToView)
-        hbox.addWidget(x)
+        vbox.addWidget(x)
         # add button for returning to menu
-        back_button = QtGui.QPushButton('Zurück')
-        back_button.clicked.connect(self.on_back_button)
-        hbox.addWidget(back_button, QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
-        self.setLayout(hbox)
+        button_box = QtGui.QHBoxLayout()
+        button_box.addStretch(100)
+        self.back_button = QtGui.QPushButton('Zurück')
+        button_box.addWidget(self.back_button)
+        vbox.addLayout(button_box)
+        self.setLayout(vbox)
 
     def set_signals_and_slots(self):
         """Sets all signals and slots."""
-        pass
+        self.back_button.clicked.connect(self.on_back_button)
+
+    @QtCore.pyqtSlot()
+    def on_back_button(self):
+        self.main_gui.show_available_rounds_panel()
+
+
+class InformationPanel(QtGui.QWidget):
+    """Shows a panel with information about pyPardy."""
+    def __init__(self, parent, game_data, width, height):
+        super(InformationPanel, self).__init__(parent)
+        self.main_gui = parent
+        self.game_data = game_data
+        self.setFixedSize(width, height)
+        self.create_fonts()
+        self.setup_ui()
+        self.set_signals_and_slots()
+
+    def create_fonts(self):
+        if config.LOW_RESOLUTION:
+            self.label_font = QtGui.QFont(config.BASE_FONT)
+            self.label_font.setPointSize(22)
+        else:
+            self.label_font = QtGui.QFont(config.BASE_FONT)
+            self.label_font.setPointSize(30)
+
+    def setup_ui(self):
+        vbox = QtGui.QVBoxLayout()
+        vbox.setMargin(10)
+        # add text labels
+        label_6 = QtGui.QLabel()
+        label_6.setFont(self.label_font)
+        label_6.setText("pyPardy")
+        label_6.setAlignment(QtCore.Qt.AlignCenter)
+        vbox.addWidget(label_6)
+        label_9 = QtGui.QLabel()
+        label_9.setFont(self.label_font)
+        label_9.setText("pyPardy is a game similar to Jeopardy(tm).")
+        label_9.setAlignment(QtCore.Qt.AlignCenter)
+        vbox.addWidget(label_9)
+        line = QtGui.QFrame()
+        line.setFrameShape(QtGui.QFrame.HLine)
+        line.setFrameShadow(QtGui.QFrame.Sunken)
+        vbox.addWidget(line)
+        label_7 = QtGui.QLabel()
+        label_7.setText("Author: Christian Wichmann")
+        label_7.setFont(self.label_font)
+        label_7.setAlignment(QtCore.Qt.AlignCenter)
+        vbox.addWidget(label_7)
+        label_8 = QtGui.QLabel()
+        label_8.setFont(self.label_font)
+        label_8.setText("Licensed under GNU GPL v2 or newer.")
+        label_8.setAlignment(QtCore.Qt.AlignCenter)
+        vbox.addWidget(label_8)
+        # add button for returning to menu
+        button_box = QtGui.QHBoxLayout()
+        button_box.addStretch(100)
+        self.back_button = QtGui.QPushButton('Zurück')
+        button_box.addWidget(self.back_button)
+        vbox.addLayout(button_box)
+        self.setLayout(vbox)
+
+    def set_signals_and_slots(self):
+        """Sets all signals and slots."""
+        self.back_button.clicked.connect(self.on_back_button)
 
     @QtCore.pyqtSlot()
     def on_back_button(self):

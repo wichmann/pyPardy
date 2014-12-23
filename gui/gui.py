@@ -144,9 +144,7 @@ class PyPardyGui(QtGui.QMainWindow):
             logger.info('Round was completed.')
             if config.AUDIO_SFX:
                 self.game_end_sound.play()
-            # TODO Create game over dialog as big as needed without defining
-            # constant size
-            dialog = game_ui.GameOverDialog(self, self.current_game, 600, 400)
+            dialog = game_ui.GameOverDialog(self, self.current_game)
             dialog.show()
             self.show_available_rounds_panel()
 
@@ -201,7 +199,12 @@ class PyPardyGui(QtGui.QMainWindow):
         self.stackedWidget.setCurrentWidget(config_panel)
 
     def show_information_panel(self):
-        pass
+        info_panel = admin.InformationPanel(self,
+                                            self.current_game,
+                                            self.WIDTH,
+                                            self.HEIGHT)
+        self.stackedWidget.addWidget(info_panel)
+        self.stackedWidget.setCurrentWidget(info_panel)
 
 
 def handle_exit():

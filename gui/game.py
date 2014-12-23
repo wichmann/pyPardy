@@ -787,20 +787,17 @@ class TeamViewPanel(QtGui.QWidget):
 
 class GameOverDialog(QtGui.QDialog):
     """Dialog showing which team has won first place."""
-    def __init__(self, parent, game_data, width, height):
+    def __init__(self, parent, game_data):
         """Initialize dialog for showing final score of game.
 
         :param parent: parent widget
         :param game_data: instance of Game() containing all necessary
                           information
-        :param width: width of this dialog box
-        :param height: height of this dialog box
         """
         super(GameOverDialog, self).__init__(parent)
         # set data for this dialog
         self.game_data = game_data
         self.main_gui = parent
-        self.setFixedSize(width, height)
         # remove window decorations from this dialog
         #self.setWindowFlags(QtCore.Qt.CustomizeWindowHint)
         #self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
@@ -860,6 +857,7 @@ class GameOverDialog(QtGui.QDialog):
         place_label.setFont(self.team_font)
         place_label.setAlignment(QtCore.Qt.AlignCenter)
         place_label.setStyleSheet(self.place_style)
+        place_label.setMinimumWidth(150)
         box.addWidget(place_label, QtCore.Qt.AlignHCenter)
         points_label = QtGui.QLabel(str(points))
         points_label.setFont(self.points_font)
