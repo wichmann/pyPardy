@@ -103,9 +103,9 @@ class AvailableRoundPanel(QtGui.QMainWindow):
 
     @QtCore.pyqtSlot()
     def on_button_click(self):
-        filename_to_load = self.sender().filename
-        logger.info('File "{}" should be loaded...'.format(filename_to_load))
-        self.current_game.current_round_data = round.load_round_data_file(filename_to_load)
+        self.last_loaded_file = self.sender().filename
+        logger.info('Round data file "{}" loaded.'.format(self.last_loaded_file))
+        self.current_game.current_round_data = round.load_round_data_file(self.last_loaded_file)
         # create new question table and connect it to method of this class
         self.current_round_question_panel = game.QuestionTablePanel(self, self.current_game,
                                                                     self.WIDTH, self.HEIGHT, False)
@@ -113,9 +113,109 @@ class AvailableRoundPanel(QtGui.QMainWindow):
         self.setCentralWidget(self.current_round_question_panel)
         # TODO Add exit button to get back to menu!
 
-    def show_edit_dialog(self, question, topic):
-        logger.info('Edit question: ' + str(question) + '-' + str(topic))
+    @QtCore.pyqtSlot(int, int)
+    def show_edit_dialog(self, topic, question):
+        """Opens up a new dialog to edit a question."""
+        logger.info('Edit question: {} from topic {}.'.format(question, topic))
+        dialog = EditQuestionDialog(self, self.current_game.current_round_data,
+                                    topic, question)
+        dialog.exec_()
+        if dialog.data_has_changed:
+            logger.info('Round data saved to file.')
+            round.save_round_data_file(self.last_loaded_file,
+                                       self.current_game.current_round_data)
 
+
+class EditQuestionDialog(QtGui.QDialog):
+    """Panel showing all available rounds.
+
+    :param data: round data qith the question that should be edited
+    :param topic: number of the topic that should be edited
+    :param question: number of question of the given that should be edited
+    """
+    def __init__(self, parent, data, topic, question):
+        """Initialize a new dialog box for editing a question."""
+        super(EditQuestionDialog, self).__init__(parent)
+        self.data = data
+        self.topic = topic
+        self.question = question
+        self.data_has_changed = False
+        self.create_fonts()
+        self.setup_ui()
+        self.set_signals_and_slots()
+
+    def create_fonts(self):
+        if config.LOW_RESOLUTION:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(18)
+            self.button_font = QtGui.QFont(config.BASE_FONT)
+            self.button_font.setPointSize(14)
+        else:
+            self.title_font = QtGui.QFont(config.BASE_FONT)
+            self.title_font.setPointSize(30)
+            self.button_font = QtGui.QFont(config.BASE_FONT)
+            self.button_font.setPointSize(20)
+            
+    def setup_ui(self):
+        self.setWindowTitle(config.APP_NAME + ' - Frage editieren...')
+        self.setWindowIcon(QtGui.QIcon('icons/buzzer.png'))
+        self.setSizePolicy(QtGui.QSizePolicy.Expanding,
+                           QtGui.QSizePolicy.Expanding)
+        self.layout = QtGui.QGridLayout()
+        margin = 10
+        self.layout.setSpacing(margin)
+        # extract correct question data from round data        
+        question_data = self.data['topics'][self.topic]['questions'][self.question]        
+        topic_text = self.data['topics'][self.topic]['title']
+        question_text = (self.question + 1) * config.QUESTION_POINTS
+        # add title for dialog (and remove line breaks in topic names!)
+        title_text = '{} - {}'.format(topic_text, question_text).replace('<br>', '')
+        title_label = QtGui.QLabel(title_text)
+        title_label.setFont(self.title_font)
+        title_label.setWordWrap(False)
+        self.layout.addWidget(title_label, 0, 0, 1, 2, QtCore.Qt.AlignHCenter)
+        # add text fields for question and answer
+        self.layout.addWidget(QtGui.QLabel('Frage: '), 1, 0, QtCore.Qt.AlignTop)
+        self.question_text_field = QtGui.QTextEdit()
+        self.question_text_field.setText(question_data['question'])
+        self.question_text_field.setMaximumHeight(75)
+        self.layout.addWidget(self.question_text_field, 1, 1)
+        self.layout.addWidget(QtGui.QLabel('Antwort: '), 2, 0, QtCore.Qt.AlignTop)
+        self.answer_text_field = QtGui.QTextEdit()
+        self.answer_text_field.setText(question_data['answer'])
+        self.answer_text_field.setMaximumHeight(75)
+        self.layout.addWidget(self.answer_text_field, 2, 1)
+        # add close button
+        self.button_box = QtGui.QHBoxLayout()
+        self.cancel_button = QtGui.QPushButton()
+        self.cancel_button.setText('Abbrechen')
+        self.button_box.addWidget(self.cancel_button)
+        self.ok_button = QtGui.QPushButton()
+        self.ok_button.setText('OK')
+        self.button_box.addWidget(self.ok_button)
+        self.layout.addLayout(self.button_box, 3, 1)
+        self.setLayout(self.layout)
+
+    def set_signals_and_slots(self):
+        """Sets all signals and slots for edit dialog."""
+        self.cancel_button.clicked.connect(lambda: self.on_close(False))
+        self.ok_button.clicked.connect(lambda: self.on_close(True))
+
+    @QtCore.pyqtSlot()
+    def on_close(self, save_data):
+        """Handles click on either the cancel or the ok button. Depending on
+        the value of the parameter save_data the changed data will be saved."""
+        # save data
+        if save_data:
+            self.data_has_changed = True
+            question_data = self.data['topics'][self.topic]['questions'][self.question]
+            # use method 'toHtml()' to get line breaks from text fields
+            text = self.question_text_field.toPlainText().replace('\n', '<br>')
+            question_data['question'] = text
+            text = self.answer_text_field.toPlainText().replace('\n', '<br>')
+            question_data['answer'] = text
+        # close dialog
+        self.close()
 
 def create_logger():
     """Creates logger for this application."""
@@ -136,7 +236,9 @@ def create_logger():
 if __name__ == '__main__':
     logger = create_logger()
     logger.info('Starting pyPardyEdit...')   
+    # load and adjust config settings
     config.load_config_from_file()
+    config.APP_NAME = 'pyPardyEdit'
     app = QtGui.QApplication(sys.argv)
     app.setApplicationName(config.APP_NAME)
     main = AvailableRoundPanel(None, 1024, 768)

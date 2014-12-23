@@ -6,16 +6,16 @@ from cx_Freeze import setup, Executable
 
 # Dependencies are automatically detected, but it might need fine tuning.
 includefiles = ['windows/libusb-1.0.dll',
-				('icons/buzzer.png', 'icons/buzzer.png'),
-				'README.md',
-				'LICENSE',
-				'C:\\Windows\\SysWOW64\\msvcr110.dll']
+                ('icons/buzzer.png', 'icons/buzzer.png'),
+                'README.md',
+                'LICENSE',
+                'C:\\Windows\\SysWOW64\\msvcr110.dll']
 excludes = []
 packages = []
 buildOptions = {'packages': packages,
-				'excludes': excludes,
-				'include_files':includefiles
-				}
+                'excludes': excludes,
+                'include_files':includefiles
+                }
 
 # GUI applications require a different base on Windows (the default is for a
 # console application).
@@ -24,7 +24,8 @@ if sys.platform == "win32":
     base = "Win32GUI"
 
 executables = [
-    Executable('pyPardy.py', base=base)
+    Executable('pyPardy.py', base=base),
+    Executable('pyPardyEdit.py', base=base)
 ]
 
 setup(
@@ -54,5 +55,5 @@ setup(
     options=dict(build_exe=buildOptions),
     executables=executables, requires=['PyQt4', 'libusb1'],
     #data_files=[('libs', 'windows/libusb-1.0.dll'),
-	#			('icons', 'icons/buzzer.png')],
+    #            ('icons', 'icons/buzzer.png')],
 )
