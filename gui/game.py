@@ -294,20 +294,20 @@ class QuestionViewPanel(QtGui.QWidget):
 
     def build_control_buttons(self):
         # add button for showing the answer of the question
-        self.show_answer_button = QtGui.QPushButton('Antwort...')
+        self.show_answer_button = QtGui.QPushButton(_('Answer...'))
         self.show_answer_button.setFont(self.button_font)
         self.show_answer_button.setEnabled(False)
         helper.hide_widget(self.show_answer_button)
         self.grid.addWidget(self.show_answer_button, 2, 0,
                             QtCore.Qt.AlignBottom)
         # add button for going back to question table
-        self.answer_correct_button = QtGui.QPushButton('Richtig!')
+        self.answer_correct_button = QtGui.QPushButton(_('Correct!'))
         self.answer_correct_button.setFont(self.button_font)
         self.answer_correct_button.setEnabled(False)
         helper.hide_widget(self.answer_correct_button)
         self.grid.addWidget(self.answer_correct_button, 2, 1,
                             QtCore.Qt.AlignBottom)
-        self.answer_incorrect_button = QtGui.QPushButton('Falsch!')
+        self.answer_incorrect_button = QtGui.QPushButton(_('Wrong!'))
         self.answer_incorrect_button.setFont(self.button_font)
         self.answer_incorrect_button.setEnabled(False)
         helper.hide_widget(self.answer_incorrect_button)
@@ -483,7 +483,7 @@ class QuestionViewPanel(QtGui.QWidget):
         else:
             # otherwise just show one of the buttons to get back to the
             # question view table
-            self.answer_correct_button.setText('Zurück')
+            self.answer_correct_button.setText(_('Back'))
             self.answer_correct_button.setFocus()
             self.answer_correct_button.setEnabled(True)
             helper.animate_widget(self.answer_correct_button, False)
@@ -552,7 +552,7 @@ class QuestionViewPanel(QtGui.QWidget):
                     # update user interface
                     self.hide_evaluation_buttons()
                     self.team_view_panel.on_update_points()
-                    self.fade_in_answer_button('Zurück')
+                    self.fade_in_answer_button(_('Zurück'))
                 else:
                     logger.info('Question was answered incorrectly!')
                     # store buzzer id for team that has buzzed and answered
@@ -610,6 +610,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.background_music = Phonon.MediaObject()
         Phonon.createPath(self.background_music, self.audio_output)
         if config.LOOP_BACKGROUND_MUSIC:
+            # enabling restart of bg music if it finished
             self.background_music.finished.connect(self.background_music.play)
         self.background_music.setCurrentSource(Phonon.MediaSource('./sounds/jeopardy.wav'))
         # create buzzer sound object
@@ -846,7 +847,7 @@ class GameOverDialog(QtGui.QDialog):
         self.grid.addWidget(self.build_button(), 4, 2)#,QtCore.Qt.AlignBottom)
 
     def build_button(self):
-        self.close_button = QtGui.QPushButton('Schließen')
+        self.close_button = QtGui.QPushButton(_('Close'))
         self.close_button.setFont(self.points_font)
         return self.close_button
 

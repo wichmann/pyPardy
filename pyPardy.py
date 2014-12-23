@@ -17,7 +17,8 @@ Python dependencies:
 import logging
 import logging.handlers
 import sys
-
+import gettext
+    
 from data import round
 from data import config
 from gui import gui
@@ -41,7 +42,10 @@ def create_logger():
 
 if __name__ == '__main__':
     logger = create_logger()
-    logger.info('Starting pyPardy...')   
+    logger.info('Starting pyPardy...')
+    # setup i18n
+    gettext.install('pyPardy', './translations')
+    # load config
     config.load_config_from_file()
     if config.DEBUG:
         # print all available round data to stdout when in debug mode

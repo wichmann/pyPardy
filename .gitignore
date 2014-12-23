@@ -47,16 +47,13 @@ coverage.xml
 
 # Django stuff:
 *.log
-*.pot
+#*.pot
 
 # Sphinx documentation
 docs/_build/
 
 
 #####
-
 # Project specific
 settings.json
 .idea
-
-
