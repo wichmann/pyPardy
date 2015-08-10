@@ -245,6 +245,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.setFixedSize(width, height)
         # build gui and slots
         self.create_fonts()
+        self.set_background()
         self.setup_ui()
         helper.whitefy(self)
         self.set_signals_and_slots()
@@ -268,6 +269,24 @@ class QuestionViewPanel(QtGui.QWidget):
             self.question_font.setPointSize(42)
             self.button_font = QtGui.QFont(config.BASE_FONT)
             self.button_font.setPointSize(24)
+
+    def set_background(self):
+        """Paints a color gradient over the background.
+
+        Sources:
+         * http://developer.nokia.com/community/wiki/Archived:Creating_a_gradient_background_for_a_QPushButton_with_style_sheet
+         * https://wiki.python.org/moin/PyQt/Windows%20with%20gradient%20backgrounds
+        """
+        #palette = QtGui.QPalette()
+        #gradient = QtGui.QLinearGradient(QtCore.QRectF(self.rect()).topLeft(),
+        #                                 QtCore.QRectF(self.rect()).topRight())
+        #gradient.setColorAt(0.0, QtGui.QColor(33, 152, 192))
+        #gradient.setColorAt(1.0, QtGui.QColor(13, 92, 166))
+        #palette.setBrush(QtGui.QPalette.Background, QtGui.QBrush(gradient))
+        #self.setPalette(palette)
+        self.setStyleSheet("""background-color: qlineargradient(
+                              x1: 0, y1: 0, x2: 0, y2: 1,
+                              stop: 0 #ffffff, stop: 1 #eeeeee);""")
 
     def setup_ui(self):
         self.setSizePolicy(QtGui.QSizePolicy.Expanding,
@@ -564,7 +583,7 @@ class QuestionViewPanel(QtGui.QWidget):
                     # update user interface
                     self.hide_evaluation_buttons()
                     self.team_view_panel.on_update_points()
-                    self.fade_in_answer_button(_('Zurück'))
+                    self.fade_in_answer_button(_('Back'))
                 else:
                     logger.info('Question was answered incorrectly!')
                     # store buzzer id for team that has buzzed and answered

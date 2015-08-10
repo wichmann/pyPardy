@@ -43,7 +43,6 @@ class PyPardyGui(QtGui.QMainWindow):
         self.buzzer_config_panel = None
         # build and config all widgets
         self.setup_ui()
-        self.set_background()
         helper.center_on_screen(self)
         self.set_signals_and_slots()
         # create instance of Game class for saving all necessary data
@@ -76,24 +75,6 @@ class PyPardyGui(QtGui.QMainWindow):
         self.show_available_rounds_panel()
         # set central widget for main window
         self.setCentralWidget(self.stackedWidget)
-
-    def set_background(self):
-        """Paints a color gradient over the background.
-
-        Sources:
-         * http://developer.nokia.com/community/wiki/Archived:Creating_a_gradient_background_for_a_QPushButton_with_style_sheet
-         * https://wiki.python.org/moin/PyQt/Windows%20with%20gradient%20backgrounds
-        """
-        #palette = QtGui.QPalette()
-        #gradient = QtGui.QLinearGradient(QtCore.QRectF(self.rect()).topLeft(),
-        #                                 QtCore.QRectF(self.rect()).topRight())
-        #gradient.setColorAt(0.0, QtGui.QColor(33, 152, 192))
-        #gradient.setColorAt(1.0, QtGui.QColor(13, 92, 166))
-        #palette.setBrush(QtGui.QPalette.Background, QtGui.QBrush(gradient))
-        #self.setPalette(palette)
-        self.stackedWidget.setStyleSheet("""background-color: qlineargradient(
-                              x1: 0, y1: 0, x2: 0, y2: 1,
-                              stop: 0 #ffffff, stop: 1 #eeeeee);""")
 
     def set_signals_and_slots(self):
         """Sets all signals and slots for main window."""

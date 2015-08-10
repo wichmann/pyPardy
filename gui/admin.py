@@ -175,28 +175,28 @@ class AvailableRoundPanel(QtGui.QWidget):
             self.button_box.addWidget(new_button)
             self.button_box.addStretch(1)
         # add button for assigning team buzzer
-        buzzer_config_button = helper.HoverButton()
-        buzzer_config_button.setText(_('Change buzzer assignment...'))
+        buzzer_config_button = QtGui.QPushButton()
+        buzzer_config_button.setText(_('Change buzzer assignment'))
         buzzer_config_button.setFont(self.button_font)
         buzzer_config_button.clicked.connect(self.on_buzzer_config_button)
         self.button_box.addStretch(5)
         self.button_box.addWidget(buzzer_config_button)
         # add button for configuration
-        config_button = helper.HoverButton()
+        config_button = QtGui.QPushButton()
         config_button.setText(_('Configuration'))
         config_button.setFont(self.button_font)
         config_button.clicked.connect(self.on_config_button)
         self.button_box.addStretch(1)
         self.button_box.addWidget(config_button)
         # add button for information panel
-        info_button = helper.HoverButton()
+        info_button = QtGui.QPushButton()
         info_button.setText(_('Information'))
         info_button.setFont(self.button_font)
         info_button.clicked.connect(self.on_information_button)
         self.button_box.addStretch(1)
         self.button_box.addWidget(info_button)
         # add button for quitting application
-        quit_button = helper.HoverButton()
+        quit_button = QtGui.QPushButton()
         quit_button.setText(_('Exit'))
         quit_button.setFont(self.button_font)
         quit_button.clicked.connect(self.main_gui.close)
@@ -245,7 +245,9 @@ class ConfigurationPanel(QtGui.QWidget):
         self.game_data = game_data
         self.setFixedSize(width, height)
         self.create_fonts()
+        self.setup_data()
         self.setup_ui()
+        self.fill_options()
         self.set_signals_and_slots()
 
     def create_fonts(self):
@@ -256,27 +258,131 @@ class ConfigurationPanel(QtGui.QWidget):
             self.label_font = QtGui.QFont(config.BASE_FONT)
             self.label_font.setPointSize(30)
 
+    def setup_data(self):
+        self.game_options = { 'ADD_ROUND_POINTS': None,
+                              'ALLOW_ALL_TEAMS_TO_ANSWER': None,
+                              'HIDE_QUESTION': None,
+                              'PENALTY_WRONG_ANSWERS': None }
+        self.audio_options = { 'AUDIO_MUSIC': None,
+                               'AUDIO_SFX': None,
+                               'AUDIO_SPEECH': None,
+                               'LOOP_BACKGROUND_MUSIC': None }
+        self.visual_options = { 'FULLSCREEN': None,
+                                'HIGH_CONTRAST': None,
+                                'LOW_RESOLUTION': None }
+        self.game_options_labels = { 'ADD_ROUND_POINTS': _('Add points from different rounds'),
+                                     'ALLOW_ALL_TEAMS_TO_ANSWER': _('Allow all teams to answer one after another'),
+                                     'HIDE_QUESTION': _('Hide question after buzzing'),
+                                     'PENALTY_WRONG_ANSWERS': _('Subtract penalty for wrong answers') }
+        self.audio_options_labels = { 'AUDIO_MUSIC': _('Activate background music'),
+                                      'AUDIO_SFX': _('Activate sound effects'),
+                                      'AUDIO_SPEECH': _('Activate reading questions by TTS'),
+                                      'LOOP_BACKGROUND_MUSIC': _('Loop background music') }
+        self.visual_options_labels = { 'FULLSCREEN': _('Show in fullscreen'),
+                                       'HIGH_CONTRAST': _('Show with high contrasts'),
+                                       'LOW_RESOLUTION': _('Show version for low resolutions') }
     def setup_ui(self):
         vbox = QtGui.QVBoxLayout()
-        #x = QtQml.qmlRegisterType('slideswitch/slideswitch.qml', 1, 0, 'SlideSwitch')
-        x = QtDeclarative.QDeclarativeView()
-        x.setSource(QtCore.QUrl('gui/slideswitch/slideswitch.qml'))
-        x.setResizeMode(QtDeclarative.QDeclarativeView.SizeRootObjectToView)
-        vbox.addWidget(x)
+        # add game options
+        game_options_group = QtGui.QGroupBox(_('Game options'))
+        formLayout = QtGui.QFormLayout()
+        game_options_group.setLayout(formLayout)
+        for option in sorted(self.game_options):
+            new_option = QtGui.QCheckBox()
+            self.game_options[option] = new_option
+            formLayout.addRow(self.game_options_labels[option], new_option)
+        self.team_number_spin = QtGui.QSpinBox()
+        self.team_number_spin.setMaximum(6)
+        self.team_number_spin.setMinimum(2)
+        formLayout.addRow(_('Number of teams'), self.team_number_spin)
+        self.questions_points_spin = QtGui.QSpinBox()
+        self.questions_points_spin.setMaximum(500)
+        self.questions_points_spin.setMinimum(10)
+        self.questions_points_spin.setSuffix(_(' points'))
+        formLayout.addRow(_('Points per Question'), self.questions_points_spin)
+        self.questions_time_spin = QtGui.QSpinBox()
+        self.questions_time_spin.setMaximum(600)
+        self.questions_time_spin.setMinimum(1)
+        self.questions_time_spin.setSuffix(_(' seconds'))
+        formLayout.addRow(_('Time per question (seconds)'), self.questions_time_spin)
+        vbox.addWidget(game_options_group)
+        # add audio options
+        audio_options_group = QtGui.QGroupBox(_('Audio options'))
+        formLayout = QtGui.QFormLayout()
+        audio_options_group.setLayout(formLayout)
+        for option in sorted(self.audio_options):
+            new_option = QtGui.QCheckBox()
+            self.audio_options[option] = new_option
+            formLayout.addRow(self.audio_options_labels[option], new_option)
+        vbox.addWidget(audio_options_group)
+        # add visual options
+        visual_options_group = QtGui.QGroupBox(_('Visual options'))
+        formLayout = QtGui.QFormLayout()
+        visual_options_group.setLayout(formLayout)
+        for option in sorted(self.visual_options):
+            new_option = QtGui.QCheckBox()
+            self.visual_options[option] = new_option
+            formLayout.addRow(self.visual_options_labels[option], new_option)
+        vbox.addWidget(visual_options_group)
         # add button for returning to menu
         button_box = QtGui.QHBoxLayout()
         button_box.addStretch(100)
         self.back_button = QtGui.QPushButton(_('Back'))
+        self.save_button = QtGui.QPushButton(_('Save'))
+        button_box.addWidget(self.save_button)
         button_box.addWidget(self.back_button)
         vbox.addLayout(button_box)
         self.setLayout(vbox)
 
+    def fill_options(self):
+        # fill in game options
+        for option_name, option_widget in self.game_options.items():
+            option_widget.setChecked(getattr(config, option_name))
+        self.team_number_spin.setValue(config.MAX_TEAM_NUMBER)
+        self.questions_points_spin.setValue(config.QUESTION_POINTS)
+        self.questions_time_spin.setValue(config.QUESTION_TIME)
+        # fill in audio options
+        for option_name, option_widget in self.audio_options.items():
+            option_widget.setChecked(getattr(config, option_name))
+        # fill in visual options
+        for option_name, option_widget in self.visual_options.items():
+            option_widget.setChecked(getattr(config, option_name))
+
+    def store_options(self):
+        # store game options
+        for option_name, option_widget in self.game_options.items():
+            setattr(config, option_name, option_widget.isChecked())
+        try:
+            value = int(self.team_number_spin.cleanText())
+            config.MAX_TEAM_NUMBER = value
+        except ValueError:
+            value = 0
+        try:
+            value = int(self.questions_points_spin.cleanText())
+            config.QUESTION_POINTS = value
+        except ValueError:
+            value = 0
+        try:
+            value = int(self.questions_time_spin.cleanText())
+            config.QUESTION_TIME = value
+        except ValueError:
+            value = 0
+        # store audio options
+        for option_name, option_widget in self.audio_options.items():
+            setattr(config, option_name, option_widget.isChecked())
+        # store visual options
+        for option_name, option_widget in self.visual_options.items():
+            setattr(config, option_name, option_widget.isChecked())
+
     def set_signals_and_slots(self):
         """Sets all signals and slots."""
-        self.back_button.clicked.connect(self.on_back_button)
+        self.back_button.clicked.connect(lambda: self.on_back_button(False))
+        self.save_button.clicked.connect(lambda: self.on_back_button(True))
 
     @QtCore.pyqtSlot()
-    def on_back_button(self):
+    def on_back_button(self, save_options=False):
+        if save_options:
+            self.store_options()
         self.main_gui.show_available_rounds_panel()
 
 
