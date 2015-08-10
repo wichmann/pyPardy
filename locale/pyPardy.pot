@@ -1,0 +1,159 @@
+# Translations template for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-08-10 14:12+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: gui/admin.py:179
+msgid "Change buzzer assignment"
+msgstr ""
+
+#: gui/admin.py:186
+msgid "Configuration"
+msgstr ""
+
+#: gui/admin.py:193
+msgid "Information"
+msgstr ""
+
+#: gui/admin.py:200
+msgid "Exit"
+msgstr ""
+
+#: gui/admin.py:273
+msgid "Add points from different rounds"
+msgstr ""
+
+#: gui/admin.py:274
+msgid "Allow all teams to answer one after another"
+msgstr ""
+
+#: gui/admin.py:275
+msgid "Hide question after buzzing"
+msgstr ""
+
+#: gui/admin.py:276
+msgid "Subtract penalty for wrong answers"
+msgstr ""
+
+#: gui/admin.py:277
+msgid "Activate background music"
+msgstr ""
+
+#: gui/admin.py:278
+msgid "Activate sound effects"
+msgstr ""
+
+#: gui/admin.py:279
+msgid "Activate reading questions by TTS"
+msgstr ""
+
+#: gui/admin.py:280
+msgid "Loop background music"
+msgstr ""
+
+#: gui/admin.py:281
+msgid "Show in fullscreen"
+msgstr ""
+
+#: gui/admin.py:282
+msgid "Show with high contrasts"
+msgstr ""
+
+#: gui/admin.py:283
+msgid "Show version for low resolutions"
+msgstr ""
+
+#: gui/admin.py:287
+msgid "Game options"
+msgstr ""
+
+#: gui/admin.py:297
+msgid "Number of teams"
+msgstr ""
+
+#: gui/admin.py:301
+msgid " points"
+msgstr ""
+
+#: gui/admin.py:302
+msgid "Points per Question"
+msgstr ""
+
+#: gui/admin.py:306
+msgid " seconds"
+msgstr ""
+
+#: gui/admin.py:307
+msgid "Time per question (seconds)"
+msgstr ""
+
+#: gui/admin.py:310
+msgid "Audio options"
+msgstr ""
+
+#: gui/admin.py:319
+msgid "Visual options"
+msgstr ""
+
+#: gui/admin.py:330 gui/admin.py:439 gui/game.py:517 gui/game.py:586
+msgid "Back"
+msgstr ""
+
+#: gui/admin.py:331
+msgid "Save"
+msgstr ""
+
+#: gui/admin.py:414
+msgid "pyPardy"
+msgstr ""
+
+#: gui/admin.py:419
+msgid "pyPardy is a game similar to Jeopardy(tm)."
+msgstr ""
+
+#: gui/admin.py:427
+msgid "Author: Christian Wichmann"
+msgstr ""
+
+#: gui/admin.py:433
+msgid "Licensed under GNU GPL v2 or newer."
+msgstr ""
+
+#: gui/game.py:175
+msgid "Stop current game?"
+msgstr ""
+
+#: gui/game.py:176
+msgid "Do you really want to stop the currently running game?"
+msgstr ""
+
+#: gui/game.py:326
+msgid "Answer..."
+msgstr ""
+
+#: gui/game.py:333
+msgid "Correct!"
+msgstr ""
+
+#: gui/game.py:339
+msgid "Wrong!"
+msgstr ""
+
+#: gui/game.py:881
+msgid "Close"
+msgstr ""
+

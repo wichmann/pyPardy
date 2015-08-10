@@ -44,7 +44,7 @@ if __name__ == '__main__':
     logger = create_logger()
     logger.info('Starting pyPardy...')
     # setup i18n
-    gettext.install('pyPardy', './translations')
+    gettext.install('pyPardy', './locale')
     # load config
     config.load_config_from_file()
     if config.DEBUG:

@@ -7,14 +7,18 @@ Building i18n files
 
 Extracting all messages from source files:
 
-    pybabel extract gui/ > translations/gettext.po oder
-    pygettext gui/
+    pybabel extract gui/ > locale/pyPardy.pot
+
+Initialize each locale that should be supported:
+
+    pybabel init -l de_DE -d ./locale -i ./locale/messages.pot
 
 Creating mo files from translated po files:
 
-    msgfmt translations/de.po --output-file translations/de/LC_MESSAGES/pyPardy.mo
+    pybabel compile -f -d ./locale
 
 Updating messages on po files from source:
 
-    pybabel update???
-    msgmerge???
+    pybabel update -l de_DE -d ./locale/ -i ./locale/messages.pot
+
+Alternatively, you can use xgettext.

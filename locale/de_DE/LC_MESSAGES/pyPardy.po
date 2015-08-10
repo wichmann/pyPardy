@@ -1,0 +1,160 @@
+# German (Germany) translations for pyPardy.
+# Copyright (C) 2015 Christian Wichmann
+# This file is distributed under the same license as the pyPardy project.
+# Christian Wichmann <christian@freenono.org>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: pyPardy 0.3\n"
+"Report-Msgid-Bugs-To: christian@freenono.org\n"
+"POT-Creation-Date: 2015-08-10 14:12+0200\n"
+"PO-Revision-Date: 2015-08-10 14:00+0200\n"
+"Last-Translator: Christian Wichmann <christian@freenono.org>\n"
+"Language-Team: de_DE <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: gui/admin.py:179
+msgid "Change buzzer assignment"
+msgstr "Zuordnung Buzzer ändern"
+
+#: gui/admin.py:186
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: gui/admin.py:193
+msgid "Information"
+msgstr "Information"
+
+#: gui/admin.py:200
+msgid "Exit"
+msgstr "Beenden"
+
+#: gui/admin.py:273
+msgid "Add points from different rounds"
+msgstr "Addiere Punkte verschiedener Spielrunden"
+
+#: gui/admin.py:274
+msgid "Allow all teams to answer one after another"
+msgstr "Erlaube allen Teams eine Frage zu beantworten"
+
+#: gui/admin.py:275
+msgid "Hide question after buzzing"
+msgstr "Verstecke Frage nach dem Buzzern"
+
+#: gui/admin.py:276
+msgid "Subtract penalty for wrong answers"
+msgstr "Ziehe bei falscher Antwort eine Strafe ab"
+
+#: gui/admin.py:277
+msgid "Activate background music"
+msgstr "Aktiviere Hintergrundmusik"
+
+#: gui/admin.py:278
+msgid "Activate sound effects"
+msgstr "Aktiviere Sound-Effekte"
+
+#: gui/admin.py:279
+msgid "Activate reading questions by TTS"
+msgstr "Aktiviere Vorlesen der Fragen durch TTS"
+
+#: gui/admin.py:280
+msgid "Loop background music"
+msgstr "Wiederhole Hintergrundmusik"
+
+#: gui/admin.py:281
+msgid "Show in fullscreen"
+msgstr "Zeige in Fullscreen"
+
+#: gui/admin.py:282
+msgid "Show with high contrasts"
+msgstr "Zeige Programm mit hohem Kontrast"
+
+#: gui/admin.py:283
+msgid "Show version for low resolutions"
+msgstr "Zeige Programm optimiert für niedrigere Auflösungen"
+
+#: gui/admin.py:287
+msgid "Game options"
+msgstr "Spiel-Einstellungen"
+
+#: gui/admin.py:297
+msgid "Number of teams"
+msgstr "Anzahl der Teams"
+
+#: gui/admin.py:301
+msgid " points"
+msgstr " Punkte"
+
+#: gui/admin.py:302
+msgid "Points per Question"
+msgstr "Punkte pro Frage"
+
+#: gui/admin.py:306
+msgid " seconds"
+msgstr " Sekunden"
+
+#: gui/admin.py:307
+msgid "Time per question (seconds)"
+msgstr "Zeit pro Frage (Sekunden)"
+
+#: gui/admin.py:310
+msgid "Audio options"
+msgstr "Audio-Einstellungen"
+
+#: gui/admin.py:319
+msgid "Visual options"
+msgstr "Grafik-Einstellungen"
+
+#: gui/admin.py:330 gui/admin.py:439 gui/game.py:517 gui/game.py:586
+msgid "Back"
+msgstr "Zurück"
+
+#: gui/admin.py:331
+msgid "Save"
+msgstr "Speichern"
+
+#: gui/admin.py:414
+msgid "pyPardy"
+msgstr "pyPardy"
+
+#: gui/admin.py:419
+msgid "pyPardy is a game similar to Jeopardy(tm)."
+msgstr "pyPardy ist ein Spiel ähnlich Jeopardy(tm)."
+
+#: gui/admin.py:427
+msgid "Author: Christian Wichmann"
+msgstr "Autor: Christian Wichmann"
+
+#: gui/admin.py:433
+msgid "Licensed under GNU GPL v2 or newer."
+msgstr "Lizensiert unter der GNU GPL v2 oder neuer."
+
+#: gui/game.py:175
+msgid "Stop current game?"
+msgstr "Laufendes Spiel beenden?"
+
+#: gui/game.py:176
+msgid "Do you really want to stop the currently running game?"
+msgstr "Willst Du wirklich das laufende Spiel beenden?"
+
+#: gui/game.py:326
+msgid "Answer..."
+msgstr "Antwort..."
+
+#: gui/game.py:333
+msgid "Correct!"
+msgstr "Korrekt!"
+
+#: gui/game.py:339
+msgid "Wrong!"
+msgstr "Falsch!"
+
+#: gui/game.py:881
+msgid "Close"
+msgstr "Schließen"
+
