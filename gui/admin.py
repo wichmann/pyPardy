@@ -8,6 +8,7 @@ Administrative widgets of pyPardy.
 """
 
 import logging
+from functools import partial
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 from PyQt4 import QtDeclarative
@@ -29,6 +30,9 @@ class BuzzerConfigPanel(QtGui.QWidget):
         self.game_data = game_data
         self.team_label_list = []
         self.currently_highlighted_team = 0
+        self.STYLE_HIGHLIGHTED = 'border: none; background: none; color: red'
+        self.STYLE_NONHIGHLIGHTED = 'border: none; background: none; color: black'
+
         self.setFixedSize(width, height)
         self.create_fonts()
         self.setup_ui()
@@ -56,20 +60,27 @@ class BuzzerConfigPanel(QtGui.QWidget):
             new_button = QtGui.QPushButton()
             new_button.setIcon(QtGui.QIcon('./icons/buzzer.png'))
             new_button.setIconSize(QtCore.QSize(128, 128))
+            new_button.setDown(True)
             vbox.addWidget(new_button)
             team_name = config.TEAM_NAMES[i]
-            new_label = QtGui.QLabel(team_name)
-            self.team_label_list.append(new_label)
-            new_label.setAlignment(QtCore.Qt.AlignCenter |
+            new_label_input = QtGui.QLineEdit(team_name)
+            self.team_label_list.append(new_label_input)
+            new_label_input.setAlignment(QtCore.Qt.AlignCenter |
                                    QtCore.Qt.AlignHCenter)
-            new_label.setFont(self.label_font)
-            vbox.addWidget(new_label)
+            new_label_input.setFont(self.label_font)
+            new_label_input.setStyleSheet(self.STYLE_NONHIGHLIGHTED)
+            new_label_input.returnPressed.connect(partial(self.on_change_team_name, i))
+            vbox.addWidget(new_label_input)
             vbox.addStretch(1)
             # add vbox to hbox
             hbox.addLayout(vbox)
             hbox.addStretch(1)
         self.setLayout(hbox)
-        self.team_label_list[0].setStyleSheet("color: red")
+        self.team_label_list[0].setStyleSheet(self.STYLE_HIGHLIGHTED)
+
+    def on_change_team_name(self, team_id):
+        new_team_name = self.team_label_list[team_id].text()
+        config.TEAM_NAMES[team_id] = new_team_name
 
     def set_signals_and_slots(self):
         """Sets all signals and slots for buzzer configuation window."""
@@ -80,6 +91,14 @@ class BuzzerConfigPanel(QtGui.QWidget):
     def close_connection_to_buzzer(self):
         self.buzzer_connector.buzzing.disconnect(self.on_buzzer_pressed)
         self.buzzer_connector = None
+
+    def keyPressEvent(self, event):
+        if event.isAutoRepeat():
+            return
+        key = event.key()
+        if key == QtCore.Qt.Key_Escape:
+            self.close_connection_to_buzzer()
+            self.main_gui.show_available_rounds_panel()
 
     @QtCore.pyqtSlot(int)
     def on_buzzer_pressed(self, buzzer_id):
@@ -92,13 +111,13 @@ class BuzzerConfigPanel(QtGui.QWidget):
                                               buzzer_id)
         if self.currently_highlighted_team < config.MAX_TEAM_NUMBER - 1:
             # unhighlight last team name
-            self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
+            self.team_label_list[self.currently_highlighted_team].setStyleSheet(self.STYLE_NONHIGHLIGHTED)
             # highlight next team name
             self.currently_highlighted_team += 1
-            self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: red")
+            self.team_label_list[self.currently_highlighted_team].setStyleSheet(self.STYLE_HIGHLIGHTED)
         else:
             # unhighlight all team names and return
-            self.team_label_list[self.currently_highlighted_team].setStyleSheet("color: black")
+            self.team_label_list[self.currently_highlighted_team].setStyleSheet(self.STYLE_NONHIGHLIGHTED)
             self.close_connection_to_buzzer()
             self.main_gui.show_available_rounds_panel()
 
