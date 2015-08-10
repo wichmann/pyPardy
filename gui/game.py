@@ -170,6 +170,16 @@ class QuestionTablePanel(QtGui.QWidget):
             self.focus_specific_button(topic, question - 1)
         elif key == QtCore.Qt.Key_S:
             self.focus_specific_button(topic, question + 1)
+        elif key == QtCore.Qt.Key_Escape:
+            quit_game_message_box = QtGui.QMessageBox()
+            quit_game_message_box.setText(_('Stop current game?'))
+            quit_game_message_box.setInformativeText(_('Do you really want to stop the currently running game?'))
+            quit_game_message_box.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
+            quit_game_message_box.setDefaultButton(QtGui.QMessageBox.No)
+            quit_game_message_box.setIcon(QtGui.QMessageBox.Question)
+            ret = quit_game_message_box.exec_()
+            if ret == QtGui.QMessageBox.Yes:
+                self.main_gui.quit_round()
 
     def focus_specific_button(self, topic, question):
         """Focuses a given button defined by its topic and the question number.
@@ -319,6 +329,7 @@ class QuestionViewPanel(QtGui.QWidget):
         self.question_label = QtGui.QLabel(self.game_data.get_current_question())
         self.question_label.setFont(self.question_font)
         self.question_label.setLineWidth(25)
+        self.question_label.setStyleSheet('background-color: none;')
         self.question_label.setWordWrap(True)
         self.question_label.setAlignment(QtCore.Qt.AlignTop |
                                          QtCore.Qt.AlignHCenter)
@@ -337,6 +348,7 @@ class QuestionViewPanel(QtGui.QWidget):
         #self.timer_lcd.resize(300, 200)
         self.timer_lcd.setSegmentStyle(QtGui.QLCDNumber.Flat)
         self.timer_lcd.setFrameStyle(QtGui.QFrame.NoFrame)
+        self.timer_lcd.setStyleSheet('background-color: none;')
         #self.set_lcd_colors()
         self.grid.addWidget(self.timer_lcd, 2, 3,
                             QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)

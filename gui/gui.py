@@ -43,7 +43,7 @@ class PyPardyGui(QtGui.QMainWindow):
         self.buzzer_config_panel = None
         # build and config all widgets
         self.setup_ui()
-        #self.set_background()
+        self.set_background()
         helper.center_on_screen(self)
         self.set_signals_and_slots()
         # create instance of Game class for saving all necessary data
@@ -93,7 +93,7 @@ class PyPardyGui(QtGui.QMainWindow):
         #self.setPalette(palette)
         self.stackedWidget.setStyleSheet("""background-color: qlineargradient(
                               x1: 0, y1: 0, x2: 0, y2: 1,
-                              stop: 0 #2198c0, stop: 1 #0d5ca6);""")
+                              stop: 0 #ffffff, stop: 1 #eeeeee);""")
 
     def set_signals_and_slots(self):
         """Sets all signals and slots for main window."""
@@ -142,11 +142,15 @@ class PyPardyGui(QtGui.QMainWindow):
         # handle end of round
         if self.current_game.is_round_complete():
             logger.info('Round was completed.')
-            if config.AUDIO_SFX:
-                self.game_end_sound.play()
-            dialog = game_ui.GameOverDialog(self, self.current_game)
-            dialog.show()
-            self.show_available_rounds_panel()
+            self.round_complete()
+
+    def quit_round(self):
+        self.current_game.quit_round()
+        if config.AUDIO_SFX:
+            self.game_end_sound.play()
+        dialog = game_ui.GameOverDialog(self, self.current_game)
+        dialog.show()
+        self.show_available_rounds_panel()
 
     def show_question(self, topic, question):
         # remove old question view if it exists

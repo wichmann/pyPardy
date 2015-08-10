@@ -108,9 +108,13 @@ class Game():
 
     ##### methods concerning status of questions #####
 
-    def mark_question_as_complete(self):
+    def mark_question_as_complete(self, topic=None, question=None):
         """Marks current questions of current topic as completed."""
-        string = '{}-{}'.format(self.current_topic, self.current_question)
+        if topic == None:
+            topic = self.current_topic
+        if question == None:
+            question=self.current_question
+        string = '{}-{}'.format(topic, question)
         self.played_questions_list.append(string)
 
     def was_question_completed(self, topic, question):
@@ -131,6 +135,13 @@ class Game():
                     return False
         self.fix_ranking()
         return True
+
+    def quit_round(self):
+        for topic in range(self.get_number_of_topics()):
+            for question in range(self.get_number_of_questions(topic)):
+                if not self.was_question_completed(topic, question):
+                    self.mark_question_as_complete(topic=topic, question=question)
+        self.fix_ranking()
 
     ##### methods concerning points and team management #####
 
@@ -187,7 +198,7 @@ class Game():
                     place += 1
 
     def get_placed_team(self, place):
-        if self.is_round_complete() and place in self.ranking:
+        if self.is_round_complete() and (place in self.ranking):
             return (config.TEAM_NAMES[self.ranking[place]],
                     self.get_points_for_team(self.ranking[place]))
         else:
